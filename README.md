@@ -1,2 +1,2 @@
-# ACCESS-OM2
+# ACCESS-OM
 ACCESS Ocean-Ice Model: Testing new development strategy
