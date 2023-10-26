@@ -1,2 +1,2 @@
-# ACCESS-OM
-ACCESS Ocean-Ice Model: Testing new development strategy
+# ACCESS-OM2
+ACCESS Ocean-Ice Model 2: Release Configurations
