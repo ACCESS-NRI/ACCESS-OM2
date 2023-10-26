@@ -1,0 +1,11 @@
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+spack:
+  # add package specs to the `specs` list
+  specs:
+  - access-om2 ^cice5@git.2023.10.19=2023.10.19 ^mom5@git.2023.10.26=2023.10.16 ^libaccessom2@git.2023.10.26=2023.10.26 %intel@19.0.5.281
+  view: true
+  concretizer:
+    unify: true
