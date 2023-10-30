@@ -1,0 +1,11 @@
+name: Deploy ACCESS-OM2
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  deploy:
+    name: Deploy
+    uses: access-nri/build-cd/.github/workflows/deploy-1-setup.yml@main
+    secrets: inherit
