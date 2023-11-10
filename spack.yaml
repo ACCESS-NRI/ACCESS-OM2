@@ -5,7 +5,7 @@
 spack:
   # add package specs to the `specs` list
   specs:
-  - access-om2 ^cice5@git.2023.10.19 ^mom5@git.2023.10.26 ^libaccessom2@git.2023.10.26 ^oasis3-mct@git.2023.11.09 %intel@19.0.5.281
+  - access-om2 ^cice5@git.2023.10.19 ^mom5@git.2023.11.09 ^libaccessom2@git.2023.10.26 ^oasis3-mct@git.2023.11.09 ^netcdf-c@4.7.4 ^netcdf-fortran@4.5.2 ^nci-openmpi@4.0.2 %intel@19.0.5.281
   view: true
   concretizer:
     unify: true
