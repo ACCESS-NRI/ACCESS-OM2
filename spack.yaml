@@ -46,6 +46,6 @@ spack:
       flags: {}
       operating_system: rocky8
       target: x86_64
-      modules: []
+      modules: [intel-compiler/2019.5.281]
       environment: {}
       extra_rpaths: []
