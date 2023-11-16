@@ -28,11 +28,11 @@ spack env create access-om2 spack.yaml
 spack env activate access-om2
 spack install
 ```
-to create a spack environment called `access-om2` and build all the ACCESS-OM2 components.
+to create a spack environment called `access-om2` and build all the ACCESS-OM2 components, the locations of which can be found using `spack find --paths`.
 
-In contrast the [COSIMA ACCESS-OM2 repository](https://github.com/COSIMA/access-om2) uses [submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) to bring all the code dependencies into a single repository and build all the models together. 
+In contrast, the [COSIMA ACCESS-OM2 repository](https://github.com/COSIMA/access-om2) uses [submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) to bring all the code dependencies into a single repository and build all the models together. 
 
-### Deployment.
+### Deployment
   
 ACCESS-OM2 is deployed automatically when a new version of the [`spack.yaml`](https://github.com/ACCESS-NRI/ACCESS-OM2/blob/main/spack.yaml) file is committed to this repository and tagged with a new version. All the ACCESS-OM2 components are built using `spack` on `gadi` and installed under the [`vk83`](https://my.nci.org.au/mancini/project/vk83) project in `/g/data/vk83`. It is necessary to be a member of [`vk83`](https://my.nci.org.au/mancini/project/vk83) project to use ACCESS-NRI deployments of ACCESS-OM2. 
 
