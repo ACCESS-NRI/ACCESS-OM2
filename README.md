@@ -43,7 +43,7 @@ The deployment process also creates a GitHub release with the same tag. All rele
 
 Additionally the deployment creates environment modulefiles, the [standard method for deploying software on `gadi`](https://opus.nci.org.au/display/Help/Environment+Modules). To view available ACCESS-OM2 versions:
 ```
-module use /g/data/vk83/modules
+module use /g/data/vk83/apps/spack/0.20/release/modules/linux-rocky8-x86_64
 module avail access-om2
 ```
 
