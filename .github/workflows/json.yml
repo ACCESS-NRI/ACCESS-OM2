@@ -1,0 +1,33 @@
+name: Validate JSON files
+on:
+  pull_request:
+    paths:
+      - '**.json'
+jobs:
+  validate:
+    name: Validate
+    uses: access-nri/actions/.github/workflows/validate-json.yml@main
+    with:
+      src: "config"
+  check-versions-exist:
+    name: Check Versions Exist
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        id: versions
+        run: |
+          echo "packages=$(jq --compact-output --raw-output '."spack-packages"' ./config/versions.json)" >> $GITHUB_OUTPUT
+          echo "config=$(jq --compact-ouput --raw-output '."spack-config"' ./config/versions.json)" >> $GITHUB_OUTPUT
+      - name: Spack Packages
+        uses: actions/checkout@v4
+        with:
+          repository: access-nri/spack-packages
+          ref: ${{ steps.versions.outputs.packages }}
+          path: packages
+      - name: Spack Config
+        uses: actions/checkout@v4
+        with:
+          repository: access-nri/spack-config
+          ref: ${{ steps.versions.outputs.config }}
+          path: config
