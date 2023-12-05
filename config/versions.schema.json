@@ -13,5 +13,7 @@
         "spack-config": {
             "type": "string"
         }
-    }
+    },
+    "required": [ "$schema", "spack-packages", "spack-config" ],
+    "additionalProperties": false
 }
