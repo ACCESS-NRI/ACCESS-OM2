@@ -1,0 +1,5 @@
+{
+    "$schema": "./versions.schema.json",
+    "spack-packages": "2023.11.01",
+    "spack-config": "2023.11.01"
+}
