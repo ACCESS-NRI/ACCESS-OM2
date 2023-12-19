@@ -2,7 +2,7 @@ name: CI
 on:
   pull_request:
     paths:
-      - 'config/*.json'
+      - '**.json'
       - 'spack.yaml'
 jobs:
   changed:
@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       spack-yaml-changed: ${{ steps.filter.outputs.spack-yaml }}
+      json-changed: ${{ steps.filter.outputs.json }}
       versions-json-changed: ${{ steps.filter.outputs.versions-json }}
     steps:
       - uses: dorny/paths-filter@v2.9.3
@@ -18,6 +19,8 @@ jobs:
           filters: |
             spack-yaml:
               - 'spack.yaml'
+            json:
+              - '**.json'
             versions-json:
               - 'config/*.json'
 
@@ -62,7 +65,7 @@ jobs:
     name: Validate JSON
     needs:
       - changed
-    if: ${{ needs.changed.outputs.versions-json-changed == 'true' }}
+    if: ${{ needs.changed.outputs.json-changed == 'true' }}
     uses: access-nri/actions/.github/workflows/validate-json.yml@main
     with:
       src: "config"
