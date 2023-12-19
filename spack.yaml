@@ -26,3 +26,33 @@ spack:
   view: true
   concretizer:
     unify: true
+  modules:
+    default:
+      enable:
+      - tcl
+      roots:
+        tcl: $spack/../release/modules
+        lmod: $spack/../release/lmod
+      tcl:
+        hash_length: 0
+        include:
+        - access-om2
+        - mom5
+        - cice5
+        - libaccessom2
+        - oasis3-mct
+        exclude_implicits: true
+        all:
+          autoload: direct
+          conflict:
+          - '{name}'
+          environment:
+            set:
+              'SPACK_{name}_ROOT': '{prefix}'
+        projections:
+          all: '{name}/{version}'
+          access-om2: '{name}/2023.11.23'
+          cice5: '{name}/2023.10.19'
+          mom5: '{name}/2023.11.09'
+          libaccessom2: '{name}/2023.10.26'
+          oasis3-mct: '{name}/2023.11.09'

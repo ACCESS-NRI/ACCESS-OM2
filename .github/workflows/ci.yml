@@ -1,0 +1,97 @@
+name: CI
+on:
+  pull_request:
+    paths:
+      - 'config/*.json'
+      - 'spack.yaml'
+jobs:
+  changed:
+    name: Files Changed
+    runs-on: ubuntu-latest
+    outputs:
+      spack-yaml-changed: ${{ steps.filter.outputs.spack-yaml }}
+      json-changed: ${{ steps.filter.outputs.json }}
+      versions-json-changed: ${{ steps.filter.outputs.versions-json }}
+    steps:
+      - uses: dorny/paths-filter@v2.9.3
+        id: filter
+        with:
+          filters: |
+            spack-yaml:
+              - 'spack.yaml'
+            json:
+              - 'config/*.json'
+            versions-json:
+              - 'config/versions.json'
+
+  spack-yaml-checks:
+    name: Check spack.yaml
+    runs-on: ubuntu-latest
+    needs:
+      - changed
+    if: ${{ needs.changed.outputs.spack-yaml-changed == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Projection Version Matches
+        # this step checks that the versions of the packages themselves match with the
+        #  names of the modules. For example, mom5@git.2023.12.12 matches with the
+        #  modulefile mom5/2023.12.12 (specifically, the version strings match)
+        run: |
+          FAILED='false'
+          DEPS=$(yq ".spack.modules.default.tcl.include | join(\" \")" spack.yaml)
+
+          # for each of the packages (access-om2, mom5, cice5...)
+          for DEP in $DEPS; do
+            DEP_VER=''
+            if [[ "$DEP" == "access-om2" ]]; then
+              DEP_VER=$(yq ".spack.specs[]" spack.yaml | cut -c16-)
+            else
+              DEP_VER=$(yq ".spack.packages.\"$DEP\".require" spack.yaml | cut -c6-)
+            fi
+
+            MODULE_VER=$(yq ".spack.modules.default.tcl.projections.\"$DEP\"" spack.yaml | cut -c8-)
+
+            if [[ "$DEP_VER" != "$MODULE_VER" ]]; then
+              echo "::error::Version of dependency and projection do not match ($DEP_VER != $MODULE_VER)"
+              FAILED='true'
+            fi
+          done
+          if [[ "$FAILED" == "true" ]]; then
+            exit 1
+          fi
+
+  validate:
+    name: Validate JSON
+    needs:
+      - changed
+    if: ${{ needs.changed.outputs.json-changed == 'true' }}
+    uses: access-nri/actions/.github/workflows/validate-json.yml@main
+    with:
+      src: "config"
+
+  check-versions-exist:
+    name: Check Versions Exist
+    runs-on: ubuntu-latest
+    needs:
+      - changed
+    if: ${{ needs.changed.outputs.versions-json-changed == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup
+        id: versions
+        run: |
+          echo "packages=$(jq --compact-output --raw-output '."spack-packages"' ./config/versions.json)" >> $GITHUB_OUTPUT
+          echo "config=$(jq --compact-output --raw-output '."spack-config"' ./config/versions.json)" >> $GITHUB_OUTPUT
+      - name: Spack Packages
+        uses: actions/checkout@v4
+        with:
+          repository: access-nri/spack-packages
+          ref: ${{ steps.versions.outputs.packages }}
+          path: packages
+      - name: Spack Config
+        uses: actions/checkout@v4
+        with:
+          repository: access-nri/spack-config
+          ref: ${{ steps.versions.outputs.config }}
+          path: config
