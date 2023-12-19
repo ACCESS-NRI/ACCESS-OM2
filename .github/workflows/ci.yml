@@ -2,7 +2,7 @@ name: CI
 on:
   pull_request:
     paths:
-      - '**.json'
+      - 'config/*.json'
       - 'spack.yaml'
 jobs:
   changed:
@@ -19,7 +19,7 @@ jobs:
             spack-yaml:
               - 'spack.yaml'
             versions-json:
-              - 'config/**'
+              - 'config/*.json'
 
   spack-yaml-checks:
     name: Check spack.yaml
