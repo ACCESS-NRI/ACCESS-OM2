@@ -19,6 +19,8 @@ spack:
       require: '@4.7.4'
     netcdf-fortran:
       require: '@4.5.2'
+    parallelio:
+      require: '@2.5.2'
     nci-openmpi:
       require: '@4.0.2'
     all:
