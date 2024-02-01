@@ -1,6 +1,10 @@
 name: CI
 on:
   pull_request:
+    branches:
+      # Branches that modify spack.yaml must be of the form: pre-*.*.* (ex: pre-2024.01.1)
+      # in order for the PR to access the '* Prerelease' GitHub Environments.
+      - 'pre-*.*.*'
     paths:
       - 'config/*.json'
       - 'spack.yaml'
@@ -112,3 +116,31 @@ jobs:
 
             If this is not what was expected, commit changes to `config/versions.json`.
         run: gh pr comment --body '${{ env.BODY }}'
+
+  prerelease-deploy-version:
+    name: Get Prerelease Number
+    runs-on: ubuntu-latest
+    outputs:
+      number: ${{ steps.history.outputs.commits }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Number of Commits on ${{ github.head_ref }}
+        id: history
+        run: echo "commits=$(git rev-list --count HEAD)" >> $GITHUB_OUTPUT
+
+  prerelease-deploy:
+    name: Deploy to Prerelease
+    # This will create a `spack` environment with the name `access-om2-<version>-<commit number>`
+    # For example, `access-om2-2024.01.1-3` for the deployment based on the third commit on this
+    # `pre-2024.01.1` PR branch.
+    needs:
+      - prerelease-deploy-version
+      - spack-yaml-checks
+      - validate
+      - check-versions-exist
+    uses: access-nri/build-cd/.github/workflows/deploy-1-setup.yml@main
+    with:
+      type: prerelease
+      version: ${{ github.head_ref }}-${{ needs.prerelease-deploy-version.outputs.number }}
+    secrets: inherit
