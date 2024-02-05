@@ -78,9 +78,6 @@ jobs:
     if: ${{ needs.changed.outputs.versions-json-changed == 'true' }}
     permissions:
       pull-requests: write
-    outputs:
-      packages-version: ${{ steps.versions.outputs.packages }}
-      config-version: ${{ steps.versions.outputs.config }}
     steps:
       - uses: actions/checkout@v4
 
