@@ -76,6 +76,9 @@ jobs:
     needs:
       - changed
     if: ${{ needs.changed.outputs.versions-json-changed == 'true' }}
+    outputs:
+      packages-version: ${{ steps.versions.outputs.packages }}
+      config-version: ${{ steps.versions.outputs.config }}
     steps:
       - uses: actions/checkout@v4
       - name: Setup
@@ -95,3 +98,23 @@ jobs:
           repository: access-nri/spack-config
           ref: ${{ steps.versions.outputs.config }}
           path: config
+
+  config-versions-notifier:
+    name: Config Versions Notifier
+    needs:
+      - check-versions-exist
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          BODY: |
+            This ${{ github.repository }} model will be deployed using:
+            * `access-nri/spack-packages` version [`${{ needs.check-versions-exist.outputs.packages-version }}`](https://github.com/ACCESS-NRI/spack-packages/releases/tag/${{ needs.check-versions-exist.outputs.packages-version }})
+            * `access-nri/spack-config` version [`${{ needs.check-versions-exist.outputs.config-version }}`](https://github.com/ACCESS-NRI/spack-config/releases/tag/${{ needs.check-versions-exist.outputs.config-version }})
+
+            If this is not what was expected, commit changes to `config/versions.json`.
+        run: gh pr comment --body '${{ env.BODY }}'
