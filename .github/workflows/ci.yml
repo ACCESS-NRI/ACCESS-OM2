@@ -76,22 +76,39 @@ jobs:
     needs:
       - changed
     if: ${{ needs.changed.outputs.versions-json-changed == 'true' }}
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
+
       - name: Setup
         id: versions
         run: |
           echo "packages=$(jq --compact-output --raw-output '."spack-packages"' ./config/versions.json)" >> $GITHUB_OUTPUT
           echo "config=$(jq --compact-output --raw-output '."spack-config"' ./config/versions.json)" >> $GITHUB_OUTPUT
+
       - name: Spack Packages
         uses: actions/checkout@v4
         with:
           repository: access-nri/spack-packages
           ref: ${{ steps.versions.outputs.packages }}
           path: packages
+
       - name: Spack Config
         uses: actions/checkout@v4
         with:
           repository: access-nri/spack-config
           ref: ${{ steps.versions.outputs.config }}
           path: config
+
+      - name: Comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          BODY: |
+            This ${{ github.repository }} model will be deployed using:
+            * `access-nri/spack-packages` version [`${{ steps.versions.outputs.packages-version }}`](https://github.com/ACCESS-NRI/spack-packages/releases/tag/${{ steps.versions.outputs.packages-version }})
+            * `access-nri/spack-config` version [`${{ steps.versions.outputs.config-version }}`](https://github.com/ACCESS-NRI/spack-config/releases/tag/${{ steps.versions.outputs.config-version }})
+
+            If this is not what was expected, commit changes to `config/versions.json`.
+        run: gh pr comment --body '${{ env.BODY }}'
