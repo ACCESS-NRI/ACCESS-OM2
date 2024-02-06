@@ -17,7 +17,7 @@ jobs:
       json-changed: ${{ steps.filter.outputs.json }}
       versions-json-changed: ${{ steps.filter.outputs.versions-json }}
     steps:
-      - uses: dorny/paths-filter@v2.9.3
+      - uses: dorny/paths-filter@ad1ae68cd06927a8731fe67e877a2351c7a09691  #v2.9.3
         id: filter
         with:
           filters: |
