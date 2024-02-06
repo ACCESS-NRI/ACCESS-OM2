@@ -2,16 +2,32 @@ name: CI
 on:
   pull_request:
     branches:
-      # Branches that modify spack.yaml must be of the form: pre-*.*.* (ex: pre-2024.01.1)
-      # in order for the PR to access the '* Prerelease' GitHub Environments.
-      - 'pre-*.*.*'
+      - main
     paths:
       - 'config/*.json'
       - 'spack.yaml'
 jobs:
+  branch-check:
+    name: Branch Name Compliance Check
+    # Branches that modify spack.yaml must be of the form: pre-*.*.* (ex: pre-2024.01.1)
+    # in order for the PR to access the '* Prerelease' GitHub Environments.
+    # We can't use regex in an `if` conditional, so we have to do more specific testing later.
+    if: startsWith(github.head_ref, 'pre-')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check
+        run: |
+          regex="pre-[0-9]+\.[0-9]+\.[0-9]+"
+          if [[ ! ${{ github.head_ref }} =~ $regex ]]; then
+            echo "::error::${{ github.head_ref }} doesn't match '$regex', so you will be unable to deploy prereleases. Please update the branch name to be in compliance."
+            exit 1
+          fi
+
   changed:
     name: Files Changed
     runs-on: ubuntu-latest
+    needs:
+      - branch-check
     outputs:
       spack-yaml-changed: ${{ steps.filter.outputs.spack-yaml }}
       json-changed: ${{ steps.filter.outputs.json }}
@@ -120,6 +136,8 @@ jobs:
   prerelease-deploy-version:
     name: Get Prerelease Number
     runs-on: ubuntu-latest
+    needs:
+      - branch-check
     outputs:
       number: ${{ steps.history.outputs.commits }}
     steps:
