@@ -127,7 +127,7 @@ jobs:
 
       - name: Get Number of Commits on ${{ github.head_ref }}
         id: history
-        run: echo "commits=$(git rev-list --count HEAD)" >> $GITHUB_OUTPUT
+        run: echo "commits=$(git rev-list --count main..HEAD)" >> $GITHUB_OUTPUT
 
   prerelease-deploy:
     name: Deploy to Prerelease
