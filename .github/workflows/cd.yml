@@ -29,14 +29,16 @@ jobs:
           GH_REPO: ${{ github.repository }}
         # We use the `gh` utility as it offers much easier traversal of GitHub-
         # related things (prs, issues, etc...).
+        # In this merged_branch variable, we get the list of PRs that have been merged,
+        # and sort them by when they were merged, taking the most recent (last) and
+        # returning the branch name of that PR.
         # The `cut` command splits the `pre-<version>` branch into just `<version>`,
         # which will be the new tag.
         run: |
           merged_branch=$(gh pr list \
             --state merged \
-            --limit 1 \
-            --json 'headRefName' \
-            --jq '.[].headRefName')
+            --json 'headRefName,mergedAt' \
+            --jq 'sort_by(.mergedAt) | last | .headRefName')
           echo "name=$(cut --delimiter '-' --fields 2 <<< '$merged_branch')" >> $GITHUB_OUTPUT
 
   undeploy-prereleases:
