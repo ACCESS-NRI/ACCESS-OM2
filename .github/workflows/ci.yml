@@ -4,8 +4,8 @@ on:
     branches:
       - main
     paths:
-      - 'config/*.json'
-      - 'spack.yaml'
+      - config/**
+      - spack.yaml
 jobs:
   branch-check:
     name: Branch Name Compliance Check
