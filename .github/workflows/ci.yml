@@ -103,6 +103,8 @@ jobs:
           echo "packages=$(jq --compact-output --raw-output '."spack-packages"' ./config/versions.json)" >> $GITHUB_OUTPUT
           echo "config=$(jq --compact-output --raw-output '."spack-config"' ./config/versions.json)" >> $GITHUB_OUTPUT
 
+      # The next two steps checkout the spack-{packages,config} repos to confirm that the versions in
+      # versions.json exist in the repositories.
       - name: Spack Packages
         uses: actions/checkout@v4
         with:
