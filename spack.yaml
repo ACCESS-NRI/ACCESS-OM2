@@ -1,11 +1,11 @@
-# This is a Spack Environment file.
+# This is a test Spack Environment file.
 #
 # It describes a set of packages to be installed, along with
 # configuration settings.
 spack:
   # add package specs to the `specs` list
   specs:
-  - access-om2@git.2023.11.23
+  - access-om2@git.0000.00.1
   packages:
     cice5:
       require: '@git.2023.10.19'
@@ -53,7 +53,7 @@ spack:
               'SPACK_{name}_ROOT': '{prefix}'
         projections:
           all: '{name}/{version}'
-          access-om2: '{name}/2023.11.23'
+          access-om2: '{name}/0000.00.1'
           cice5: '{name}/2023.10.19'
           mom5: '{name}/2023.11.09'
           libaccessom2: '{name}/2023.10.26'
