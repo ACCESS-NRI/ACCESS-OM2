@@ -31,7 +31,6 @@ jobs:
     outputs:
       spack-yaml-changed: ${{ steps.filter.outputs.spack-yaml }}
       json-changed: ${{ steps.filter.outputs.json }}
-      versions-json-changed: ${{ steps.filter.outputs.versions-json }}
     steps:
       - uses: dorny/paths-filter@ad1ae68cd06927a8731fe67e877a2351c7a09691  #v2.9.3
         id: filter
@@ -41,8 +40,6 @@ jobs:
               - 'spack.yaml'
             json:
               - 'config/*.json'
-            versions-json:
-              - 'config/versions.json'
 
   spack-yaml-checks:
     name: Check spack.yaml
@@ -95,7 +92,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - changed
-    if: ${{ needs.changed.outputs.versions-json-changed == 'true' }}
     permissions:
       pull-requests: write
     steps:
@@ -107,6 +103,8 @@ jobs:
           echo "packages=$(jq --compact-output --raw-output '."spack-packages"' ./config/versions.json)" >> $GITHUB_OUTPUT
           echo "config=$(jq --compact-output --raw-output '."spack-config"' ./config/versions.json)" >> $GITHUB_OUTPUT
 
+      # The next two steps checkout the spack-{packages,config} repos to confirm that the versions in
+      # versions.json exist in the repositories.
       - name: Spack Packages
         uses: actions/checkout@v4
         with:
@@ -127,8 +125,8 @@ jobs:
           GH_REPO: ${{ github.repository }}
           BODY: |
             This ${{ github.repository }} model will be deployed using:
-            * `access-nri/spack-packages` version [`${{ steps.versions.outputs.packages-version }}`](https://github.com/ACCESS-NRI/spack-packages/releases/tag/${{ steps.versions.outputs.packages-version }})
-            * `access-nri/spack-config` version [`${{ steps.versions.outputs.config-version }}`](https://github.com/ACCESS-NRI/spack-config/releases/tag/${{ steps.versions.outputs.config-version }})
+            * `access-nri/spack-packages` version [`${{ steps.versions.outputs.packages }}`](https://github.com/ACCESS-NRI/spack-packages/releases/tag/${{ steps.versions.outputs.packages }})
+            * `access-nri/spack-config` version [`${{ steps.versions.outputs.config }}`](https://github.com/ACCESS-NRI/spack-config/releases/tag/${{ steps.versions.outputs.config }})
 
             If this is not what was expected, commit changes to `config/versions.json`.
         run: gh pr comment --body '${{ env.BODY }}'
@@ -144,6 +142,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
+          fetch-depth: 0
 
       - name: Get Number of Commits on ${{ github.head_ref }}
         id: history
