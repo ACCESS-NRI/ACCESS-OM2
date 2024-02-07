@@ -162,7 +162,7 @@ jobs:
     # The conditional below asserts that we should run this job as long as the result of the dependent jobs
     # are not 'failures' or 'cancelled' (aka, either 'success' or 'skipped'). Skipped jobs may be created
     # if certain files are not updated (for example, we don't need to check the validity of json if none
-    # has been updated in the PR), so we should treat 'skipped' jobs as a vacous 'success'.
+    # has been updated in the PR), so we should treat 'skipped' jobs as a vacuous 'success'.
     # The `always()` status function is there, because (if we do not give a different status function)
     # by default there is an implicit 'if: success()' which would short-curcuit and skip the job.
     if: always() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
