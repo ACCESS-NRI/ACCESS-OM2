@@ -123,8 +123,8 @@ jobs:
           GH_REPO: ${{ github.repository }}
           BODY: |
             This ${{ github.repository }} model will be deployed using:
-            * `access-nri/spack-packages` version [`${{ steps.versions.outputs.packages-version }}`](https://github.com/ACCESS-NRI/spack-packages/releases/tag/${{ steps.versions.outputs.packages-version }})
-            * `access-nri/spack-config` version [`${{ steps.versions.outputs.config-version }}`](https://github.com/ACCESS-NRI/spack-config/releases/tag/${{ steps.versions.outputs.config-version }})
+            * `access-nri/spack-packages` version [`${{ steps.versions.outputs.packages }}`](https://github.com/ACCESS-NRI/spack-packages/releases/tag/${{ steps.versions.outputs.packages }})
+            * `access-nri/spack-config` version [`${{ steps.versions.outputs.config }}`](https://github.com/ACCESS-NRI/spack-config/releases/tag/${{ steps.versions.outputs.config }})
 
             If this is not what was expected, commit changes to `config/versions.json`.
         run: gh pr comment --body '${{ env.BODY }}'
