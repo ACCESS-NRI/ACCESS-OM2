@@ -139,16 +139,23 @@ jobs:
     needs:
       - branch-check
     outputs:
-      number: ${{ steps.history.outputs.commits }}
+      number: ${{ steps.get-version.outputs.number }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
 
-      - name: Get Number of Commits on ${{ github.head_ref }}
-        id: history
-        run: echo "commits=$(git rev-list --count origin/main..HEAD)" >> $GITHUB_OUTPUT
+      - name: Generate Version Number
+        id: get-version
+        # This step generates the version number for prereleases, which given a branch
+        # like `pre-<version>`, looks like: `<version>-<number of commits on this branch>`.
+        # Ex. `pre-2024.10.1` with 2 commits on branch -> `2024.10.1-2`.
+        run: |
+          number_of_commits=$(git rev-list --count origin/main..HEAD)
+          no_pre_version=$(cut --delimiter '-' --field 2 <<< "${{ github.head_ref }}")
+          echo "number=${no_pre_version}-${number_of_commits}" >> $GITHUB_OUTPUT
+
 
   prerelease-deploy:
     name: Deploy to Prerelease
@@ -170,5 +177,6 @@ jobs:
     uses: access-nri/build-cd/.github/workflows/deploy-1-setup.yml@main
     with:
       type: prerelease
-      version: ${{ github.head_ref }}-${{ needs.prerelease-deploy-version.outputs.number }}
+      ref: ${{ github.head_ref }}
+      version: ${{ needs.prerelease-deploy-version.outputs.number }}
     secrets: inherit
