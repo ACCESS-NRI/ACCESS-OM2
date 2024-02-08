@@ -56,7 +56,7 @@ jobs:
       - generate-tag
     uses: access-nri/build-cd/.github/workflows/deploy-1-setup.yml@main
     with:
-      ref: main
+      ref: ${{ github.ref_name }}
       version: ${{ needs.generate-tag.outputs.name }}
     secrets: inherit
     permissions:
