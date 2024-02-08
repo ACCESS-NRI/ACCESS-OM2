@@ -50,23 +50,10 @@ jobs:
       version-pattern: ${{ needs.generate-tag.outputs.name }}-*
     secrets: inherit
 
-  deploy-release:
-    name: Deploy Release
-    needs:
-      - generate-tag
-    uses: access-nri/build-cd/.github/workflows/deploy-1-setup.yml@main
-    with:
-      ref: ${{ github.ref_name }}
-      version: ${{ needs.generate-tag.outputs.name }}
-    secrets: inherit
-    permissions:
-      contents: write
-
   push-tag:
     name: Tag Deployment
     needs:
       - generate-tag
-      - deploy-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -77,5 +64,18 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git tag ${{ needs.generate-tag.outputs.name }}
-          git push --tags
+          git tag ${{ needs.generate-tag.outputs.name }} --force
+          git push --tags --force
+
+  deploy-release:
+    name: Deploy Release
+    needs:
+      - generate-tag
+      - push-tag
+    uses: access-nri/build-cd/.github/workflows/deploy-1-setup.yml@main
+    with:
+      ref: ${{ github.ref_name }}
+      version: ${{ needs.generate-tag.outputs.name }}
+    secrets: inherit
+    permissions:
+      contents: write
