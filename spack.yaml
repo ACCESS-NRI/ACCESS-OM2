@@ -21,7 +21,7 @@ spack:
       require: '@4.5.2'
     parallelio:
       require: '@2.5.2'
-    nci-openmpi:
+    openmpi:
       require: '@4.0.2'
     all:
       compiler: [intel@19.0.5.281]
