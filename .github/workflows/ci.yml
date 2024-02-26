@@ -139,7 +139,8 @@ jobs:
     needs:
       - branch-check
     outputs:
-      number: ${{ steps.get-version.outputs.number }}
+      version: ${{ steps.get-version.outputs.version-name }}
+      version-build: ${{ steps.get-version-build.outputs.version-build-name }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -148,13 +149,39 @@ jobs:
 
       - name: Generate Version Number
         id: get-version
+        # The step generates a general version number from the branch name, looking the
+        # same as a regular release build.
+        # Ex. 'pre-2024.01.1' -> '2024.01.1'
+        run: version-name=$(cut --delimiter '-' --field 2 <<< "${{ github.head_ref }}")
+
+      - name: Generate Version-Build String
+        id: get-version-build
         # This step generates the version number for prereleases, which given a branch
         # like `pre-<version>`, looks like: `<version>-<number of commits on this branch>`.
         # Ex. `pre-2024.10.1` with 2 commits on branch -> `2024.10.1-2`.
         run: |
-          number_of_commits=$(git rev-list --count origin/main..HEAD)
-          no_pre_version=$(cut --delimiter '-' --field 2 <<< "${{ github.head_ref }}")
-          echo "number=${no_pre_version}-${number_of_commits}" >> $GITHUB_OUTPUT
+          number-of-commits=$(git rev-list --count origin/main..HEAD)
+          echo "version-build-name=${{ steps.get-version.outputs.version-name }}-${number-of-commits}" >> $GITHUB_OUTPUT
+
+  update-prerelease-tag:
+    name: Update Prerelease Tag ${{ needs.prerelease-deploy-version.outputs.version }}
+    needs:
+      - prerelease-deploy-version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Push
+        # NOTE: Regarding the config user.name/user.email, see https://github.com/actions/checkout/pull/1184
+        run: |
+          git config user.name ${{ vars.GH_ACTIONS_BOT_GIT_USER_NAME }}
+          git config user.email ${{ vars.GH_ACTIONS_BOT_GIT_USER_EMAIL }}
+          git tag ${{ needs.prerelease-deploy-version.outputs.version }} --force
+          git push --tags --force
 
 
   prerelease-deploy:
@@ -178,5 +205,5 @@ jobs:
     with:
       type: prerelease
       ref: ${{ github.head_ref }}
-      version: ${{ needs.prerelease-deploy-version.outputs.number }}
+      version: ${{ needs.prerelease-deploy-version.outputs.version-build }}
     secrets: inherit
