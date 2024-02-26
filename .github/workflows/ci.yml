@@ -176,9 +176,10 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Push
+        # NOTE: Regarding the config user.name/user.email, see https://github.com/actions/checkout/pull/1184
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git tag ${{ needs.prerelease-deploy-version.outputs.version }} --force
           git push --tags --force
 
