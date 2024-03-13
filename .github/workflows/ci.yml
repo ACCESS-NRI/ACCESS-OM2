@@ -30,6 +30,9 @@ jobs:
     needs:
       - validate-json
     runs-on: ubuntu-latest
+    outputs:
+      spack-packages-version: ${{ steps.versions.outputs.packages }}
+      spack-config-version:  ${{ steps.versions.outputs.config }}
     steps:
       - uses: actions/checkout@v4
 
@@ -233,8 +236,8 @@ jobs:
             * `${{ needs.get-versions.outputs.version-build }}` as a Prerelease (during this PR). This can be accessed on `Gadi` via `spack` at `/g/data/vk83/prerelease/apps/spack/0.20/spack` once deployed.
 
             It will be deployed using:
-            * `access-nri/spack-packages` version [`${{ steps.versions.outputs.packages }}`](https://github.com/ACCESS-NRI/spack-packages/releases/tag/${{ steps.versions.outputs.packages }})
-            * `access-nri/spack-config` version [`${{ steps.versions.outputs.config }}`](https://github.com/ACCESS-NRI/spack-config/releases/tag/${{ steps.versions.outputs.config }})
+            * `access-nri/spack-packages` version [`${{ needs.check-json.outputs.spack-packages-version }}`](https://github.com/ACCESS-NRI/spack-packages/releases/tag/${{ needs.check-json.outputs.spack-packages-version }})
+            * `access-nri/spack-config` version [`${{ needs.check-json.outputs.spack-config-version }}`](https://github.com/ACCESS-NRI/spack-config/releases/tag/${{ needs.check-json.outputs.spack-config-version }})
 
             If this is not what was expected, commit changes to `config/versions.json`.
         run: |

@@ -1,0 +1,101 @@
+name: Comment Command
+on:
+  issue_comment:
+    types:
+      - created
+      - edited
+env:
+  RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+  SPACK_YAML_MODEL_YQ: .spack.specs[0]
+  SPACK_YAML_MODEL_PROJECTION_YQ: .spack.modules.default.tcl.projections.access-om2
+jobs:
+  bump-version:
+    name: Bump spack.yaml
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '!bump')
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          token: ${{ secrets.GH_COMMIT_CHECK_TOKEN }}
+
+      - name: Setup
+        id: setup
+        # outputs:
+        #   original-version: The version contained within the spack.yaml
+        #   version: The version that will be bumped (could be latest tag instead of original-version)
+        #   bump: The bump type (major, minor or current as specified in the bump-version action)
+        run: |
+          # Get the version of access-om2 from the spack.yaml in the PR the comment was written in
+          gh pr checkout ${{ github.event.issue.number }}
+          access_om2_package=$(yq e '${{ env.SPACK_YAML_MODEL_YQ }}' spack.yaml)
+          original_version=${access_om2_package/*@git./}
+          echo "original-version=${original_version}" >> $GITHUB_OUTPUT
+
+          # Validate the comment
+          if [[ "${{ contains(github.event.comment.body, 'major') }}" == "true" ]]; then
+            # Compare the current date (year-month) with the latest git tag (year-month)
+            # to determine the next valid tag. We do this because especially feature-rich
+            # months might increment the date part beyond the current date.
+
+            d="$(date +%Y-%m)-01"
+            d_s=$(date --date "$d" +%s)
+
+            latest_tag=$(git describe --tags --abbrev=0 | tr '.' '-')
+            tag_date=${latest_tag%-*}-01
+            tag_date_s=$(date --date "$tag_date" +%s)
+
+            echo "Comparing current date ${d} with ${tag_date} (tag looks like ${latest_tag})"
+
+            if (( d_s <= tag_date_s )); then
+              echo "version=${tag_date}" >> $GITHUB_OUTPUT
+              echo "bump=major" >> $GITHUB_OUTPUT
+            else
+              echo "version=${original_version}" >> $GITHUB_OUTPUT
+              echo "bump=current" >> $GITHUB_OUTPUT
+            fi
+          elif [[ "${{ contains(github.event.comment.body, 'minor')}}" == "true" ]]; then
+            echo "version=${original_version}" >> $GITHUB_OUTPUT
+            echo "bump=minor" >> $GITHUB_OUTPUT
+          else
+            echo "::warning::Usage: `!bump [major|minor]`, got `${{ github.event.comment.body }}`"
+            exit 1
+          fi
+
+      - name: Bump Version
+        id: bump
+        uses: access-nri/actions/.github/actions/bump-version@main
+        with:
+          version: ${{ steps.setup.outputs.version }}
+          versioning-scheme: calver-minor
+          bump-type: ${{ steps.setup.outputs.bump }}
+
+      - name: Update, Commit and Push the Bump
+        run: |
+          git config user.name ${{ vars.GH_ACTIONS_BOT_GIT_USER_NAME }}
+          git config user.email ${{ vars.GH_ACTIONS_BOT_GIT_USER_EMAIL }}
+
+          yq -i '${{ env.SPACK_YAML_MODEL_YQ }} = "access-om2@git.${{ steps.bump.outputs.after }}"' spack.yaml
+          yq -i '${{ env.SPACK_YAML_MODEL_PROJECTION_YQ }} = "{name}/${{ steps.bump.outputs.after }}"' spack.yaml
+          git add spack.yaml
+          git commit -m "spack.yaml: Updated access-om2 package version from ${{ steps.setup.outputs.original-version }} to ${{ steps.bump.outputs.after }}"
+          git push
+
+      - name: Success Notifier
+        env:
+          BODY: |
+            :white_check_mark: Version bumped from `${{ steps.setup.outputs.original-version }}` to `${{ steps.bump.outputs.after }}` :white_check_mark:
+        run: |
+          gh pr comment --body '${{ env.BODY }}'
+
+      - name: Failure Notifier
+        if: failure()
+        env:
+          BODY: |
+            :x: Failed to bump version or commit changes, see ${{ env.RUN_URL }} :x:
+        run: gh pr comment --body '${{ env.BODY }}'
