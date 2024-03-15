@@ -1,0 +1,42 @@
+name: PR Closed Cleanup
+# Remove prereleases that were part of a closed PR, so we save space
+# on our deployment targets. If needed, one can still get the
+# spack.yaml as part of the closed PR and revive it themselves.
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+      - backport/*.*
+    paths:
+      - config/**
+      - spack.yaml
+env:
+  SPACK_YAML_MODEL_YQ: .spack.specs[0]
+jobs:
+  get-prerelease-tag-pattern:
+    name: Get Prerelease Tag Pattern
+    # Get the tag name from the `spack.yaml` that was in the PR that was closed
+    # which is of the form `access-om2@git.<version>`.
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Tag
+        id: tag
+        # Get the tag name from the access-om2 spec in the `spack.yaml`.
+        run: |
+          access_om2_package=$(yq e '${{ env.SPACK_YAML_MODEL_YQ }}' spack.yaml)
+          echo "name=${access_om2_package/*@git./}" >> $GITHUB_OUTPUT
+
+  undeploy-prereleases:
+    name: Undeploy Prereleases
+    needs:
+      - get-prerelease-tag-pattern
+    uses: access-nri/build-cd/.github/workflows/undeploy-1-setup.yml@main
+    with:
+      version-pattern: ${{ needs.get-prerelease-tag-pattern.outputs.tag }}-*
+    secrets: inherit
