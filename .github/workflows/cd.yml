@@ -3,20 +3,18 @@ on:
   push:
     branches:
       - main
+      - backport/*.*
     paths:
       - config/**
       - spack.yaml
-
+env:
+  SPACK_YAML_MODEL_YQ: .spack.specs[0]
 jobs:
   generate-tag:
     name: Generate Tag Name
-    # Get the tag name from the branch that was merged into main, which
-    # is of the form `pre-<version>`.
-    # We assume that this will always be the most recent merged PR, as
-    # this workflow kicks off immediately after the merge completes.
+    # Get the tag name from the `spack.yaml` that was merged into main, which
+    # is of the form `access-om2@git.<version>`.
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     outputs:
       name: ${{ steps.tag.outputs.name }}
     steps:
@@ -24,31 +22,10 @@ jobs:
 
       - name: Generate Tag
         id: tag
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
-        # We use the `gh` utility as it offers much easier traversal of GitHub-
-        # related things (prs, issues, etc...).
-        # In this merged_branch variable, we get the list of PRs that have been merged,
-        # and sort them by when they were merged, taking the most recent (last) and
-        # returning the branch name of that PR.
-        # The `cut` command splits the `pre-<version>` branch into just `<version>`,
-        # which will be the new tag.
+        # Get the tag name from the access-om2 spec in the `spack.yaml`.
         run: |
-          merged_branch=$(gh pr list \
-            --state merged \
-            --json 'headRefName,mergedAt' \
-            --jq 'sort_by(.mergedAt) | last | .headRefName')
-          echo "name=$(cut --delimiter '-' --fields 2 <<< '$merged_branch')" >> $GITHUB_OUTPUT
-
-  undeploy-prereleases:
-    name: Undeploy Prereleases
-    needs:
-      - generate-tag
-    uses: access-nri/build-cd/.github/workflows/undeploy-1-setup.yml@main
-    with:
-      version-pattern: ${{ needs.generate-tag.outputs.name }}-*
-    secrets: inherit
+          access_om2_package=$(yq e '${{ env.SPACK_YAML_MODEL_YQ }}' spack.yaml)
+          echo "name=${access_om2_package/*@git./}" >> $GITHUB_OUTPUT
 
   push-tag:
     name: Tag Deployment

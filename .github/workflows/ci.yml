@@ -3,52 +3,116 @@ on:
   pull_request:
     branches:
       - main
+      - backport/*.*
     paths:
       - config/**
       - spack.yaml
+env:
+  SPACK_YAML_MODEL_YQ: .spack.specs[0]
 jobs:
-  branch-check:
-    name: Branch Name Compliance Check
-    # Branches that modify spack.yaml must be of the form: pre-*.*.* (ex: pre-2024.01.1)
-    # in order for the PR to access the '* Prerelease' GitHub Environments.
-    # We can't use regex in an `if` conditional, so we have to do more specific testing later.
-    if: startsWith(github.head_ref, 'pre-')
+  # There are a lot of interconnected jobs here. Here is a dependency diagram:
+  # validate-json ──> check-json ─────────┬─────────────────────────┐
+  #                                       ├> notifier               ├> prerelease-deploy
+  # check-spack-yaml ──> deploy-versions ─┼> update-prerelease-tag ─┤
+  #                                       └─────────────────────────┘
+
+  # ---------------------
+  # | JSON-RELATED JOBS |
+  # ---------------------
+  validate-json:
+    name: Validate JSON
+    uses: access-nri/actions/.github/workflows/validate-json.yml@main
+    with:
+      src: "config"
+
+  check-json:
+    name: Check JSON Fields
+    needs:
+      - validate-json
     runs-on: ubuntu-latest
+    outputs:
+      spack-packages-version: ${{ steps.versions.outputs.packages }}
+      spack-config-version:  ${{ steps.versions.outputs.config }}
     steps:
-      - name: Check
+      - uses: actions/checkout@v4
+
+      # The next two steps checkout the spack-{packages,config} repos to confirm that the versions in
+      # versions.json exist in the repositories.
+      - name: Setup
+        id: versions
         run: |
-          regex="pre-[0-9]+\.[0-9]+\.[0-9]+"
-          if [[ ! ${{ github.head_ref }} =~ $regex ]]; then
-            echo "::error::${{ github.head_ref }} doesn't match '$regex', so you will be unable to deploy prereleases. Please update the branch name to be in compliance."
+          echo "packages=$(jq --compact-output --raw-output '."spack-packages"' ./config/versions.json)" >> $GITHUB_OUTPUT
+          echo "config=$(jq --compact-output --raw-output '."spack-config"' ./config/versions.json)" >> $GITHUB_OUTPUT
+
+      - name: Spack Packages
+        id: spack-packages
+        continue-on-error: true
+        uses: actions/checkout@v4
+        with:
+          repository: access-nri/spack-packages
+          ref: ${{ steps.versions.outputs.packages }}
+          path: packages
+
+      - name: Spack Config
+        id: spack-config
+        continue-on-error: true
+        uses: actions/checkout@v4
+        with:
+          repository: access-nri/spack-config
+          ref: ${{ steps.versions.outputs.config }}
+          path: config
+
+      - name: Failure Notifier
+        if: contains(steps.*.outcome, 'failure')
+        run: |
+          if [[ "${{ steps.spack-packages.outcome }}" == "failure" ]]; then
+            echo "::error::spack-packages at the specified ref (${{ steps.versions.outputs.packages }}) doesn't exist."
+          fi
+          if [[ "${{ steps.spack-config.outcome }}" == "failure" ]]; then
+            echo "::error::spack-config at the specified ref (${{ steps.versions.outputs.config }}) doesn't exist."
+          fi
+          exit 1
+
+  # ---------------------------
+  # | SPACK.YAML-RELATED JOBS |
+  # ---------------------------
+  check-spack-yaml:
+    name: Check spack.yaml
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check Model Version Modified
+        id: version
+        run: |
+          git checkout ${{ github.base_ref }}
+          base_version=$(yq e '${{ env.SPACK_YAML_MODEL_YQ }}' spack.yaml)
+
+          git checkout ${{ github.head_ref }}
+          current_version=$(yq e '${{ env.SPACK_YAML_MODEL_YQ }}' spack.yaml)
+          echo "current=${current_version}" >> $GITHUB_OUTPUT
+
+          if [[ "${base_version}" == "${current_version}" ]]; then
+            echo "::warning::The version string hasn't been modified in this PR, but needs to be before merging."
             exit 1
           fi
 
-  changed:
-    name: Files Changed
-    runs-on: ubuntu-latest
-    needs:
-      - branch-check
-    outputs:
-      spack-yaml-changed: ${{ steps.filter.outputs.spack-yaml }}
-      json-changed: ${{ steps.filter.outputs.json }}
-    steps:
-      - uses: dorny/paths-filter@ad1ae68cd06927a8731fe67e877a2351c7a09691  #v2.9.3
-        id: filter
-        with:
-          filters: |
-            spack-yaml:
-              - 'spack.yaml'
-            json:
-              - 'config/*.json'
-
-  spack-yaml-checks:
-    name: Check spack.yaml
-    runs-on: ubuntu-latest
-    needs:
-      - changed
-    if: ${{ needs.changed.outputs.spack-yaml-changed == 'true' }}
-    steps:
-      - uses: actions/checkout@v4
+      - name: Same Model Version Failure Notifier
+        if: failure() && steps.version.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BODY: |
+            The model version in the `spack.yaml` has not been updated.
+            Either update it manually, or comment the following to have it updated and committed automatically:
+            * `!bump major` for feature releases
+            * `!bump minor` for bugfixes
+        run: |
+          gh pr checkout ${{ github.event.pull_request.number }}
+          gh pr comment --body '${{ env.BODY }}'
 
       - name: Projection Version Matches
         # this step checks that the versions of the packages themselves match with the
@@ -78,66 +142,11 @@ jobs:
             exit 1
           fi
 
-  validate:
-    name: Validate JSON
+  get-versions:
+    name: Get Version and Build Number
     needs:
-      - changed
-    if: ${{ needs.changed.outputs.json-changed == 'true' }}
-    uses: access-nri/actions/.github/workflows/validate-json.yml@main
-    with:
-      src: "config"
-
-  check-versions-exist:
-    name: Check Versions Exist
+      - check-spack-yaml
     runs-on: ubuntu-latest
-    needs:
-      - changed
-    permissions:
-      pull-requests: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup
-        id: versions
-        run: |
-          echo "packages=$(jq --compact-output --raw-output '."spack-packages"' ./config/versions.json)" >> $GITHUB_OUTPUT
-          echo "config=$(jq --compact-output --raw-output '."spack-config"' ./config/versions.json)" >> $GITHUB_OUTPUT
-
-      # The next two steps checkout the spack-{packages,config} repos to confirm that the versions in
-      # versions.json exist in the repositories.
-      - name: Spack Packages
-        uses: actions/checkout@v4
-        with:
-          repository: access-nri/spack-packages
-          ref: ${{ steps.versions.outputs.packages }}
-          path: packages
-
-      - name: Spack Config
-        uses: actions/checkout@v4
-        with:
-          repository: access-nri/spack-config
-          ref: ${{ steps.versions.outputs.config }}
-          path: config
-
-      - name: Comment
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
-          BODY: |
-            This ${{ github.repository }} model will be deployed using:
-            * `access-nri/spack-packages` version [`${{ steps.versions.outputs.packages }}`](https://github.com/ACCESS-NRI/spack-packages/releases/tag/${{ steps.versions.outputs.packages }})
-            * `access-nri/spack-config` version [`${{ steps.versions.outputs.config }}`](https://github.com/ACCESS-NRI/spack-config/releases/tag/${{ steps.versions.outputs.config }})
-
-            If this is not what was expected, commit changes to `config/versions.json`.
-        run: |
-          gh pr checkout ${{ github.event.pull_request.number }}
-          gh pr comment --body '${{ env.BODY }}'
-
-  prerelease-deploy-version:
-    name: Get Prerelease Number
-    runs-on: ubuntu-latest
-    needs:
-      - branch-check
     outputs:
       version: ${{ steps.get-version.outputs.version-name }}
       version-build: ${{ steps.get-version-build.outputs.version-build-name }}
@@ -149,24 +158,26 @@ jobs:
 
       - name: Generate Version Number
         id: get-version
-        # The step generates a general version number from the branch name, looking the
+        # The step generates a general version number from the spack.yaml, looking the
         # same as a regular release build.
-        # Ex. 'pre-2024.01.1' -> '2024.01.1'
-        run: version-name=$(cut --delimiter '-' --field 2 <<< "${{ github.head_ref }}")
+        # Ex. 'access-om2@git.2024.01.1' -> '2024.01.1'
+        run: |
+          access_om2_package=$(yq e '${{ env.SPACK_YAML_MODEL_YQ }}' spack.yaml)
+          echo "version-name=${access_om2_package/*@git./}" >> $GITHUB_OUTPUT
 
       - name: Generate Version-Build String
         id: get-version-build
-        # This step generates the version number for prereleases, which given a branch
-        # like `pre-<version>`, looks like: `<version>-<number of commits on this branch>`.
-        # Ex. `pre-2024.10.1` with 2 commits on branch -> `2024.10.1-2`.
+        # This step generates the version number for prereleases,
+        # which looks like: `<version>-<number of commits on this branch>`.
+        # Ex. `2024.10.1` with 2 commits on branch -> `2024.10.1-2`.
         run: |
-          number-of-commits=$(git rev-list --count origin/main..HEAD)
-          echo "version-build-name=${{ steps.get-version.outputs.version-name }}-${number-of-commits}" >> $GITHUB_OUTPUT
+          number_of_commits=$(git rev-list --count ${{ github.event.pull_request.base.sha }}..HEAD)
+          echo "version-build-name=${{ steps.get-version.outputs.version-name }}-${number_of_commits}" >> $GITHUB_OUTPUT
 
   update-prerelease-tag:
-    name: Update Prerelease Tag ${{ needs.prerelease-deploy-version.outputs.version }}
+    name: Update Prerelease Tag ${{ needs.get-versions.outputs.version }}
     needs:
-      - prerelease-deploy-version
+      - get-versions
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -180,30 +191,55 @@ jobs:
         run: |
           git config user.name ${{ vars.GH_ACTIONS_BOT_GIT_USER_NAME }}
           git config user.email ${{ vars.GH_ACTIONS_BOT_GIT_USER_EMAIL }}
-          git tag ${{ needs.prerelease-deploy-version.outputs.version }} --force
+          git tag ${{ needs.get-versions.outputs.version }} --force
           git push --tags --force
 
-
+  # -----------------------------
+  # | PRERELEASE DEPLOYMENT JOB |
+  # -----------------------------
   prerelease-deploy:
     name: Deploy to Prerelease
-    # This will create a `spack` environment with the name `access-om2-<version>-<commit number>`
-    # For example, `access-om2-2024.01.1-3` for the deployment based on the third commit on this
-    # `pre-2024.01.1` PR branch.
+    # This will create a `spack` environment with the name `access-om2-<version>-<commit number>`.
+    # For example, `access-om2-2024_01_1-3` for the deployment based on the third commit on the PR branch.
     needs:
-      - prerelease-deploy-version
-      - spack-yaml-checks
-      - validate
-      - check-versions-exist
-    # The conditional below asserts that we should run this job as long as the result of the dependent jobs
-    # are not 'failures' or 'cancelled' (aka, either 'success' or 'skipped'). Skipped jobs may be created
-    # if certain files are not updated (for example, we don't need to check the validity of json if none
-    # has been updated in the PR), so we should treat 'skipped' jobs as a vacuous 'success'.
-    # The `always()` status function is there, because (if we do not give a different status function)
-    # by default there is an implicit 'if: success()' which would short-curcuit and skip the job.
-    if: always() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+      - get-versions  # so we can give an appropriate version to the prerelease build
+      - update-prerelease-tag  # implies all the spack.yaml-related checks have passed
+      - check-json  # implies all the json-related checks have passed
     uses: access-nri/build-cd/.github/workflows/deploy-1-setup.yml@main
     with:
       type: prerelease
       ref: ${{ github.head_ref }}
-      version: ${{ needs.prerelease-deploy-version.outputs.version-build }}
+      version: ${{ needs.get-versions.outputs.version-build }}
     secrets: inherit
+
+  notifier:
+    name: Notifier
+    runs-on: ubuntu-latest
+    needs:
+      - check-json
+      - get-versions
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          BODY: |
+            This `${{ github.repository }}` model will be deployed with the following versions:
+            * `${{ needs.get-versions.outputs.version }}` as a Release (when merged).
+            * `${{ needs.get-versions.outputs.version-build }}` as a Prerelease (during this PR). This can be accessed on `Gadi` via `spack` at `/g/data/vk83/prerelease/apps/spack/0.20/spack` once deployed.
+
+            It will be deployed using:
+            * `access-nri/spack-packages` version [`${{ needs.check-json.outputs.spack-packages-version }}`](https://github.com/ACCESS-NRI/spack-packages/releases/tag/${{ needs.check-json.outputs.spack-packages-version }})
+            * `access-nri/spack-config` version [`${{ needs.check-json.outputs.spack-config-version }}`](https://github.com/ACCESS-NRI/spack-config/releases/tag/${{ needs.check-json.outputs.spack-config-version }})
+
+            If this is not what was expected, commit changes to `config/versions.json`.
+        run: |
+          gh pr checkout ${{ github.event.pull_request.number }}
+          gh pr comment --body '${{ env.BODY }}'
