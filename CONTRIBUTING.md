@@ -10,7 +10,6 @@ Simply open a pull request from your own branch to `main`, in which you make you
 
 Some things to be mindful of:
 
-* Remember to update the version of the `access-om2` spec in the `spack.yaml` - this is the bit that looks like `- access-om2@git.VERSION`. It is this `VERSION` that will be eventually tagged to the commit.
 * The `config/versions.json` file is used to bundle the deployment with a particular version of `spack-packages` and `spack-config`. Don't forget to change this if there are cool new features in either of the repositories that you want to incorporate into your deployment.
 
 ### PRs for Backported Bugfixes
@@ -26,7 +25,6 @@ We should:
 
 We need to be mindful of the same things as merges of features into `main`:
 
-* Remember to update the version of the `access-om2` spec in the `spack.yaml` - this is the bit that looks like `- access-om2@git.VERSION`. It is this `VERSION` that will be eventually tagged to the commit.
 * The `config/versions.json` file is used to bundle the deployment with a particular version of `spack-packages` and `spack-config`. Don't forget to change this if there are cool new features in either of the repositories that you want to incorporate into your deployment.
 
 > [!NOTE]
@@ -38,4 +36,4 @@ The `Prerelease` Environment is an ephemeral, completely separated place in `vk8
 
 These `spack env`s are of the form `access-om2-VERSION-BUILD`, such as `access-om2-2024_02_1-3` for the 3rd commit in the PR for `access-om2` version `2024.02.1`.
 
-These ephemeral `spack env`s are removed upon merging of the pull request, where the proper deployment is then done.
+These ephemeral `spack env`s are removed upon closing of the pull request, where the proper deployment is then done if the PR is merged.
