@@ -15,8 +15,6 @@ jobs:
     # Get the tag name from the `spack.yaml` that was merged into main, which
     # is of the form `access-om2@git.<version>`.
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     outputs:
       name: ${{ steps.tag.outputs.name }}
     steps:
@@ -25,20 +23,9 @@ jobs:
       - name: Generate Tag
         id: tag
         # Get the tag name from the access-om2 spec in the `spack.yaml`.
-        # The `cut` command splits the `access-om2@git.<version>` field into just `<version>`,
-        # which will be the new tag.
         run: |
           access_om2_package=$(yq e '${{ env.SPACK_YAML_MODEL_YQ }}' spack.yaml)
           echo "name=${access_om2_package/*@git./}" >> $GITHUB_OUTPUT
-
-  undeploy-prereleases:
-    name: Undeploy Prereleases
-    needs:
-      - generate-tag
-    uses: access-nri/build-cd/.github/workflows/undeploy-1-setup.yml@main
-    with:
-      version-pattern: ${{ needs.generate-tag.outputs.name }}-*
-    secrets: inherit
 
   push-tag:
     name: Tag Deployment
