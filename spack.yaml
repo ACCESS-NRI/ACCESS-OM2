@@ -5,7 +5,7 @@
 spack:
   # add package specs to the `specs` list
   specs:
-  - access-om2@git.2023.11.23
+    - access-om2@git.2023.11.24
   packages:
     cice5:
       require: '@git.2023.10.19'
@@ -31,29 +31,29 @@ spack:
   modules:
     default:
       enable:
-      - tcl
+        - tcl
       roots:
         tcl: $spack/../release/modules
         lmod: $spack/../release/lmod
       tcl:
         hash_length: 0
         include:
-        - access-om2
-        - mom5
-        - cice5
-        - libaccessom2
-        - oasis3-mct
+          - access-om2
+          - mom5
+          - cice5
+          - libaccessom2
+          - oasis3-mct
         exclude_implicits: true
         all:
           autoload: direct
           conflict:
-          - '{name}'
+            - '{name}'
           environment:
             set:
               'SPACK_{name}_ROOT': '{prefix}'
         projections:
           all: '{name}/{version}'
-          access-om2: '{name}/2023.11.23'
+          access-om2: '{name}/2023.11.24'
           cice5: '{name}/2023.10.19'
           mom5: '{name}/2023.11.09'
           libaccessom2: '{name}/2023.10.26'
