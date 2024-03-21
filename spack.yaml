@@ -1,7 +1,7 @@
 # This is a Spack Environment file.
 #
 # It describes a set of packages to be installed, along with
-# configuration settings.
+# configuration settings. Wow!
 spack:
   # add package specs to the `specs` list
   specs:
