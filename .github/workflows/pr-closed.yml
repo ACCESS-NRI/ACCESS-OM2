@@ -12,31 +12,25 @@ on:
     paths:
       - config/**
       - spack.yaml
-env:
-  SPACK_YAML_MODEL_YQ: .spack.specs[0]
 jobs:
-  get-prerelease-tag-pattern:
-    name: Get Prerelease Tag Pattern
-    # Get the tag name from the `spack.yaml` that was in the PR that was closed
-    # which is of the form `access-om2@git.<version>`.
+  setup:
+    name: Setup
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ steps.tag.outputs.name }}
+      version-pattern: ${{ steps.version.outputs.pattern }}
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Get Tag
-        id: tag
-        # Get the tag name from the access-om2 spec in the `spack.yaml`.
+      - name: Version Pattern
+        id: version
+        # For example, `access-om2-pr12-*`
         run: |
-          access_om2_package=$(yq e '${{ env.SPACK_YAML_MODEL_YQ }}' spack.yaml)
-          echo "name=${access_om2_package/*@git./}" >> $GITHUB_OUTPUT
+          repo_name_lower=$(echo ${{ github.event.repository.name }} | tr [:upper:] [:lower:])
+          echo "pattern=${repo_name_lower}-pr${{ github.event.pull_request.number }}-*" >> $GITHUB_OUTPUT
 
   undeploy-prereleases:
     name: Undeploy Prereleases
     needs:
-      - get-prerelease-tag-pattern
+      - setup
     uses: access-nri/build-cd/.github/workflows/undeploy-1-setup.yml@main
     with:
-      version-pattern: ${{ needs.get-prerelease-tag-pattern.outputs.tag }}-*
+      version-pattern: ${{ needs.setup.outputs.version-pattern }}
     secrets: inherit

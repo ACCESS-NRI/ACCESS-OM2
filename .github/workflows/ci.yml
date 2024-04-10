@@ -148,34 +148,34 @@ jobs:
       - check-spack-yaml
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.get-version.outputs.version-name }}
-      version-build: ${{ steps.get-version-build.outputs.version-build-name }}
+      release: ${{ steps.get-release.outputs.version }}
+      prerelease: ${{ steps.get-prerelease.outputs.version }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
 
-      - name: Generate Version Number
-        id: get-version
+      - name: Generate Release Version
+        id: get-release
         # The step generates a general version number from the spack.yaml, looking the
         # same as a regular release build.
         # Ex. 'access-om2@git.2024.01.1' -> '2024.01.1'
         run: |
           access_om2_package=$(yq e '${{ env.SPACK_YAML_MODEL_YQ }}' spack.yaml)
-          echo "version-name=${access_om2_package/*@git./}" >> $GITHUB_OUTPUT
+          echo "version=${access_om2_package/*@git./}" >> $GITHUB_OUTPUT
 
-      - name: Generate Version-Build String
-        id: get-version-build
+      - name: Generate Prerelease Version
+        id: get-prerelease
         # This step generates the version number for prereleases,
-        # which looks like: `<version>-<number of commits on this branch>`.
-        # Ex. `2024.10.1` with 2 commits on branch -> `2024.10.1-2`.
+        # which looks like: `pr<pull request number>-<number of commits on this branch>`.
+        # Ex. Pull Request #12 with 2 commits on branch -> `pr12-2`.
         run: |
           number_of_commits=$(git rev-list --count ${{ github.event.pull_request.base.sha }}..HEAD)
-          echo "version-build-name=${{ steps.get-version.outputs.version-name }}-${number_of_commits}" >> $GITHUB_OUTPUT
+          echo "version=pr${{ github.event.pull_request.number }}-${number_of_commits}" >> $GITHUB_OUTPUT
 
   update-prerelease-tag:
-    name: Update Prerelease Tag ${{ needs.get-versions.outputs.version }}
+    name: Update Prerelease Tag ${{ needs.get-versions.outputs.release }}
     needs:
       - get-versions
     runs-on: ubuntu-latest
@@ -191,7 +191,7 @@ jobs:
         run: |
           git config user.name ${{ vars.GH_ACTIONS_BOT_GIT_USER_NAME }}
           git config user.email ${{ vars.GH_ACTIONS_BOT_GIT_USER_EMAIL }}
-          git tag ${{ needs.get-versions.outputs.version }} --force
+          git tag ${{ needs.get-versions.outputs.release }} --force
           git push --tags --force
 
   # -----------------------------
@@ -199,8 +199,8 @@ jobs:
   # -----------------------------
   prerelease-deploy:
     name: Deploy to Prerelease
-    # This will create a `spack` environment with the name `access-om2-<version>-<commit number>`.
-    # For example, `access-om2-2024_01_1-3` for the deployment based on the third commit on the PR branch.
+    # This will create a `spack` environment with the name `access-om2-pr<pull request number>-<commit number>`.
+    # For example, `access-om2-pr13-3` for the deployment based on the third commit on the PR#13.
     needs:
       - get-versions  # so we can give an appropriate version to the prerelease build
       - update-prerelease-tag  # implies all the spack.yaml-related checks have passed
@@ -209,7 +209,7 @@ jobs:
     with:
       type: prerelease
       ref: ${{ github.head_ref }}
-      version: ${{ needs.get-versions.outputs.version-build }}
+      version: ${{ needs.get-versions.outputs.prerelease }}
     secrets: inherit
 
   notifier:
@@ -232,8 +232,8 @@ jobs:
           GH_REPO: ${{ github.repository }}
           BODY: |
             This `${{ github.repository }}` model will be deployed with the following versions:
-            * `${{ needs.get-versions.outputs.version }}` as a Release (when merged).
-            * `${{ needs.get-versions.outputs.version-build }}` as a Prerelease (during this PR). This can be accessed on `Gadi` via `spack` at `/g/data/vk83/prerelease/apps/spack/0.20/spack` once deployed.
+            * `${{ needs.get-versions.outputs.release }}` as a Release (when merged).
+            * `${{ needs.get-versions.outputs.prerelease }}` as a Prerelease (during this PR). This can be accessed on `Gadi` via `spack` at `/g/data/vk83/prerelease/apps/spack/0.20/spack` once deployed.
 
             It will be deployed using:
             * `access-nri/spack-packages` version [`${{ needs.check-json.outputs.spack-packages-version }}`](https://github.com/ACCESS-NRI/spack-packages/releases/tag/${{ needs.check-json.outputs.spack-packages-version }})
