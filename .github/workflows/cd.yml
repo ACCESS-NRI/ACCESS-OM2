@@ -7,53 +7,12 @@ on:
     paths:
       - config/**
       - spack.yaml
-env:
-  SPACK_YAML_MODEL_YQ: .spack.specs[0]
 jobs:
-  generate-tag:
-    name: Generate Tag Name
-    # Get the tag name from the `spack.yaml` that was merged into main, which
-    # is of the form `access-om2@git.<version>`.
-    runs-on: ubuntu-latest
-    outputs:
-      name: ${{ steps.tag.outputs.name }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Generate Tag
-        id: tag
-        # Get the tag name from the access-om2 spec in the `spack.yaml`.
-        run: |
-          access_om2_package=$(yq e '${{ env.SPACK_YAML_MODEL_YQ }}' spack.yaml)
-          echo "name=${access_om2_package/*@git./}" >> $GITHUB_OUTPUT
-
-  push-tag:
-    name: Tag Deployment
-    needs:
-      - generate-tag
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Push Tag
-        # NOTE: Regarding the config user.name/user.email, see https://github.com/actions/checkout/pull/1184
-        run: |
-          git config user.name ${{ vars.GH_ACTIONS_BOT_GIT_USER_NAME }}
-          git config user.email ${{ vars.GH_ACTIONS_BOT_GIT_USER_EMAIL }}
-          git tag ${{ needs.generate-tag.outputs.name }} --force
-          git push --tags --force
-
-  deploy-release:
-    name: Deploy Release
-    needs:
-      - generate-tag
-      - push-tag
-    uses: access-nri/build-cd/.github/workflows/deploy-1-setup.yml@main
+  cd:
+    name: CD
+    uses: access-nri/build-cd/.github/workflows/cd.yml@main
     with:
-      ref: ${{ github.ref_name }}
-      version: ${{ needs.generate-tag.outputs.name }}
-    secrets: inherit
+      model: ${{ vars.NAME }}
     permissions:
       contents: write
+    secrets: inherit
