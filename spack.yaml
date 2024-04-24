@@ -8,21 +8,29 @@ spack:
     - access-om2@git.2024.03.0
   packages:
     cice5:
-      require: '@git.2023.10.19'
+      require:
+        - '@git.2023.10.19'
     mom5:
-      require: '@git.2023.11.09'
+      require:
+        - '@git.2023.11.09'
     libaccessom2:
-      require: '@git.2023.10.26'
+      require:
+        - '@git.2023.10.26'
     oasis3-mct:
-      require: '@git.2023.11.09'
+      require:
+        - '@git.2023.11.09'
     netcdf-c:
-      require: '@4.7.4'
+      require:
+        - '@4.7.4'
     netcdf-fortran:
-      require: '@4.5.2'
+      require:
+        - '@4.5.2'
     parallelio:
-      require: '@2.5.2'
+      require:
+        - '@2.5.2'
     openmpi:
-      require: '@4.0.2'
+      require:
+        - '@4.0.2'
     all:
       compiler: [intel@19.0.5.281]
   view: true
