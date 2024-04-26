@@ -32,7 +32,7 @@ spack:
       require:
         - '@4.1.6'
     all:
-      compiler: [intel@19.0.5.281]
+      compiler: [intel@2021.6.0]
   view: true
   concretizer:
     unify: true
