@@ -30,7 +30,7 @@ spack:
         - '@2.6.2'
     openmpi:
       require:
-        - '@4.1.6'
+        - '@4.1.5'
     all:
       compiler: [intel@2021.6.0]
   view: true
