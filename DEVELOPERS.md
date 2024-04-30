@@ -67,7 +67,7 @@ Once the environment is created use `spack env activate .` from within the envir
 
 It is necessary after `spack develop` to call `spack concretize -f` to force spack to update the concretization so that it picks up the changes to the packages that are being developed.
 
-## Compiling Modified ACCESS-OM2 Model Component Code
+## Compiling Modified Code
 
 Now the source code can be modified, and then compiled by invoking `spack install`
 
