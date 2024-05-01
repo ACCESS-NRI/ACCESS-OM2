@@ -26,12 +26,13 @@ Note: `spack` is cloned from the ACCESS-NRI fork as on occasion there are some f
 
 Add all the `spack-config` settings to your local `spack` instance:
 ```bash
-ln -s -r -v spack-config/v0.20/gadi/* spack/etc/spack/
+ln -s -r -v spack-config/v0.21/gadi/* spack/etc/spack/
 ```
 
 ## Enable spack
 
-For every new login or new shell it is necessary to add `spack` to your shell, as well as some other settings:
+For every new login or new shell it is necessary to add `spack` to your shell, as well as some other settings. 
+Do note the space between the `.` and the path, as we are not treating `spack-enable.bash` as an executable:
 ```bash
 . spack-config/spack-enable.bash
 ```
@@ -305,11 +306,11 @@ $ spack install
 ==> Warning: Module file /g/data/.../dev_instructions/release/modules/linux-rocky8-x86_64/mom5/2023.11.09 exists and will not be overwritten
 ```
 
-This was a simple exmple to show the development workflow: `change code > test compilation > change code > test` compilation cycle.
+This was a simple example to show the development workflow: `change code > test compilation > change code > test` compilation cycle.
 
 #### Notes
 
-In this example the path to the [`ACCESS-OM2` `spack.yaml` environment file](https://github.com/ACCESS-NRI/ACCESS-OM2/blob/main/spack.yaml) is given as an argument to the [`spack env create` command](https://spack.readthedocs.io/en/latest/command_index.html#spack-env-create). This makes the developent environment the same as that for the released ACCESS-OM2 model that is referenced in the local copy of the repo.
+In this example the path to the [`ACCESS-OM2` `spack.yaml` environment file](https://github.com/ACCESS-NRI/ACCESS-OM2/blob/main/spack.yaml) is given as an argument to the [`spack env create` command](https://spack.readthedocs.io/en/latest/command_index.html#spack-env-create). This makes the development environment the same as that for the released ACCESS-OM2 model that is referenced in the local copy of the repo.
 
 By default `spack` clones the source code repository into the environment directory:
 ```
