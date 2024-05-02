@@ -327,7 +327,7 @@ $ spack develop -p ../../sources/MOM5/ mom5@git.master
 
 ### Developing more than one model component
 
-To develop more than one component simultaneously use `spack develop` to mark it as a development component, and it it isn't already in the list of `specs` for the environment use `spack add` to add it.
+To develop more than one component simultaneously use `spack develop` to mark it as a development component, and if it isn't already in the list of `specs` for the environment use `spack add` to add it.
 
 ```bash
 $ spack env create -d . ../../ACCESS-OM2/spack.yaml
@@ -368,35 +368,10 @@ $ spack concretize -f
  -   ig2eod2      ^mom5@git.2023.11.09=2023.11.09%intel@19.0.5.281~deterministic~optimisation_report+restart_repro build_system=makefile dev_path=/g/data/tm70/aph502/dev_instructions/envs/mom5-cice5-dev/mom5 type=ACCESS-OM arch=linux-rocky8-x86_64
 
 ==> Concretized mom5@git.2023.11.09=2023.11.09
- -   ig2eod2  mom5@git.2023.11.09=2023.11.09%intel@19.0.5.281~deterministic~optimisation_report+restart_repro build_system=makefile dev_path=/g/data/tm70/aph502/dev_instructions/envs/mom5-cice5-dev/mom5 type=ACCESS-OM arch=linux-rocky8-x86_64
-[^]  aretozi      ^datetime-fortran@1.7.0%intel@19.0.5.281 build_system=autotools patches=80b9577 arch=linux-rocky8-x86_64
-[^]  ugorlm6      ^gmake@4.4.1%intel@19.0.5.281~guile build_system=autotools arch=linux-rocky8-x86_64
-[^]  ltfg7jc      ^libaccessom2@git.2023.10.26=2023.10.26%intel@19.0.5.281~deterministic~ipo~optimisation_report build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
-[e]  y2zohex          ^cmake@3.24.2%intel@19.0.5.281~doc+ncurses+ownlibs~qt build_system=generic build_type=Release arch=linux-rocky8-x86_64
-[^]  nyxvikk          ^json-fortran@8.3.0%intel@19.0.5.281~ipo build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
-[^]  uyq7tvp          ^pkgconf@1.9.5%intel@19.0.5.281 build_system=autotools arch=linux-rocky8-x86_64
-[^]  i3inxza      ^netcdf-c@4.7.4%intel@19.0.5.281~blosc~byterange~dap~fsync~hdf4~jna+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared~szip~zstd build_system=autotools arch=linux-rocky8-x86_64
-[^]  a6mpuk7          ^hdf5@1.14.1-2%intel@19.0.5.281~cxx~fortran+hl~ipo~java~map+mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
-[^]  arj4bfz              ^zlib@1.2.13%intel@19.0.5.281+optimize+pic+shared build_system=makefile arch=linux-rocky8-x86_64
-[^]  mnx4ggh      ^netcdf-fortran@4.5.2%intel@19.0.5.281~doc+pic+shared build_system=autotools patches=b050dbd arch=linux-rocky8-x86_64
-[^]  sh2anmt      ^oasis3-mct@git.2023.11.09=2023.11.09%intel@19.0.5.281~deterministic~optimisation_report build_system=makefile arch=linux-rocky8-x86_64
-[e]  4jwtg3n      ^openmpi@4.0.2%intel@19.0.5.281~atomics~cuda~cxx~cxx_exceptions~gpfs~internal-hwloc~java~legacylaunchers~lustre~memchecker~orterunprefix+romio+rsh~singularity+static+vt+wrapper-rpath build_system=autotools fabrics=none patches=073477a,60ce20b schedulers=none arch=linux-rocky8-x86_64
+# trimming concretization diagram for brevity...
 
 ==> Concretized cice5@git.2023.10.19=2023.10.19
- -   tnz4lu7  cice5@git.2023.10.19=2023.10.19%intel@19.0.5.281~deterministic~optimisation_report build_system=makefile dev_path=/g/data/tm70/aph502/dev_instructions/envs/mom5-cice5-dev/cice5 arch=linux-rocky8-x86_64
-[^]  aretozi      ^datetime-fortran@1.7.0%intel@19.0.5.281 build_system=autotools patches=80b9577 arch=linux-rocky8-x86_64
-[^]  ugorlm6      ^gmake@4.4.1%intel@19.0.5.281~guile build_system=autotools arch=linux-rocky8-x86_64
-[^]  ltfg7jc      ^libaccessom2@git.2023.10.26=2023.10.26%intel@19.0.5.281~deterministic~ipo~optimisation_report build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
-[e]  y2zohex          ^cmake@3.24.2%intel@19.0.5.281~doc+ncurses+ownlibs~qt build_system=generic build_type=Release arch=linux-rocky8-x86_64
-[^]  nyxvikk          ^json-fortran@8.3.0%intel@19.0.5.281~ipo build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
-[^]  uyq7tvp          ^pkgconf@1.9.5%intel@19.0.5.281 build_system=autotools arch=linux-rocky8-x86_64
-[^]  i3inxza      ^netcdf-c@4.7.4%intel@19.0.5.281~blosc~byterange~dap~fsync~hdf4~jna+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared~szip~zstd build_system=autotools arch=linux-rocky8-x86_64
-[^]  a6mpuk7          ^hdf5@1.14.1-2%intel@19.0.5.281~cxx~fortran+hl~ipo~java~map+mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
-[^]  arj4bfz              ^zlib@1.2.13%intel@19.0.5.281+optimize+pic+shared build_system=makefile arch=linux-rocky8-x86_64
-[^]  mnx4ggh      ^netcdf-fortran@4.5.2%intel@19.0.5.281~doc+pic+shared build_system=autotools patches=b050dbd arch=linux-rocky8-x86_64
-[^]  sh2anmt      ^oasis3-mct@git.2023.11.09=2023.11.09%intel@19.0.5.281~deterministic~optimisation_report build_system=makefile arch=linux-rocky8-x86_64
-[e]  4jwtg3n      ^openmpi@4.0.2%intel@19.0.5.281~atomics~cuda~cxx~cxx_exceptions~gpfs~internal-hwloc~java~legacylaunchers~lustre~memchecker~orterunprefix+romio+rsh~singularity+static+vt+wrapper-rpath build_system=autotools fabrics=none patches=073477a,60ce20b schedulers=none arch=linux-rocky8-x86_64
-[^]  nwolfzy      ^parallelio@2.5.2%intel@19.0.5.281+fortran~ipo~logging+mpi~pnetcdf~shared~timing build_system=cmake build_type=Release generator=make patches=55a6d7a arch=linux-rocky8-x86_64
+# trimming concretization diagram for brevity...
 
 ==> Updating view at /g/data/tm70/aph502/dev_instructions/envs/mom5-cice5-dev/.spack-env/view
 ==> Warning: Skipping external package: openmpi@4.0.2%intel@19.0.5.281~atomics~cuda~cxx~cxx_exceptions~gpfs~internal-hwloc~java~legacylaunchers~lustre~memchecker~orterunprefix+romio+rsh~singularity+static+vt+wrapper-rpath build_system=autotools fabrics=none patches=073477a,60ce20b schedulers=none arch=linux-rocky8-x86_64/4jwtg3n
