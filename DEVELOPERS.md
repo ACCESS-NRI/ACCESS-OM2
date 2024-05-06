@@ -60,11 +60,15 @@ These instructions use [independent environments](https://spack-tutorial.readthe
 
 First step is choose a location for your development environment directory: it will only contain text files and possibly source code repositories. All compiled packages will be put in the directories defined in `spack-config` (defined with [`install_tree`](https://spack.readthedocs.io/en/latest/config_yaml.html#install-tree-root) in [`config.yaml`](https://github.com/ACCESS-NRI/spack-config/blob/main/common/config.yaml#L4)).
 
-Choose an environment name that suits the aim of the work.  Make a directory for the named for the environment, `cd` into it then use the `spack env create -d .` to create an environment directory. 
+Choose a name that suits the aim of the work. Make a directory with that name, `cd` into that directory then type the command `spack env create -d .`. This creates a `spack` environment with the same name as the directory. 
 
-### Modifying environment
+### Modifying an environment
 
-Once the environment is created use `spack env activate .` from within the environment directory, add packages that are required, and use `spack develop` to indicate which packages will be modified and recompiled. By default `spack` will clone the source code automatically, but it is possible to pass the path to an existing source code repository directory if that is preferred.
+Once the environment is created type `spack env activate .` from within the environment directory to activate the environment. 
+
+Add packages that are required, and use `spack develop` to indicate which packages will be modified and recompiled. 
+
+By default `spack` will clone the source code automatically, but it is possible to use an existing source code repository directory if that is preferred.
 
 It is necessary after `spack develop` to call `spack concretize -f` to force spack to update the concretization so that it picks up the changes to the packages that are being developed.
 
