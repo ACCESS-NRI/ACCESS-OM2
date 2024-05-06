@@ -58,7 +58,7 @@ If option 1 is preferred the source code for the component(s) to be modified has
 
 These instructions use [independent environments](https://spack-tutorial.readthedocs.io/en/latest/tutorial_environments.html#creating-an-independent-environment) rather than managed environments. The [main difference](https://spack-tutorial.readthedocs.io/en/latest/tutorial_environments.html#managed-versus-independent-environments) is that managed environments live within the spack directory structure, independent environments are outside it, and must be referenced directly by their path. 
 
-First step is choose a location for your development environment directory: it will only contain text files and possibly source code repositories. All compiled packages will be put in the directories defined in `spack-config`.
+First step is choose a location for your development environment directory: it will only contain text files and possibly source code repositories. All compiled packages will be put in the directories defined in `spack-config` (defined with [`install_tree`](https://spack.readthedocs.io/en/latest/config_yaml.html#install-tree-root) in [`config.yaml`](https://github.com/ACCESS-NRI/spack-config/blob/main/common/config.yaml#L4)).
 
 Choose an environment name that suits the aim of the work.  Make a directory for the named for the environment, `cd` into it then use the `spack env create -d .` to create an environment directory. 
 
