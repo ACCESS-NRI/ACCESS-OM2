@@ -60,7 +60,7 @@ These instructions use [independent environments](https://spack-tutorial.readthe
 
 First step is choose a location for your development environment directory: it will only contain text files and possibly source code repositories. All compiled packages will be put in the directories defined in `spack-config` (defined with [`install_tree`](https://spack.readthedocs.io/en/latest/config_yaml.html#install-tree-root) in [`config.yaml`](https://github.com/ACCESS-NRI/spack-config/blob/main/common/config.yaml#L4)).
 
-Choose a name that suits the aim of the work. Make a directory with that name, `cd` into that directory then type the command `spack env create -d .`. This creates a `spack` environment with the same name as the directory. 
+Choose a name that suits the aim of the work. Make a directory with that name, `cd` into that directory then type the command `spack env create -d .`. This creates a `spack` independent environment in the current directory.
 
 ### Modifying an environment
 
