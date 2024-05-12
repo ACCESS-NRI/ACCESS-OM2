@@ -52,7 +52,7 @@ There are two options for source code location:
 1. Use an existing path to the source code directory
 2. Let spack clone the code for you and place it in the environment directory
 
-If option 1 is preferred the source code for the component(s) to be modified has to be available on the filesystem, e.g. using `git clone`, before the next steps.
+If option 1 is preferred the source code for the component(s) to be modified has to be available on the filesystem, e.g. using `git clone`, before the next steps. For more details, see the [Notes](#notes) section below.
 
 ### Creating an environment
 
