@@ -84,11 +84,14 @@ The instructions above are best understood by example.
 
 In this example the `mom5` component will be modified but all other components and dependencies remain the same. 
 
+This example also uses the [`ACCESS-OM2` `spack.yaml` environment file](https://github.com/ACCESS-NRI/ACCESS-OM2/blob/main/spack.yaml) as an argument to the [`spack env create` command](https://spack.readthedocs.io/en/latest/command_index.html#spack-env-create). This makes the development environment the same as that for the released ACCESS-OM2 model that is referenced in the local copy of the repo. So it is necessary to clone [this repository](https://github.com/ACCESS-NRI/ACCESS-OM2/).
+
 1. Create an environment with a name that reflects the purpose, activate, and set the `mom5` package to be a development environment: 
 ```bash
+$ git clone https://github.com/ACCESS-NRI/ACCESS-OM2.git
 $ mkdir mom5-dev
 $ cd mom5-dev
-$ spack env create -d . ../../ACCESS-OM2/spack.yaml
+$ spack env create -d . ../ACCESS-OM2/spack.yaml
 ==> Created environment in /g/data/.../envs/mom5-dev
 ==> You can activate this environment with:
 ==>   spack env activate /g/data/.../envs/mom5-dev
@@ -314,8 +317,6 @@ This was a simple example to show the development workflow: `change code > test 
 
 #### Notes
 
-In this example the path to the [`ACCESS-OM2` `spack.yaml` environment file](https://github.com/ACCESS-NRI/ACCESS-OM2/blob/main/spack.yaml) is given as an argument to the [`spack env create` command](https://spack.readthedocs.io/en/latest/command_index.html#spack-env-create). This makes the development environment the same as that for the released ACCESS-OM2 model that is referenced in the local copy of the repo.
-
 By default `spack` clones the source code repository into the environment directory:
 ```
 $ ls -gd mom5/
@@ -334,7 +335,7 @@ $ spack develop -p ../../sources/MOM5/ mom5@git.master
 To develop more than one component simultaneously use `spack develop` to mark it as a development component, and if it isn't already in the list of `specs` for the environment use `spack add` to add it.
 
 ```bash
-$ spack env create -d . ../../ACCESS-OM2/spack.yaml
+$ spack env create -d . ../ACCESS-OM2/spack.yaml
 ==> Created environment in /g/data/tm70/aph502/dev_instructions/envs/mom5-cice5-dev
 ==> You can activate this environment with:
 ==>   spack env activate /g/data/tm70/aph502/dev_instructions/envs/mom5-cice5-dev
