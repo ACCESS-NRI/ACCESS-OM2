@@ -43,13 +43,13 @@ Spack [has environments](https://spack.readthedocs.io/en/latest/environments.htm
 
 Environments create an isolated operating environment within which `spack` can only see and access packages that are added to the environment. In this repository the model to be built is defined using an environment in the `spack.yaml` file.
 
-Spack supports model development using a modified environment where the components that are being actively developed are compiled "in-place", and the rest built in the normal spack way.
+Spack generally automatically downloads package sources to a cache, compiles and installs them.  Spack also supports model development using a modified environment where the components that are being actively developed are compiled in a local source directory, and the rest built in the normal spack manner.
 
 ### Source code
 
-There are two options for source code location: 
+There are two options for local source directory location: 
 
-1. Use an existing path to the source code directory
+1. Use a path to an existing source code repository
 2. Let spack clone the code for you and place it in the environment directory
 
 If option 1 is preferred the source code for the component(s) to be modified has to be available on the filesystem, e.g. using `git clone`, before the next steps. For more details, see the [Notes](#notes) section below.
