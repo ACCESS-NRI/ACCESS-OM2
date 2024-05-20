@@ -2,11 +2,11 @@
 
 This guide is to assist developers who wish to modify one or more of the model components of ACCESS-OM2 and compile the modified code. Typically there is a development cycle, where the code is modified, compiled, tested and further modified based on testing.
 
-In particular this guide steps through the process to develop the ACCESS-OM2 model using [`spack`](spack.io), the build from source package manager that is use to build and deploy the model.
+This guide steps through the process to develop the ACCESS-OM2 model using [`spack`](spack.io), the build from source package manager that is used to build and deploy the model.
 
 It is assumed the modifications and compilation will be done on the [NCI HPC system `gadi`](https://opus.nci.org.au/display/Help/Gadi+User+Guide).
 
-Much of this adapted from the [spack Developer Workflows Tutorial](https://spack-tutorial.readthedocs.io/en/latest/tutorial_developer_workflows.html).
+Much of this is adapted from the [spack Developer Workflows Tutorial](https://spack-tutorial.readthedocs.io/en/latest/tutorial_developer_workflows.html).
 
 ## Initial set-up 
 
@@ -24,7 +24,7 @@ git clone https://github.com/ACCESS-NRI/spack-config.git --branch main
 
 Note: `spack` is cloned from the ACCESS-NRI fork as on occasion there are some fixes that are back-ported by ACCESS-NRI.
 
-Add all the `spack-config` settings to your local `spack` instance:
+Link all the `spack-config` settings to your local `spack` instance:
 ```bash
 ln -s -r -v spack-config/v0.21/gadi/* spack/etc/spack/
 ```
@@ -41,7 +41,7 @@ Do note the space between the `.` and the path, as we are not treating `spack-en
 
 Spack [has environments](https://spack.readthedocs.io/en/latest/environments.html), which is similar to many other related implementations such as conda environments and python virtual environments.
 
-Environments create an isolated operating environment within which `spack` can only see and access packages that are added to the environment. In this repository the model to be built is defined using an environment in the `spack.yaml` file.
+Environments create an isolated operating environment within which `spack` can only see and access packages that are added to the environment. In this repository, the model to be built is defined using the `spack.yaml` environment file.
 
 Spack generally automatically downloads package sources to a cache, compiles and installs them.  Spack also supports model development using a modified environment where the components that are being actively developed are compiled in a local source directory, and the rest built in the normal spack manner.
 
