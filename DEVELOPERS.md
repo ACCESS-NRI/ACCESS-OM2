@@ -1,8 +1,8 @@
 # Developers Guide
 
-This guide is to assist developers who wish to modify one or more of the model components of ACCESS-OM2 and compile the modified code. Typically there is a development cycle, where the code is modified, compiled, tested and further modified based on testing.
+This guide steps through the process to develop the ACCESS-OM2 model using [`spack`](spack.io), the build from source package manager that is used to build and deploy the model.  Spack generally automatically downloads package sources to a cache, compiles and installs them.  Spack also supports model development using a modified environment where the components that are being actively developed are compiled in a local source directory, and the rest built in the normal spack manner.
 
-This guide steps through the process to develop the ACCESS-OM2 model using [`spack`](spack.io), the build from source package manager that is used to build and deploy the model.
+This guide is to assist developers who wish to modify one or more of the model components of ACCESS-OM2 and compile the modified code. Typically there is a development cycle, where the code is modified, compiled, tested and further modified based on testing.
 
 It is assumed the modifications and compilation will be done on the [NCI HPC system `gadi`](https://opus.nci.org.au/display/Help/Gadi+User+Guide).
 
@@ -10,11 +10,9 @@ Much of this is adapted from the [spack Developer Workflows Tutorial](https://sp
 
 ## Initial set-up 
 
-The steps in this section need only be done once, as long as the versions of the three repositories are sufficient.
+The steps in this section need only be done once, unless the cloned repositories need to be updated to a newer version.
 
 It is necessary to make a local copy of `spack`, the configuration suitable for `gadi` (`spack-config`) and a package repository (`spack-packages`) which defines a number of the packages used by ACCESS-OM2.
-
-Adapted from [instructions on the forum](https://forum.access-hive.org.au/t/how-to-build-access-om2-on-gadi/1545)
 
 ```bash
 git clone -c feature.manyFiles=true https://github.com/ACCESS-NRI/spack.git --branch releases/v0.21 --single-branch --depth=1
@@ -22,12 +20,17 @@ git clone https://github.com/ACCESS-NRI/spack-packages.git --branch main
 git clone https://github.com/ACCESS-NRI/spack-config.git --branch main
 ```
 
-Note: `spack` is cloned from the ACCESS-NRI fork as on occasion there are some fixes that are back-ported by ACCESS-NRI.
-
 Link all the `spack-config` settings to your local `spack` instance:
 ```bash
 ln -s -r -v spack-config/v0.21/gadi/* spack/etc/spack/
 ```
+
+> [!NOTE]
+>
+> This guide is adapted from [instructions on the ACCESS-Hive Forum](https://forum.access-hive.org.au/t/how-to-build-access-om2-on-gadi/1545)
+>
+> `spack` is cloned from the ACCESS-NRI fork as on occasion there are some fixes that are back-ported by ACCESS-NRI from more recent versions of `spack`.
+
 
 ## Enable spack
 
@@ -43,8 +46,6 @@ Spack [has environments](https://spack.readthedocs.io/en/latest/environments.htm
 
 Environments create an isolated operating environment within which `spack` can only see and access packages that are added to the environment. In this repository, the model to be built is defined using the `spack.yaml` environment file.
 
-Spack generally automatically downloads package sources to a cache, compiles and installs them.  Spack also supports model development using a modified environment where the components that are being actively developed are compiled in a local source directory, and the rest built in the normal spack manner.
-
 ### Source code
 
 There are two options for local source directory location: 
@@ -53,6 +54,9 @@ There are two options for local source directory location:
 2. Let spack clone the code for you and place it in the environment directory
 
 If option 1 is preferred the source code for the component(s) to be modified has to be available on the filesystem, e.g. using `git clone`, before the next steps. For more details, see the [Notes](#notes) section below.
+
+> [!Note]
+> The choice of where the source code for an environment should reside depends on use case and personal prefrence. If an existing source code repository location is used in more than one environment it requires the code repository be kept in sync with the purpose of the development environment, e.g. two separate feature branches utilising two different development environments would require the developer to check out the correct branch when switching between development environments. It would also preclude building both environments simultaneously.
 
 ### Creating an environment
 
