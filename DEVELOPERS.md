@@ -83,7 +83,7 @@ It is necessary after `spack develop` to call `spack concretize -f` to force spa
 
 Now the source code can be modified, and then compiled by invoking `spack install`
 
-## Example
+## Examples
 
 The instructions above are best understood by example.
 
@@ -336,3 +336,68 @@ If you have an existing source code repository clone you wish to use specify the
 $ spack develop -p ../../sources/MOM5/ mom5@git.master 
 ==> Configuring spec mom5@git.master=2023.11.09 for development at path ../../sources/MOM5/
 ```
+
+### Developing more than one model component
+
+To develop more than one component simultaneously use `spack develop` to mark it as a development component, and if it isn't already in the list of `specs` for the environment use `spack add` to add it.
+
+```bash
+$ spack env create -d . ../ACCESS-OM2/spack.yaml
+==> Created environment in /g/data/tm70/aph502/dev_instructions/envs/mom5-cice5-dev
+==> You can activate this environment with:
+==>   spack env activate /g/data/tm70/aph502/dev_instructions/envs/mom5-cice5-dev
+==> Warning: upstream not found: /g/data/vk83/apps/spack/0.21/release/.spack-db/index.json
+$ spack env activate .
+$ spack develop mom5@git.2023.11.09
+==> Configuring spec mom5@git.2023.11.09=2023.11.09 for development at path mom5
+$ spack develop cice5@git.2023.10.19
+==> Configuring spec cice5@git.2023.10.19=2023.10.19 for development at path cice5
+$ spack add mom5@git.2023.11.09
+==> Adding mom5@git.2023.11.09=2023.11.09 to environment /g/data/tm70/aph502/dev_instructions/envs/mom5-cice5-dev
+$ spack add cice5@git.2023.10.19
+==> Adding cice5@git.2023.10.19=2023.10.19 to environment /g/data/tm70/aph502/dev_instructions/envs/mom5-cice5-dev
+```
+
+```bash
+$ spack concretize -f
+==> Warning: upstream not found: /g/data/vk83/apps/spack/0.21/release/.spack-db/index.json
+==> Concretized access-om2@git.2024.03.0=2024.03.0
+ -   2rd6qte  access-om2@git.2024.03.0=2024.03.0%intel@19.0.5.281~deterministic build_system=bundle arch=linux-rocky8-x86_64
+ -   tnz4lu7      ^cice5@git.2023.10.19=2023.10.19%intel@19.0.5.281~deterministic~optimisation_report build_system=makefile dev_path=/g/data/tm70/aph502/dev_instructions/envs/mom5-cice5-dev/cice5 arch=linux-rocky8-x86_64
+[^]  aretozi          ^datetime-fortran@1.7.0%intel@19.0.5.281 build_system=autotools patches=80b9577 arch=linux-rocky8-x86_64
+[^]  ugorlm6          ^gmake@4.4.1%intel@19.0.5.281~guile build_system=autotools arch=linux-rocky8-x86_64
+[^]  i3inxza          ^netcdf-c@4.7.4%intel@19.0.5.281~blosc~byterange~dap~fsync~hdf4~jna+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared~szip~zstd build_system=autotools arch=linux-rocky8-x86_64
+[^]  a6mpuk7              ^hdf5@1.14.1-2%intel@19.0.5.281~cxx~fortran+hl~ipo~java~map+mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
+[^]  arj4bfz                  ^zlib@1.2.13%intel@19.0.5.281+optimize+pic+shared build_system=makefile arch=linux-rocky8-x86_64
+[^]  mnx4ggh          ^netcdf-fortran@4.5.2%intel@19.0.5.281~doc+pic+shared build_system=autotools patches=b050dbd arch=linux-rocky8-x86_64
+[^]  sh2anmt          ^oasis3-mct@git.2023.11.09=2023.11.09%intel@19.0.5.281~deterministic~optimisation_report build_system=makefile arch=linux-rocky8-x86_64
+[e]  4jwtg3n          ^openmpi@4.0.2%intel@19.0.5.281~atomics~cuda~cxx~cxx_exceptions~gpfs~internal-hwloc~java~legacylaunchers~lustre~memchecker~orterunprefix+romio+rsh~singularity+static+vt+wrapper-rpath build_system=autotools fabrics=none patches=073477a,60ce20b schedulers=none arch=linux-rocky8-x86_64
+[^]  nwolfzy          ^parallelio@2.5.2%intel@19.0.5.281+fortran~ipo~logging+mpi~pnetcdf~shared~timing build_system=cmake build_type=Release generator=make patches=55a6d7a arch=linux-rocky8-x86_64
+[^]  ltfg7jc      ^libaccessom2@git.2023.10.26=2023.10.26%intel@19.0.5.281~deterministic~ipo~optimisation_report build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
+[e]  y2zohex          ^cmake@3.24.2%intel@19.0.5.281~doc+ncurses+ownlibs~qt build_system=generic build_type=Release arch=linux-rocky8-x86_64
+[^]  nyxvikk          ^json-fortran@8.3.0%intel@19.0.5.281~ipo build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
+[^]  uyq7tvp          ^pkgconf@1.9.5%intel@19.0.5.281 build_system=autotools arch=linux-rocky8-x86_64
+ -   ig2eod2      ^mom5@git.2023.11.09=2023.11.09%intel@19.0.5.281~deterministic~optimisation_report+restart_repro build_system=makefile dev_path=/g/data/tm70/aph502/dev_instructions/envs/mom5-cice5-dev/mom5 type=ACCESS-OM arch=linux-rocky8-x86_64
+
+==> Concretized mom5@git.2023.11.09=2023.11.09
+# trimming concretization diagram for brevity...
+
+==> Concretized cice5@git.2023.10.19=2023.10.19
+# trimming concretization diagram for brevity...
+
+==> Updating view at /g/data/tm70/aph502/dev_instructions/envs/mom5-cice5-dev/.spack-env/view
+==> Warning: Skipping external package: openmpi@4.0.2%intel@19.0.5.281~atomics~cuda~cxx~cxx_exceptions~gpfs~internal-hwloc~java~legacylaunchers~lustre~memchecker~orterunprefix+romio+rsh~singularity+static+vt+wrapper-rpath build_system=autotools fabrics=none patches=073477a,60ce20b schedulers=none arch=linux-rocky8-x86_64/4jwtg3n
+```
+
+Now there are source subdirectories for `mom5` and `cice5` 
+
+```bash
+$ ls -lg
+total 28
+drwxr-s--- 20 tm70  4096 Apr 30 20:49 cice5
+drwxr-s--- 11 tm70  4096 Apr 30 20:49 mom5
+-rw-r-----  1 tm70 15477 Apr 30 20:50 spack.lock
+-rw-r-----  1 tm70  1586 Apr 30 20:50 spack.yaml
+```
+
+Both can be compiled with a single call to `spack install`.
