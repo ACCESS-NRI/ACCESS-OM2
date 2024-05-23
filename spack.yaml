@@ -17,6 +17,8 @@ spack:
       require: '@git.2023.11.09'
     netcdf-c:
       require: '@4.7.4'
+    hdf5:
+      require: '@1.14.1-2'
     netcdf-fortran:
       require: '@4.5.2'
     parallelio:
