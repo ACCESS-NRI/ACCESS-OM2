@@ -83,7 +83,7 @@ It is necessary after `spack develop` to call `spack concretize -f` to force spa
 
 Now the source code can be modified, and then compiled by invoking `spack install`
 
-## Example
+## Examples
 
 The instructions above are best understood by example.
 
@@ -336,3 +336,28 @@ If you have an existing source code repository clone you wish to use specify the
 $ spack develop -p ../../sources/MOM5/ mom5@git.master 
 ==> Configuring spec mom5@git.master=2023.11.09 for development at path ../../sources/MOM5/
 ```
+
+### Modifying an external dependency
+
+External dependencies are packages that the model depends on but are not model components that ACCESS-NRI is responsible for. What is an external dependency and what is not can change. If there is a bug in an external dependency then it might be necessary to use `spack develop` to modify, build and test that dependency.
+
+Use `spack info` to determine what versions are supported for the `spack` version being used, and choose appropriate values.
+
+For illustrative purposes the latest versions of `netcdf-c` and `netcdf-fortran` are installed.
+
+```bash
+$ spack install netcdf-c@4.9.2 netcdf-fortran@4.6.0
+```
+
+This entailed compiling a number of dependent packages.
+
+The required versions of `netcdf-c` and `netcdf-fortran` were then updated in `spack.yaml`
+
+UNRESOLVED: Can't get this to work. Can compile the new versions outside an environment, but when I change the versions in the `spack.yaml` get
+```
+==> Error: concretization failed for the following reasons:
+
+   1. No valid value for variant 'deterministic' of package 'access-om2'
+```
+
+THIS NEEDS TO BE FIXED BEFORE MERGING!
