@@ -105,10 +105,8 @@ $ spack env create -d . ../ACCESS-OM2/spack.yaml
 $ spack env activate .
 $ spack env status
 ==> Using spack.yaml in current directory: /g/data/.../envs/mom5-dev
-$ spack develop mom5@git.master
-==> Configuring spec mom5@git.master=2023.11.09 for development at path mom5
-$ spack add mom5@git.2023.11.09
-==> Adding mom5@git.2023.11.09=2023.11.09 to environment /g/data/.../dev_instructions/envs/mom5-dev
+$ spack develop mom5@git.2023.11.09
+==> Configuring spec mom5@git.2023.11.09=2023.11.09 for development at path mom5
 ```
 
 2. Concretize the updated environment. This will update what spack thinks is required to build the defined specs, in this case `access-om2` and `mom5`. Note that the `mom5` spec has a `dev_path` argument that points to the location of the sources it will use to build the package.
@@ -116,40 +114,22 @@ $ spack add mom5@git.2023.11.09
 ```bash
 $ spack concretize -f
 ==> Concretized access-om2@git.2024.03.0=2024.03.0
- -   5nk4sjp  access-om2@git.2024.03.0=2024.03.0%intel@19.0.5.281~deterministic build_system=bundle arch=linux-rocky8-x86_64
-[^]  v3zncpq      ^cice5@git.2023.10.19=2023.10.19%intel@19.0.5.281~deterministic~optimisation_report build_system=makefile arch=linux-rocky8-x86_64
-[^]  aretozi          ^datetime-fortran@1.7.0%intel@19.0.5.281 build_system=autotools patches=80b9577 arch=linux-rocky8-x86_64
-[^]  i3inxza          ^netcdf-c@4.7.4%intel@19.0.5.281~blosc~byterange~dap~fsync~hdf4~jna+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared~szip~zstd build_system=autotools arch=linux-rocky8-x86_64
-[^]  a6mpuk7              ^hdf5@1.14.1-2%intel@19.0.5.281~cxx~fortran+hl~ipo~java~map+mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
-[^]  arj4bfz                  ^zlib@1.2.13%intel@19.0.5.281+optimize+pic+shared build_system=makefile arch=linux-rocky8-x86_64
-[^]  mnx4ggh          ^netcdf-fortran@4.5.2%intel@19.0.5.281~doc+pic+shared build_system=autotools patches=b050dbd arch=linux-rocky8-x86_64
-[^]  sh2anmt          ^oasis3-mct@git.2023.11.09=2023.11.09%intel@19.0.5.281~deterministic~optimisation_report build_system=makefile arch=linux-rocky8-x86_64
-[e]  4jwtg3n          ^openmpi@4.0.2%intel@19.0.5.281~atomics~cuda~cxx~cxx_exceptions~gpfs~internal-hwloc~java~legacylaunchers~lustre~memchecker~orterunprefix+romio+rsh~singularity+static+vt+wrapper-rpath build_system=autotools fabrics=none patches=073477a,60ce20b schedulers=none arch=linux-rocky8-x86_64
-[^]  nwolfzy          ^parallelio@2.5.2%intel@19.0.5.281+fortran~ipo~logging+mpi~pnetcdf~shared~timing build_system=cmake build_type=Release generator=make patches=55a6d7a arch=linux-rocky8-x86_64
-[^]  ltfg7jc      ^libaccessom2@git.2023.10.26=2023.10.26%intel@19.0.5.281~deterministic~ipo~optimisation_report build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
-[e]  y2zohex          ^cmake@3.24.2%intel@19.0.5.281~doc+ncurses+ownlibs~qt build_system=generic build_type=Release arch=linux-rocky8-x86_64
-[^]  ugorlm6          ^gmake@4.4.1%intel@19.0.5.281~guile build_system=autotools arch=linux-rocky8-x86_64
-[^]  nyxvikk          ^json-fortran@8.3.0%intel@19.0.5.281~ipo build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
-[^]  uyq7tvp          ^pkgconf@1.9.5%intel@19.0.5.281 build_system=autotools arch=linux-rocky8-x86_64
- -   lisulnp      ^mom5@git.2023.11.09=2023.11.09%intel@19.0.5.281~deterministic~optimisation_report+restart_repro build_system=makefile dev_path=/g/data/.../dev_instructions/envs/mom5-dev/mom5 type=ACCESS-OM arch=linux-rocky8-x86_64
-
-==> Concretized mom5@git.2023.11.09=2023.11.09
- -   lisulnp  mom5@git.2023.11.09=2023.11.09%intel@19.0.5.281~deterministic~optimisation_report+restart_repro build_system=makefile dev_path=/g/data/.../dev_instructions/envs/mom5-dev/mom5 type=ACCESS-OM arch=linux-rocky8-x86_64
-[^]  aretozi      ^datetime-fortran@1.7.0%intel@19.0.5.281 build_system=autotools patches=80b9577 arch=linux-rocky8-x86_64
-[^]  ltfg7jc      ^libaccessom2@git.2023.10.26=2023.10.26%intel@19.0.5.281~deterministic~ipo~optimisation_report build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
-[e]  y2zohex          ^cmake@3.24.2%intel@19.0.5.281~doc+ncurses+ownlibs~qt build_system=generic build_type=Release arch=linux-rocky8-x86_64
-[^]  ugorlm6          ^gmake@4.4.1%intel@19.0.5.281~guile build_system=autotools arch=linux-rocky8-x86_64
-[^]  nyxvikk          ^json-fortran@8.3.0%intel@19.0.5.281~ipo build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
-[^]  uyq7tvp          ^pkgconf@1.9.5%intel@19.0.5.281 build_system=autotools arch=linux-rocky8-x86_64
-[^]  i3inxza      ^netcdf-c@4.7.4%intel@19.0.5.281~blosc~byterange~dap~fsync~hdf4~jna+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared~szip~zstd build_system=autotools arch=linux-rocky8-x86_64
-[^]  a6mpuk7          ^hdf5@1.14.1-2%intel@19.0.5.281~cxx~fortran+hl~ipo~java~map+mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
-[^]  arj4bfz              ^zlib@1.2.13%intel@19.0.5.281+optimize+pic+shared build_system=makefile arch=linux-rocky8-x86_64
-[^]  mnx4ggh      ^netcdf-fortran@4.5.2%intel@19.0.5.281~doc+pic+shared build_system=autotools patches=b050dbd arch=linux-rocky8-x86_64
-[^]  sh2anmt      ^oasis3-mct@git.2023.11.09=2023.11.09%intel@19.0.5.281~deterministic~optimisation_report build_system=makefile arch=linux-rocky8-x86_64
-[e]  4jwtg3n      ^openmpi@4.0.2%intel@19.0.5.281~atomics~cuda~cxx~cxx_exceptions~gpfs~internal-hwloc~java~legacylaunchers~lustre~memchecker~orterunprefix+romio+rsh~singularity+static+vt+wrapper-rpath build_system=autotools fabrics=none patches=073477a,60ce20b schedulers=none arch=linux-rocky8-x86_64
-
-==> Updating view at /g/data/.../dev_instructions/envs/mom5-dev/.spack-env/view
-==> Warning: Skipping external package: openmpi@4.0.2%intel@19.0.5.281~atomics~cuda~cxx~cxx_exceptions~gpfs~internal-hwloc~java~legacylaunchers~lustre~memchecker~orterunprefix+romio+rsh~singularity+static+vt+wrapper-rpath build_system=autotools fabrics=none patches=073477a,60ce20b schedulers=none arch=linux-rocky8-x86_64/4jwtg3n
+ -   s6gpbn7  access-om2@git.2024.03.0=2024.03.0%intel@19.0.5.281~deterministic build_system=bundle arch=linux-rocky8-x86_64
+ -   lx7r646      ^cice5@git.2023.10.19=2023.10.19%intel@19.0.5.281~deterministic~optimisation_report build_system=makefile arch=linux-rocky8-x86_64
+ -   66vc6b7          ^datetime-fortran@1.7.0%intel@19.0.5.281 build_system=autotools patches=80b9577 arch=linux-rocky8-x86_64
+ -   v2qgeyg          ^gmake@4.4.1%intel@19.0.5.281~guile build_system=generic arch=linux-rocky8-x86_64
+ -   lxcoiut          ^netcdf-c@4.7.4%intel@19.0.5.281~blosc~byterange~dap~fsync~hdf4~jna+mpi~nczarr_zip+optimize~parallel-netcdf+pic+shared~szip~zstd build_system=autotools arch=linux-rocky8-x86_64
+ -   nq76l75              ^hdf5@1.14.3%intel@19.0.5.281~cxx~fortran+hl~ipo~java~map+mpi+shared~szip~threadsafe+tools api=default build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
+ -   lwraula                  ^zlib-ng@2.1.4%intel@19.0.5.281+compat+opt build_system=autotools arch=linux-rocky8-x86_64
+ -   2wcjlli          ^netcdf-fortran@4.5.2%intel@19.0.5.281~doc+pic+shared build_system=autotools patches=b050dbd arch=linux-rocky8-x86_64
+ -   ywm4cjc          ^oasis3-mct@git.2023.11.09=2023.11.09%intel@19.0.5.281~deterministic~optimisation_report build_system=makefile arch=linux-rocky8-x86_64
+[e]  mxcytar          ^openmpi@4.0.2%intel@19.0.5.281~atomics~cuda~cxx~cxx_exceptions~gpfs~internal-hwloc~internal-pmix~java~legacylaunchers~lustre~memchecker~openshmem~orterunprefix+romio+rsh~singularity+static+vt+wrapper-rpath build_system=autotools fabrics=none patches=073477a,60ce20b schedulers=none arch=linux-rocky8-x86_64
+ -   mhmz5m4          ^parallelio@2.5.2%intel@19.0.5.281+fortran~ipo~logging+mpi~pnetcdf~shared~timing build_system=cmake build_type=Release generator=make patches=55a6d7a arch=linux-rocky8-x86_64
+ -   zo4a6ll      ^libaccessom2@git.2023.10.26=2023.10.26%intel@19.0.5.281~deterministic~ipo~optimisation_report build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
+[e]  nemw52e          ^cmake@3.24.2%intel@19.0.5.281~doc+ncurses+ownlibs build_system=generic build_type=Release arch=linux-rocky8-x86_64
+ -   hevplm4          ^json-fortran@8.3.0%intel@19.0.5.281~ipo build_system=cmake build_type=Release generator=make arch=linux-rocky8-x86_64
+ -   tm433j6          ^pkgconf@1.9.5%intel@19.0.5.281 build_system=autotools arch=linux-rocky8-x86_64
+ -   uwi337q      ^mom5@git.2023.11.09=2023.11.09%intel@19.0.5.281~deterministic~optimisation_report+restart_repro build_system=makefile dev_path=/scratch/.../envs/mom5-dev/mom5 type=ACCESS-CM arch=linux-rocky8-x86_64
 ```
 
 3. Test compilation works without changes. Before modifications it is a good idea to test the component will build as-is:
