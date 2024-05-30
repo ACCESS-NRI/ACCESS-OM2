@@ -1,6 +1,6 @@
 # Developers Guide
 
-This guide steps through the process to develop the ACCESS-OM2 model using [`spack`](spack.io), the build from source package manager that is used to build and deploy the model.  Spack generally automatically downloads package sources to a cache, compiles and installs them.  Spack also supports model development using a modified environment where the components that are being actively developed are compiled in a local source directory, and the rest built in the normal spack manner.
+This guide steps through the process to develop the ACCESS-OM2 model using [spack](spack.io), the build from source package manager that is used to build and deploy the model.  Spack automatically downloads package sources to a cache, compiles and installs them.  However spack also supports model development using a modified environment where the components that are being actively developed are compiled in a local source directory, and the rest built in the normal spack manner.
 
 This guide is to assist developers who wish to modify one or more of the model components of ACCESS-OM2 and compile the modified code. Typically there is a development cycle, where the code is modified, compiled, tested and further modified based on testing.
 
@@ -12,7 +12,7 @@ Much of this is adapted from the [spack Developer Workflows Tutorial](https://sp
 
 It is necessary to make local copies of the following repositories using `git clone`: 
 - [`spack`](https://github.com/ACCESS-NRI/spack.git) - the build from source package manager
-- [`spack-config`](https://github.com/ACCESS-NRI/spack-config.git) - a `spack` configuration for `gadi`]
+- [`spack-config`](https://github.com/ACCESS-NRI/spack-config.git) - a spack configuration for `gadi`
 - [`spack-packages`](https://github.com/ACCESS-NRI/spack-packages.git) - ACCESS-NRI package repository which defines a number of the packages used by ACCESS-OM2
 
 ```bash
@@ -21,7 +21,7 @@ git clone https://github.com/ACCESS-NRI/spack-packages.git --branch main
 git clone https://github.com/ACCESS-NRI/spack-config.git --branch main
 ```
 
-Then link all the `spack-config` settings to your local `spack` instance:
+Then link all the `spack-config` settings to your local spack instance:
 ```bash
 ln -s -r -v spack-config/v0.21/gadi/* spack/etc/spack/
 ```
@@ -32,7 +32,7 @@ ln -s -r -v spack-config/v0.21/gadi/* spack/etc/spack/
 >
 > This guide is adapted from [instructions on the ACCESS-Hive Forum](https://forum.access-hive.org.au/t/how-to-build-access-om2-on-gadi/1545)
 >
-> `spack` is cloned from the ACCESS-NRI fork as on occasion there are some fixes that are back-ported by ACCESS-NRI from more recent versions of `spack`.
+> ACCESS-NRI maintains a fork of spack to enable back-porting fixes from more recent spack versions. This fork is the one used in these instructions.
 
 ## Enable spack
 
@@ -136,40 +136,43 @@ $ spack concretize -f
 
 ```bash
 $ spack install
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/datetime-fortran-1.7.0-aretozixwsdz42owabgzeiuxooyxrspg
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/json-fortran-8.3.0-nyxvikkez6fu64xtbeqqz2a4wngikfgi
+==> Installing gmake-4.4.1-v2qgeygrsw6xckypqqagh2pc4ib3chw6 [1/16]
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/gmake-4.4.1-v2qgeygrsw6xckypqqagh2pc4ib3chw6
+[+] /apps/cmake/3.24.2 (external cmake-3.24.2-nemw52evn6pvohthm7hxmndyxlfm2637)
 ==> openmpi@4.0.2 : has external module in ['openmpi/4.0.2']
-[+] /apps/openmpi/4.0.2 (external openmpi-4.0.2-4jwtg3nt7p3zsod4rvn3i3jyyop3arpe)
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/pkgconf-1.9.5-uyq7tvpnuuo3gosnplkvuxktaeeipuqk
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/zlib-1.2.13-arj4bfz33zf63gvfionhorrrveci6kb4
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/hdf5-1.14.1-2-a6mpuk7tw5e4pyukxwalooc7jfldalcf
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/netcdf-c-4.7.4-i3inxzaihefr3rqljoovhyevwai6bsff
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/netcdf-fortran-4.5.2-mnx4gghyb5gngsl3fgosud6k72yu2u6a
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/oasis3-mct-git.2023.11.09=2023.11.09-sh2anmtjrygzixya2fjc3p7cg4o5wc5h
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/parallelio-2.5.2-nwolfzy2xxb4wub65gmvlm3edhuolmlh
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/libaccessom2-git.2023.10.26=2023.10.26-ltfg7jcn6t4cefotvj3kjnyu5nru26xo
-==> Installing mom5-git.2023.11.09=2023.11.09-lisulnpbvmllenqb443lnuybhs3sopwk
-==> No binary for mom5-git.2023.11.09=2023.11.09-lisulnpbvmllenqb443lnuybhs3sopwk found: installing from source
-==> No patches needed for mom5
-==> mom5: Executing phase: 'edit'
-==> mom5: Executing phase: 'build'
-==> mom5: Executing phase: 'install'
-==> mom5: Successfully installed mom5-git.2023.11.09=2023.11.09-lisulnpbvmllenqb443lnuybhs3sopwk
-  Stage: 0.00s.  Edit: 0.08s.  Build: 5m 26.48s.  Install: 0.16s.  Post-install: 0.47s.  Total: 5m 29.30s
-[+] /g/data/.../dev_instructions/release/linux-rocky8-x86_64/intel-19.0.5.281/mom5-git.2023.11.09=2023.11.09-lisulnpbvmllenqb443lnuybhs3sopwk
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/cice5-git.2023.10.19=2023.10.19-v3zncpqjj2gyseudbwiudolcjq3k3leo
-==> Installing access-om2-git.2024.03.0=2024.03.0-5nk4sjpusp6cilzp3jkmubonty5q2w62
-==> No binary for access-om2-git.2024.03.0=2024.03.0-5nk4sjpusp6cilzp3jkmubonty5q2w62 found: installing from source
-==> No patches needed for access-om2
-==> access-om2: Executing phase: 'install'
-==> access-om2: Successfully installed access-om2-git.2024.03.0=2024.03.0-5nk4sjpusp6cilzp3jkmubonty5q2w62
-  Stage: 0.01s.  Install: 0.00s.  Post-install: 0.12s.  Total: 0.86s
-[+] /g/data/.../dev_instructions/release/linux-rocky8-x86_64/intel-19.0.5.281/access-om2-git.2024.03.0=2024.03.0-5nk4sjpusp6cilzp3jkmubonty5q2w62
-==> Updating view at /g/data/.../dev_instructions/envs/mom5-dev/.spack-env/view
-==> Warning: Skipping external package: openmpi@4.0.2%intel@19.0.5.281~atomics~cuda~cxx~cxx_exceptions~gpfs~internal-hwloc~java~legacylaunchers~lustre~memchecker~orterunprefix+romio+rsh~singularity+static+vt+wrapper-rpath build_system=autotools fabrics=none patches=073477a,60ce20b schedulers=none arch=linux-rocky8-x86_64/4jwtg3n
+[+] /apps/openmpi/4.0.2 (external openmpi-4.0.2-mxcytarrq3lnlmgidspiqgftznsoqnoq)
+==> Installing zlib-ng-2.1.4-lwraula2ptlbxda76lu3yt3rdupgcukm [4/16]
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/zlib-ng-2.1.4-lwraula2ptlbxda76lu3yt3rdupgcukm 
+==> Installing datetime-fortran-1.7.0-66vc6b7gy6bldpgyqf5oasnkwb6e3scw [5/16]
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/datetime-fortran-1.7.0-66vc6b7gy6bldpgyqf5oasnkwb6e3scw   
+==> Installing pkgconf-1.9.5-tm433j6fyaqdfcgwpdykshqseqglmnrn [6/16]
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/pkgconf-1.9.5-tm433j6fyaqdfcgwpdykshqseqglmnrn
+==> Installing json-fortran-8.3.0-hevplm4n45oxuosrx3ldrgecd57b4vd4 [7/16]
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/json-fortran-8.3.0-hevplm4n45oxuosrx3ldrgecd57b4vd4
+==> Installing hdf5-1.14.3-nq76l75erusuueallosn3lzuuav5omrf [8/16]
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/hdf5-1.14.3-nq76l75erusuueallosn3lzuuav5omrf
+==> Installing netcdf-c-4.7.4-lxcoiutuqt6ghbo3pitqrazqbubmg4go [9/16]
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/netcdf-c-4.7.4-lxcoiutuqt6ghbo3pitqrazqbubmg4go
+==> Installing netcdf-fortran-4.5.2-2wcjlli6necmfrsztdsl3s57bkafnbiz [10/16]                                                                  
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/netcdf-fortran-4.5.2-2wcjlli6necmfrsztdsl3s57bkafnbiz
+==> Installing oasis3-mct-git.2023.11.09=2023.11.09-ywm4cjcl3b7zvnisyi24jsjzgtdcfz4a [11/16]
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/oasis3-mct-git.2023.11.09_2023.11.09-ywm4cjcl3b7zvnisyi24jsjzgtdcfz4a
+==> Installing parallelio-2.5.2-mhmz5m4k3fs6hs6bsi22nemdtz5yba4x [12/16]
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/parallelio-2.5.2-mhmz5m4k3fs6hs6bsi22nemdtz5yba4x
+==> Installing libaccessom2-git.2023.10.26=2023.10.26-zo4a6ll4cr3aoh3yxeicm4nocm6gzmlj [13/16]
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/libaccessom2-git.2023.10.26_2023.10.26-zo4a6ll4cr3aoh3yxeicm4nocm6gzmlj
+==> Installing mom5-git.2023.11.09=2023.11.09-uwi337qmi26zojqvcaag2yi3ukml6sxc [14/16]
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/mom5-git.2023.11.09_2023.11.09-uwi337qmi26zojqvcaag2yi3ukml6sxc
+==> Installing cice5-git.2023.10.19=2023.10.19-lx7r646nefy37hxpiv5ct6skrxm3l5sa [15/16]
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/cice5-git.2023.10.19_2023.10.19-lx7r646nefy37hxpiv5ct6skrxm3l5sa
+==> Installing access-om2-git.2024.03.0=2024.03.0-s6gpbn7eottnw7wk424rj362ccye3o37 [16/16]
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64/intel-19.0.5.281/access-om2-git.2024.03.0_2024.03.0-s6gpbn7eottnw7wk424rj362ccye3o37
+==> Updating view at /scratch/.../tmp/dev-docs/envs/mom5-dev/.spack-env/view
+==> Warning: Skipping external package: openmpi@4.0.2%intel@19.0.5.281~atomics~cuda~cxx~cxx_exceptions~gpfs~internal-hwloc~internal-pmix~java~legacylaunchers~lustre~memchecker~openshmem~orterunprefix+romio+rsh~singularity+static+vt+wrapper-rpath build_system=autotools fabrics=none patches=073477a,60ce20b schedulers=none arch=linux-rocky8-x86_64/mxcytar
 ```
+The output has been truncated for brevity, but spack will attempt to install 16 packages on which the build depends. This can take a while the first time it is run (of the order of 30 minutes), but subsequent runs will re-use the dependencies and will not have to be re-built every time.
 
-4. Modify sources as required. For illustrative purposes a `module use` has been commented out to force an error in compilation:
+4. Modify sources as required. For illustrative purposes a `use` statement has been commented out to force an error in compilation:
 
 ```diff
 $ git -C mom5 diff
@@ -191,58 +194,68 @@ index 838759c..b26dc2c 100644
 5.  Rebuild modified `mom5` using `spack install`
 
 ```bash
-$ spack install
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/datetime-fortran-1.7.0-aretozixwsdz42owabgzeiuxooyxrspg
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/json-fortran-8.3.0-nyxvikkez6fu64xtbeqqz2a4wngikfgi
+spack install
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/datetime-fortran-1.7.0-oy47sjopcbyjxejfinwe3ept564idest
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/json-fortran-8.3.0-dlmgtabad5koosoqhjfcs7323itzzrxx
 ==> openmpi@4.0.2 : has external module in ['openmpi/4.0.2']
-[+] /apps/openmpi/4.0.2 (external openmpi-4.0.2-4jwtg3nt7p3zsod4rvn3i3jyyop3arpe)
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/pkgconf-1.9.5-uyq7tvpnuuo3gosnplkvuxktaeeipuqk
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/zlib-1.2.13-arj4bfz33zf63gvfionhorrrveci6kb4
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/hdf5-1.14.1-2-a6mpuk7tw5e4pyukxwalooc7jfldalcf
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/netcdf-c-4.7.4-i3inxzaihefr3rqljoovhyevwai6bsff
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/netcdf-fortran-4.5.2-mnx4gghyb5gngsl3fgosud6k72yu2u6a
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/parallelio-2.5.2-nwolfzy2xxb4wub65gmvlm3edhuolmlh
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/oasis3-mct-git.2023.11.09=2023.11.09-sh2anmtjrygzixya2fjc3p7cg4o5wc5h
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/libaccessom2-git.2023.10.26=2023.10.26-ltfg7jcn6t4cefotvj3kjnyu5nru26xo
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/cice5-git.2023.10.19=2023.10.19-v3zncpqjj2gyseudbwiudolcjq3k3leo
-==> Installing mom5-git.2023.11.09=2023.11.09-lisulnpbvmllenqb443lnuybhs3sopwk
-==> No binary for mom5-git.2023.11.09=2023.11.09-lisulnpbvmllenqb443lnuybhs3sopwk found: installing from source
-==> No patches needed for mom5
-==> mom5: Executing phase: 'edit'
-==> mom5: Executing phase: 'build'
-==> Error: ProcessError: Command exited with status 1:
-    './MOM_compile.csh' '--type' 'ACCESS-OM' '--platform' 'spack' '--no_environ' '--no_version'
-
-2 errors found in build log:
-     155    make: Nothing to be done for 'all'.
-     156    ...................................................................................................................................................................... Makefile is ready.
-     157    make: Nothing to be done for 'all'.
-     158    ..... Makefile is ready.
-     159    mpifort -Duse_netCDF -Duse_libMPI -DACCESS_OM  -fpp -Wp,-w -I/g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/oasis3-mct-git.2023.11.09=2023.11.09-sh2anmtjrygzixya2fjc3p7c
-            g4o5wc5h/include/psmile.MPI1 -I/g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/oasis3-mct-git.2023.11.09=2023.11.09-sh2anmtjrygzixya2fjc3p7cg4o5wc5h/include -I/g/data/vk8
-            3/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/libaccessom2-git.2023.10.26=2023.10.26-ltfg7jcn6t4cefotvj3kjnyu5nru26xo/include -I/g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/netcdf-fortran-4.5.2-mnx4gghyb5gngsl3fgosud6k72yu2u6a/include -fno-alias -safe-cray-ptr -fpe0 -ftz -assume byterecl -i4 -r8 -nowarn -check noarg_temp_created -assume nobuffered_io -convert big_endian -grecord-gcc-switches -align all -fp-model precise -fp-model source -align all -g3 -O2 -xCORE-AVX2 -debug all -check none -traceback -I/g/data/.../dev_instructio
-            ns/envs/mom5-dev/mom5/exec/spack/lib_FMS -I/g/data/.../dev_instructions/envs/mom5-dev/mom5/exec/spack/ACCESS-OM/lib_ocean -c        /g/data/.../dev_instructions/envs/mom5-dev/mom5/src/accessom_coupler/ocean_solo.F90
-     160    ifort: command line warning #10121: overriding '-march=pentium4' with '-xCORE-AVX2'
-  >> 161    /g/data/.../dev_instructions/envs/mom5-dev/mom5/src/accessom_coupler/ocean_solo.F90(365): error #6404: This name does not have a type, and must have an explicit type.   [SECONDS_PER_HOUR]
-     162        sfix_seconds = sfix_hours * SECONDS_PER_HOUR
-     163    --------------------------------^
-     164    compilation aborted for /g/data/.../dev_instructions/envs/mom5-dev/mom5/src/accessom_coupler/ocean_solo.F90 (code 1)
-  >> 165    make: *** [Makefile:20: ocean_solo.o] Error 1
-     166    Make failed to create the ACCESS-OM executable
-     167    ==> mom5: Executing phase: 'install'
-     168    ==> [2024-04-29-15:33:46.059929] Installing exec/spack/ACCESS-OM/fms_ACCESS-OM.x to /g/data/.../dev_instructions/release/linux-rocky8-x86_64/intel-19.0.5.281/mom5-git.2023.11.09=2023.11.09
-            -lisulnpbvmllenqb443lnuybhs3sopwk/bin
-     169    ==> [2024-04-29-15:33:46.204205] Installing bin/mppnccombine.spack to /g/data/.../dev_instructions/release/linux-rocky8-x86_64/intel-19.0.5.281/mom5-git.2023.11.09=2023.11.09-lisulnpbvmlle
-            nqb443lnuybhs3sopwk/bin
+[+] /apps/openmpi/4.0.2 (external openmpi-4.0.2-skdxaycsjbzb33gqqp252d7vu6zuai5e)
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/pkgconf-1.9.5-3f2l3qwlgatzrt6kdcigbdiadyydy6ld
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/zlib-ng-2.1.4-jugwcxhg3jwqkp4rzchowtra6zlmoxn3
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/gmake-4.4.1-ggoluv3v37ruoyyjo4idshs6lcfcnpyb
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/hdf5-1.14.3-a7oy4ouzbbrsyajhbwyre57iokthvdg5
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/netcdf-c-4.7.4-7mvqb2xq7nd7vxmw3d27peuoshrviu4y
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/netcdf-fortran-4.5.2-gwkizyb62yqltwm2doeui4dqdtniauje
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/parallelio-2.5.2-mv2hsjyyxrxefozyl2zm353s4g4yn4bt      
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/oasis3-mct-git.2023.11.09_2023.11.09-54ylj75ghxllo7feyxy
+o2cpa23zbx7lf                     
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/libaccessom2-git.2023.10.26_2023.10.26-44vqfykpu37f4payz
+6xsljnov7s3az6l
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/cice5-git.2023.10.19_2023.10.19-3hxisc2ywncbzlz5a3yg5f5v
+5tahn5ta                                                                                                                                     
+==> Installing mom5-git.2023.11.09=2023.11.09-sn3ycjygtex7ppdyh7t5ihasyvlr3ofm [14/15]
+==> No binary for mom5-git.2023.11.09=2023.11.09-sn3ycjygtex7ppdyh7t5ihasyvlr3ofm found: installing from source                              
+==> No patches needed for mom5                                                                                                               
+==> mom5: Executing phase: 'edit'                                                                                                            
+==> mom5: Executing phase: 'build'                                                                                                           
+==> Error: ProcessError: Command exited with status 1:                                                                                       
+    './MOM_compile.csh' '--no_version' '--type' 'ACCESS-OM' '--platform' 'spack' '--no_environ'                                              
+                                                                                                                                             
+2 errors found in build log:                                                                                                                 
+     177    make: Nothing to be done for 'all'.                                                                                                    178    ..................................................................................................................................
+...................................                                                                                                                       . Makefile is ready.
+     179    make: Nothing to be done for 'all'.                                                                                              
+     180    ..... Makefile is ready.                                                                                                         
+     181    mpifort -Duse_netCDF -Duse_libMPI -DACCESS_OM  -fpp -Wp,-w -I/scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/inte
+l-19.0.5.281/oasis3-mct-git.2023.11
+            .09_2023.11.09-54ylj75ghxllo7feyxyo2cpa23zbx7lf/include/psmile.MPI1 -I/scratch/.../tmp/dev-docs/release/linux-rocky8-x86_6
+4_v4/intel-19.0.5.281/oasis3-mct-gi 
+            t.2023.11.09_2023.11.09-54ylj75ghxllo7feyxyo2cpa23zbx7lf/include -I/scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v
+4/intel-19.0.5.281/libaccessom2-git                                                                                                          
+            .2023.10.26_2023.10.26-44vqfykpu37f4payz6xsljnov7s3az6l/include -I/scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/netcdf-fortran-4.
+            5.2-gwkizyb62yqltwm2doeui4dqdtniauje/include -fno-alias -safe-cray-ptr -fpe0 -ftz -assume byterecl -i4 -r8 -nowarn -check noarg_temp_created -assume nobuffered_io -c
+            onvert big_endian -grecord-gcc-switches -align all -fp-model precise -fp-model source -align all -g3 -O2 -xCORE-AVX2 -debug all -check none -traceback -I/scratch/.../tmp/dev-docs/envs/mom5-dev/mom5/exec/spack/lib_FMS -I/scratch/.../tmp/dev-docs/envs/mom5-dev/mom5/exec/spack/ACCE
+SS-OM/lib_ocean -c        /scratch/tm70/ap
+            h502/tmp/dev-docs/envs/mom5-dev/mom5/src/accessom_coupler/ocean_solo.F90
+     182    ifort: command line warning #10121: overriding '-march=skylake-avx512' with '-xCORE-AVX2'
+  >> 183    /scratch/.../tmp/dev-docs/envs/mom5-dev/mom5/src/accessom_coupler/ocean_solo.F90(365): error #6404: This name does not have a type, and must have an explicit
+             type.   [SECONDS_PER_HOUR]
+     184        sfix_seconds = sfix_hours * SECONDS_PER_HOUR
+     185    --------------------------------^ 
+     186    compilation aborted for /scratch/.../tmp/dev-docs/envs/mom5-dev/mom5/src/accessom_coupler/ocean_solo.F90 (code 1)
+  >> 187    make: *** [Makefile:20: ocean_solo.o] Error 1
+     188    Make failed to create the ACCESS-OM executable
+     189    ==> mom5: Executing phase: 'install'
+     190    ==> [2024-05-31-00:37:24.137440] Installing exec/spack/ACCESS-OM/fms_ACCESS-OM.x to /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281
+            /mom5-git.2023.11.09_2023.11.09-sn3ycjygtex7ppdyh7t5ihasyvlr3ofm/bin
+     191    ==> [2024-05-31-00:37:24.210207] Installing bin/mppnccombine.spack to /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/mom5-git.2023
+            .11.09_2023.11.09-sn3ycjygtex7ppdyh7t5ihasyvlr3ofm/bin
 
 See build log for details:
-  /g/data/.../dev_instructions/envs/mom5-dev/mom5/spack-build-out.txt
+  /scratch/.../tmp/dev-docs/envs/mom5-dev/mom5/spack-build-out.txt
 
-==> Warning: Skipping build of access-om2-git.2024.03.0=2024.03.0-5nk4sjpusp6cilzp3jkmubonty5q2w62 since mom5-git.2023.11.09=2023.11.09-lisulnpbvmllenqb443lnuybhs3sopwk failed
-==> Error: access-om2-git.2024.03.0=2024.03.0-5nk4sjpusp6cilzp3jkmubonty5q2w62: Package was not installed
-==> Error: mom5-git.2023.11.09=2023.11.09-lisulnpbvmllenqb443lnuybhs3sopwk: Package was not installed
-==> Warning: Module file /g/data/.../dev_instructions/release/modules/linux-rocky8-x86_64/access-om2/2024.03.0 exists and will not be overwritten
-==> Warning: Module file /g/data/.../dev_instructions/release/modules/linux-rocky8-x86_64/mom5/2023.11.09 exists and will not be overwritten
+==> Warning: Skipping build of access-om2-git.2024.03.0=2024.03.0-xtrvyahghgfmonn732mwhrl6nffuh2cq since mom5-git.2023.11.09=2023.11.09-sn3ycjygtex7ppdyh7t5ihasyvlr3ofm failed
+==> Error: access-om2-git.2024.03.0=2024.03.0-xtrvyahghgfmonn732mwhrl6nffuh2cq: Package was not installed
+==> Warning: Module file /scratch/.../tmp/dev-docs/release/modules/linux-rocky8-x86_64_v4/access-om2/2024.03.0 exists and will not be overwritten
 ==> Error: Installation request failed.  Refer to reported errors for failing package(s).
 ```
 
@@ -261,43 +274,47 @@ As expected the change resulted in an error and the build was not successful.
 
 As a result of the intentional error introduced above. 
 
-Reverting that change and `spack install` worked as expected
-
+Reverting that change and `spack install` works as expected:
 ```bash
-$ git -C mom5 stash
-Saved working directory and index state WIP on (no branch): baaf7ed Merge pull request #11 from ACCESS-NRI/mkmf-escape-fix
 $ spack install
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/datetime-fortran-1.7.0-aretozixwsdz42owabgzeiuxooyxrspg
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/json-fortran-8.3.0-nyxvikkez6fu64xtbeqqz2a4wngikfgi
+
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/datetime-fortran-1.7.0-oy47sjopcbyjxejfinwe3ept564idest
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/json-fortran-8.3.0-dlmgtabad5koosoqhjfcs7323itzzrxx
 ==> openmpi@4.0.2 : has external module in ['openmpi/4.0.2']
-[+] /apps/openmpi/4.0.2 (external openmpi-4.0.2-4jwtg3nt7p3zsod4rvn3i3jyyop3arpe)
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/pkgconf-1.9.5-uyq7tvpnuuo3gosnplkvuxktaeeipuqk
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/zlib-1.2.13-arj4bfz33zf63gvfionhorrrveci6kb4
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/hdf5-1.14.1-2-a6mpuk7tw5e4pyukxwalooc7jfldalcf
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/netcdf-c-4.7.4-i3inxzaihefr3rqljoovhyevwai6bsff
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/netcdf-fortran-4.5.2-mnx4gghyb5gngsl3fgosud6k72yu2u6a
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/oasis3-mct-git.2023.11.09=2023.11.09-sh2anmtjrygzixya2fjc3p7cg4o5wc5h
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/parallelio-2.5.2-nwolfzy2xxb4wub65gmvlm3edhuolmlh
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/libaccessom2-git.2023.10.26=2023.10.26-ltfg7jcn6t4cefotvj3kjnyu5nru26xo
-==> Installing mom5-git.2023.11.09=2023.11.09-lisulnpbvmllenqb443lnuybhs3sopwk
-==> No binary for mom5-git.2023.11.09=2023.11.09-lisulnpbvmllenqb443lnuybhs3sopwk found: installing from source
+[+] /apps/openmpi/4.0.2 (external openmpi-4.0.2-skdxaycsjbzb33gqqp252d7vu6zuai5e)
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/pkgconf-1.9.5-3f2l3qwlgatzrt6kdcigbdiadyydy6ld
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/zlib-ng-2.1.4-jugwcxhg3jwqkp4rzchowtra6zlmoxn3
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/gmake-4.4.1-ggoluv3v37ruoyyjo4idshs6lcfcnpyb
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/hdf5-1.14.3-a7oy4ouzbbrsyajhbwyre57iokthvdg5
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/netcdf-c-4.7.4-7mvqb2xq7nd7vxmw3d27peuoshrviu4y
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/netcdf-fortran-4.5.2-gwkizyb62yqltwm2doeui4dqdtniauje
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/parallelio-2.5.2-mv2hsjyyxrxefozyl2zm353s4g4yn4bt
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/oasis3-mct-git.2023.11.09_2023.11.09-54ylj75ghxllo7feyxy
+o2cpa23zbx7lf
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/libaccessom2-git.2023.10.26_2023.10.26-44vqfykpu37f4payz
+6xsljnov7s3az6l
+==> Installing mom5-git.2023.11.09=2023.11.09-sn3ycjygtex7ppdyh7t5ihasyvlr3ofm [13/15]
+==> No binary for mom5-git.2023.11.09=2023.11.09-sn3ycjygtex7ppdyh7t5ihasyvlr3ofm found: installing from source
 ==> No patches needed for mom5
 ==> mom5: Executing phase: 'edit'
 ==> mom5: Executing phase: 'build'
 ==> mom5: Executing phase: 'install'
-==> mom5: Successfully installed mom5-git.2023.11.09=2023.11.09-lisulnpbvmllenqb443lnuybhs3sopwk
-  Stage: 0.00s.  Edit: 0.08s.  Build: 12.39s.  Install: 0.09s.  Post-install: 0.36s.  Total: 14.66s
-[+] /g/data/.../dev_instructions/release/linux-rocky8-x86_64/intel-19.0.5.281/mom5-git.2023.11.09=2023.11.09-lisulnpbvmllenqb443lnuybhs3sopwk
-[+] /g/data/vk83/apps/spack/0.20/release/linux-rocky8-x86_64/intel-19.0.5.281/cice5-git.2023.10.19=2023.10.19-v3zncpqjj2gyseudbwiudolcjq3k3leo
-==> Installing access-om2-git.2024.03.0=2024.03.0-5nk4sjpusp6cilzp3jkmubonty5q2w62
-==> No binary for access-om2-git.2024.03.0=2024.03.0-5nk4sjpusp6cilzp3jkmubonty5q2w62 found: installing from source
+==> mom5: Successfully installed mom5-git.2023.11.09=2023.11.09-sn3ycjygtex7ppdyh7t5ihasyvlr3ofm
+  Stage: 0.00s.  Edit: 0.06s.  Build: 9.21s.  Install: 0.17s.  Post-install: 0.24s.  Total: 10.72s
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/mom5-git.2023.11.09_2023.11.09-sn3ycjygtex7ppdyh7t5ihasy
+vlr3ofm
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/cice5-git.2023.10.19_2023.10.19-3hxisc2ywncbzlz5a3yg5f5v
+5tahn5ta
+==> Installing access-om2-git.2024.03.0=2024.03.0-xtrvyahghgfmonn732mwhrl6nffuh2cq [15/15]
+==> No binary for access-om2-git.2024.03.0=2024.03.0-xtrvyahghgfmonn732mwhrl6nffuh2cq found: installing from source
 ==> No patches needed for access-om2
 ==> access-om2: Executing phase: 'install'
-==> access-om2: Successfully installed access-om2-git.2024.03.0=2024.03.0-5nk4sjpusp6cilzp3jkmubonty5q2w62
-  Stage: 0.00s.  Install: 0.00s.  Post-install: 0.15s.  Total: 1.07s
-[+] /g/data/.../dev_instructions/release/linux-rocky8-x86_64/intel-19.0.5.281/access-om2-git.2024.03.0=2024.03.0-5nk4sjpusp6cilzp3jkmubonty5q2w62
-==> Warning: Module file /g/data/.../dev_instructions/release/modules/linux-rocky8-x86_64/access-om2/2024.03.0 exists and will not be overwritten
-==> Warning: Module file /g/data/.../dev_instructions/release/modules/linux-rocky8-x86_64/mom5/2023.11.09 exists and will not be overwritten
+==> access-om2: Successfully installed access-om2-git.2024.03.0=2024.03.0-xtrvyahghgfmonn732mwhrl6nffuh2cq
+  Stage: 0.00s.  Install: 0.00s.  Post-install: 0.12s.  Total: 0.59s
+[+] /scratch/.../tmp/dev-docs/release/linux-rocky8-x86_64_v4/intel-19.0.5.281/access-om2-git.2024.03.0_2024.03.0-xtrvyahghgfmonn732mwh
+rl6nffuh2cq
+==> Warning: Module file /scratch/.../tmp/dev-docs/release/modules/linux-rocky8-x86_64_v4/access-om2/2024.03.0 exists and will not be
+overwritten
 ```
 
 This was a simple example to show the development workflow: `change code > test compilation > change code > test` compilation cycle.
