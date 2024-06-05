@@ -5,7 +5,7 @@
 spack:
   # add package specs to the `specs` list
   specs:
-    - access-om2@git.2024.04.0
+    - access-om2@git.2024.06.0
   packages:
     cice5:
       require:
@@ -58,7 +58,7 @@ spack:
               'SPACK_{name}_ROOT': '{prefix}'
         projections:
           all: '{name}/{version}'
-          access-om2: '{name}/2024.04.0'
+          access-om2: '{name}/2024.06.0'
           cice5: '{name}/2023.10.19'
           mom5: '{name}/2023.11.09'
           libaccessom2: '{name}/2023.10.26'
