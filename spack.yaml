@@ -29,7 +29,7 @@ spack:
         - '@4.6.1'
     parallelio:
       require:
-        - '@2.6.2'
+        - '@2.5.2'
     openmpi:
       require:
         - '@4.1.5'
