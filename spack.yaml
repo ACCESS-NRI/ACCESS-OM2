@@ -31,9 +31,9 @@ spack:
       require:
         - '@2.5.2'
     openmpi:
+      # spack version must be 0.22.1 since it takes care of compiler remark 10441
       require:
         - '@4.1.5'
-        - 'cppflags="-diag-disable=10441"'
     all:
       require:
         - '%intel@2021.10.0'
