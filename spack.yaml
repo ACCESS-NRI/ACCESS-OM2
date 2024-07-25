@@ -45,7 +45,7 @@ spack:
           - oasis3-mct
         exclude_implicits: true
         all:
-          autoload: direct
+          autoload: run
           conflict:
             - '{name}'
           environment:
