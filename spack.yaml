@@ -12,7 +12,7 @@ spack:
         - '@git.2023.10.19'
     mom5:
       require:
-        - '@git.ea4d313d6731fe6621cab26495685a77963f7cdc'
+        - '@ea4d313d6731fe6621cab26495685a77963f7cdc'
     libaccessom2:
       require:
         - '@git.2023.10.26'
