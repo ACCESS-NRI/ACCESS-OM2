@@ -16,14 +16,14 @@ It is necessary to make local copies of the following repositories using `git cl
 - [`spack-packages`](https://github.com/ACCESS-NRI/spack-packages.git) - ACCESS-NRI package repository which defines a number of the packages used by ACCESS-OM2
 
 ```bash
-git clone -c feature.manyFiles=true https://github.com/ACCESS-NRI/spack.git --branch releases/v0.21 --single-branch --depth=1
+git clone -c feature.manyFiles=true https://github.com/ACCESS-NRI/spack.git --branch releases/v0.22 --single-branch --depth=1
 git clone https://github.com/ACCESS-NRI/spack-packages.git --branch main
 git clone https://github.com/ACCESS-NRI/spack-config.git --branch main
 ```
 
 Then link all the `spack-config` settings to your local spack instance:
 ```bash
-ln -s -r -v spack-config/v0.21/gadi/* spack/etc/spack/
+ln -s -r -v spack-config/v0.22/gadi/* spack/etc/spack/
 ```
 
 > [!NOTE]
