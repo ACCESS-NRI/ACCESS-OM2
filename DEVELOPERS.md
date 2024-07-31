@@ -1,6 +1,6 @@
 # Developers Guide
 
-This guide steps through the process to develop the ACCESS-OM2 model using [spack](spack.io), the build from source package manager that is used to build and deploy the model.  Spack automatically downloads package sources to a cache, compiles and installs them.  However spack also supports model development using a modified environment where the components that are being actively developed are compiled in a local source directory, and the rest built in the normal spack manner.
+This guide steps through the process to develop the ACCESS-OM2 model using [spack](https://spack.readthedocs.io), the build from source package manager that is used to build and deploy the model.  Spack automatically downloads package sources to a cache, compiles and installs them.  However spack also supports model development using a modified environment where the components that are being actively developed are compiled in a local source directory, and the rest built in the normal spack manner.
 
 This guide is to assist developers who wish to modify one or more of the model components of ACCESS-OM2 and compile the modified code. Typically there is a development cycle, where the code is modified, compiled, tested and further modified based on testing.
 
