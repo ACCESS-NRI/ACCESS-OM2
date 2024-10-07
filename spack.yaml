@@ -5,16 +5,15 @@
 spack:
   # add package specs to the `specs` list
   specs:
-    # TODO: The CI/CD doesn't support the `=access-om2` syntax yet.
-    # - access-om2@git.2024.03.0=access-om2
-    - access-om2@git.2024.03.0
+    - access-om2@git.2024.11.0
   packages:
     cice5:
       require:
         - '@git.2023.10.19=access-om2'
     mom5:
       require:
-        - '@git.2023.11.09=access-om2'
+      # FIXME: This would need to be changed to a stable version before release
+        - '@git.dev_2024.08.14=access-om2'
     libaccessom2:
       require:
         - '@git.2023.10.26=access-om2'
@@ -33,6 +32,18 @@ spack:
     openmpi:
       require:
         - '@4.0.2'
+    access-fms:
+      require:
+      # FIXME: This would need to be changed to a stable version before release
+        - '@development'
+    access-generic-tracers:
+      require:
+      # FIXME: This would need to be changed to a stable version before release.
+        - '@development'
+    access-mocsy:
+      require:
+        - '@mom5'
+    # Specifications that apply to all packages
     all:
       require:
         - '%intel@19.0.5.281'
@@ -50,8 +61,8 @@ spack:
           - libaccessom2
           - oasis3-mct
         projections:
-          access-om2: '{name}/2024.03.0'
+          access-om2: '{name}/2024.11.0'
           cice5: '{name}/2023.10.19-{hash:7}'
-          mom5: '{name}/2023.11.09-{hash:7}'
+          mom5: '{name}/dev_2024.08.14-{hash:7}'
           libaccessom2: '{name}/2023.10.26-{hash:7}'
           oasis3-mct: '{name}/2023.11.09-{hash:7}'
