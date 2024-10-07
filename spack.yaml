@@ -12,6 +12,7 @@ spack:
       - '@git.2023.10.19'
     mom5:
       require:
+      # FIXME: This would need to be changed to a stable version before release
       - '@git.development'
     libaccessom2:
       require:
@@ -33,9 +34,11 @@ spack:
       - '@4.0.2'
     access-fms:
       require:
+      # FIXME: This would need to be changed to a stable version before release
       - '@development'
     access-generic-tracers:
       require:
+      # FIXME: This would need to be changed to a stable version before release. 
       - '@development'
     access-mocsy:
       require:
