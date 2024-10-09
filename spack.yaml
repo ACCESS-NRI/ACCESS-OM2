@@ -13,7 +13,7 @@ spack:
     mom5:
       require:
       # FIXME: This would need to be changed to a stable version before release
-      - '@git.development'
+      - '@git.dev_2024.08.14'
     libaccessom2:
       require:
       - '@git.2023.10.26'
@@ -38,7 +38,7 @@ spack:
       - '@development'
     access-generic-tracers:
       require:
-      # FIXME: This would need to be changed to a stable version before release. 
+      # FIXME: This would need to be changed to a stable version before release.
       - '@development'
     access-mocsy:
       require:
@@ -78,6 +78,6 @@ spack:
           all: '{name}/{version}'
           access-om2: '{name}/2024.10.0'
           cice5: '{name}/2023.10.19'
-          mom5: '{name}/development'
+          mom5: '{name}/dev_2024.08.14'
           libaccessom2: '{name}/2023.10.26'
           oasis3-mct: '{name}/2023.11.09'
