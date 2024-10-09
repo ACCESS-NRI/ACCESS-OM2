@@ -5,26 +5,49 @@
 spack:
   # add package specs to the `specs` list
   specs:
-    - access-om2@git.2024.03.0
+    - access-om2@git.2024.10.0
   packages:
     cice5:
-      require: '@git.2023.10.19'
+      require:
+      - '@git.2023.10.19'
     mom5:
-      require: '@git.2023.11.09'
+      require:
+      # FIXME: This would need to be changed to a stable version before release
+      - '@git.dev_2024.08.14'
     libaccessom2:
-      require: '@git.2023.10.26'
+      require:
+      - '@git.2023.10.26'
     oasis3-mct:
-      require: '@git.2023.11.09'
+      require:
+      - '@git.2023.11.09'
     netcdf-c:
-      require: '@4.7.4'
+      require:
+      - '@4.7.4'
     netcdf-fortran:
-      require: '@4.5.2'
+      require:
+      - '@4.5.2'
     parallelio:
-      require: '@2.5.2'
+      require:
+      - '@2.5.2'
     openmpi:
-      require: '@4.0.2'
+      require:
+      - '@4.0.2'
+    access-fms:
+      require:
+      # FIXME: This would need to be changed to a stable version before release
+      - '@development'
+    access-generic-tracers:
+      require:
+      # FIXME: This would need to be changed to a stable version before release.
+      - '@development'
+    access-mocsy:
+      require:
+      - '@mom5'
+    # Specifications that apply to all packages
     all:
-      compiler: [intel@19.0.5.281]
+      require:
+        - '%intel@19.0.5.281'
+        - 'target=x86_64'
   view: true
   concretizer:
     unify: true
@@ -53,8 +76,8 @@ spack:
               'SPACK_{name}_ROOT': '{prefix}'
         projections:
           all: '{name}/{version}'
-          access-om2: '{name}/2024.03.0'
+          access-om2: '{name}/2024.10.0'
           cice5: '{name}/2023.10.19'
-          mom5: '{name}/2023.11.09'
+          mom5: '{name}/dev_2024.08.14'
           libaccessom2: '{name}/2023.10.26'
           oasis3-mct: '{name}/2023.11.09'
