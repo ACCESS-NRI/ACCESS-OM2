@@ -40,7 +40,7 @@ spack:
     access-generic-tracers:
       require:
       # FIXME: This would need to be changed to a stable version before release.
-        - '@development'
+        - '@git.dev_2024.11.0'
     access-mocsy:
       require:
         - '@mom5'
