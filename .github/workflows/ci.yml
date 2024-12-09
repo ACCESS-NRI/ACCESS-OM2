@@ -19,13 +19,17 @@ on:
 jobs:
   pr-ci:
     name: CI
-    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+    if: >-
+      (github.event_name == 'pull_request' && github.event.action != 'closed') ||
+      (github.event_name == 'issue_comment' && startsWith(github.event.comment.body, '!redeploy'))
     uses: access-nri/build-cd/.github/workflows/ci.yml@main
     with:
       model: ${{ vars.NAME }}
+      pr: ${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.event.issue.number }}
     permissions:
       pull-requests: write
       contents: write
+      statuses: write
     secrets: inherit
 
   pr-comment:
