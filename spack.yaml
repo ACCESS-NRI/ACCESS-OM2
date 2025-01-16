@@ -5,14 +5,14 @@
 spack:
   # add package specs to the `specs` list
   specs:
-    - access-om2@git.2024.03.0
+    - access-om2@git.2024.03.1
   packages:
     cice5:
       require:
         - '@git.2023.10.19'
     mom5:
       require:
-        - '@git.2023.11.09'
+        - '@git.development'
     libaccessom2:
       require:
         - '@git.2023.10.26'
@@ -48,8 +48,8 @@ spack:
           - libaccessom2
           - oasis3-mct
         projections:
-          access-om2: '{name}/2024.03.0'
+          access-om2: '{name}/2024.03.1'
           cice5: '{name}/2023.10.19-{hash:7}'
-          mom5: '{name}/2023.11.09-{hash:7}'
+          mom5: '{name}/development-{hash:7}'
           libaccessom2: '{name}/2023.10.26-{hash:7}'
           oasis3-mct: '{name}/2023.11.09-{hash:7}'
