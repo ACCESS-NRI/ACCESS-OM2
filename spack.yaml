@@ -3,9 +3,29 @@
 # It describes a set of packages to be installed, along with
 # configuration settings.
 spack:
+  definitions:
+    # This is the overarching package for the model
+    - root_package:
+      - access-om2@git.2024.03.0
+
+    # Compiler and Target definitions (assumes DEPLOYMENT_TARGET set on host)
+    - when: env['DEPLOYMENT_TARGET'] == 'Gadi'  # Or, maybe 're.match(r'.+\.gadi\.nci\.org\.au', hostname)'
+      compiler_target: ['intel@19.0.5.281 target=x86_64_v4']
+    - when: env['DEPLOYMENT_TARGET'] == 'Setonix'
+      compiler_target: ['compiler@1.0.0 target=x86_64_v3']
+    # Default
+    - when: "'DEPLOYMENT_TARGET' not in env"
+      compiler_target: ['intel@2021.2.0 target=x86_64']
+
+    # Root Spec Definition
+    - root-spec:
+      - matrix:
+        - [$root_package]
+        - [$%compiler_target]
   # add package specs to the `specs` list
   specs:
-    - access-om2@git.2024.03.0
+    - $root-spec
+    # - access-om2@git.2024.03.0
   packages:
     cice5:
       require:
@@ -31,10 +51,10 @@ spack:
     openmpi:
       require:
         - '@4.0.2'
-    all:
-      require:
-        - '%intel@19.0.5.281'
-        - 'target=x86_64'
+#    all:
+#      require:
+#        - '%intel@19.0.5.281'
+#        - 'target=x86_64'
   view: true
   concretizer:
     unify: true
