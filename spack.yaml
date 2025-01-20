@@ -5,7 +5,7 @@
 spack:
   definitions:
     # This is the overarching package for the model
-    - root_package:
+    - ROOT_PACKAGE:
       - access-om2@git.2024.03.0
 
     # Compiler and Target definitions (assumes DEPLOYMENT_TARGET set on host)
@@ -18,13 +18,13 @@ spack:
       compiler_target: ['intel@2021.2.0 target=x86_64']
 
     # Root Spec Definition
-    - root-spec:
+    - ROOT_SPEC:
       - matrix:
-        - [$root_package]
+        - [$ROOT_PACKAGE]
         - [$%compiler_target]
   # add package specs to the `specs` list
   specs:
-    - $root-spec
+    - $ROOT_SPEC
     # - access-om2@git.2024.03.0
   packages:
     cice5:
