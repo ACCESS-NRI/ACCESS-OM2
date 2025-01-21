@@ -5,7 +5,7 @@
 spack:
   # add package specs to the `specs` list
   specs:
-    - access-om2@git.2025.01.1
+    - access-om2@git.2025.01.2
   packages:
     cice5:
       require:
@@ -37,11 +37,11 @@ spack:
       require:
       # FIXME: This would need to be changed to a stable version before release
         - '@git.dev_2024.12.0'
-    # Includes wombatlite-sinking: https://github.com/ACCESS-NRI/GFDL-generic-tracers/commit/2c21bd8e1a8903eac581e4448854779248da3306
+    # Includes wombatlite-sinking: https://github.com/ACCESS-NRI/GFDL-generic-tracers/commit/9bf0d6d7c72918eaa96d94e68463bf70f6065985
     access-generic-tracers:
       require:
       # FIXME: This would need to be changed to a stable version before release.
-        - '@git.dev_2025.01.1'
+        - '@git.dev_2025.01.2'
     access-mocsy:
       require:
         - '@git.2017.12.0'
@@ -63,7 +63,7 @@ spack:
           - libaccessom2
           - oasis3-mct
         projections:
-          access-om2: '{name}/2025.01.1'
+          access-om2: '{name}/2025.01.2'
           cice5: '{name}/2023.10.19-{hash:7}'
           mom5: '{name}/dev_2024.08.14-{hash:7}'
           libaccessom2: '{name}/2023.10.26-{hash:7}'
