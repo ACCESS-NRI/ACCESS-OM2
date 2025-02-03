@@ -10,9 +10,11 @@ on:
 jobs:
   cd:
     name: CD
-    uses: access-nri/build-cd/.github/workflows/cd.yml@v3
+    uses: access-nri/build-cd/.github/workflows/cd.yml@v4
     with:
       model: ${{ vars.NAME }}
     permissions:
       contents: write
+      # Required because later workflows also handle on.pull_request trigger
+      pull-requests: write
     secrets: inherit
