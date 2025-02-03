@@ -5,20 +5,22 @@
 spack:
   # add package specs to the `specs` list
   specs:
+    # TODO: The CI/CD doesn't support the `=access-om2` syntax yet.
+    # - access-om2@git.2024.03.0=access-om2
     - access-om2@git.2024.03.0
   packages:
     cice5:
       require:
-        - '@git.2023.10.19'
+        - '@git.2023.10.19=access-om2'
     mom5:
       require:
-        - '@git.2023.11.09'
+        - '@git.2023.11.09=access-om2'
     libaccessom2:
       require:
-        - '@git.2023.10.26'
+        - '@git.2023.10.26=access-om2'
     oasis3-mct:
       require:
-        - '@git.2023.11.09'
+        - '@git.2023.11.09=access-om2'
     netcdf-c:
       require:
         - '@4.7.4'
