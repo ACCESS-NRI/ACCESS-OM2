@@ -41,9 +41,12 @@ spack:
     access-mocsy:
       require:
         - '@2025.07.002'
+    gcc-runtime:
+      require:
+        - '%gcc'
     all:
       require:
-        - '%intel@19.0.5.281'
+        - '%oneapi@2025.2.0'
         - 'target=x86_64'
   view: true
   concretizer:
