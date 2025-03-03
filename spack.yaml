@@ -5,22 +5,20 @@
 spack:
   # add package specs to the `specs` list
   specs:
-    # TODO: The CI/CD doesn't support the `=access-om2` syntax yet.
-    # - access-om2@git.2024.03.0=access-om2
-    - access-om2@git.2024.03.0
+    - access-om2@git.2025.03.001
   packages:
     cice5:
       require:
-        - '@git.2023.10.19=access-om2'
+        - '@git.2025.03.001=access-om2'
     mom5:
       require:
-        - '@git.2023.11.09=access-om2'
+        - '@git.2025.03.001=access-om2'
     libaccessom2:
       require:
         - '@git.2023.10.26=access-om2'
     oasis3-mct:
       require:
-        - '@git.2023.11.09=access-om2'
+        - '@git.2025.03.001=access-om2'
     netcdf-c:
       require:
         - '@4.7.4'
@@ -32,10 +30,13 @@ spack:
         - '@2.5.2'
     openmpi:
       require:
-        - '@4.0.2'
+        - '@4.1.5'
+    gcc-runtime:
+      require:
+        - '%gcc'
     all:
       require:
-        - '%intel@19.0.5.281'
+        - '%oneapi@2025.0.4'
         - 'target=x86_64'
   view: true
   concretizer:
@@ -50,8 +51,8 @@ spack:
           - libaccessom2
           - oasis3-mct
         projections:
-          access-om2: '{name}/2024.03.0'
-          cice5: '{name}/2023.10.19-{hash:7}'
-          mom5: '{name}/2023.11.09-{hash:7}'
+          access-om2: '{name}/2025.03.001'
+          cice5: '{name}/2025.03.001-{hash:7}'
+          mom5: '{name}/2025.03.001-{hash:7}'
           libaccessom2: '{name}/2023.10.26-{hash:7}'
-          oasis3-mct: '{name}/2023.11.09-{hash:7}'
+          oasis3-mct: '{name}/2025.03.001-{hash:7}'
