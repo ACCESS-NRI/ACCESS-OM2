@@ -36,7 +36,8 @@ spack:
         - '%gcc'
     all:
       require:
-        - '%oneapi@2025.0.4'
+        #- '%oneapi@2025.0.4'
+        - '%intel@19.0.5.281'
         - 'target=x86_64'
   view: true
   concretizer:
