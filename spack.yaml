@@ -13,6 +13,7 @@ spack:
     mom5:
       require:
         - '@git.2025.03.001=access-om2'
+        - 'fflags="-assume nan_compares -assume ieee_compares"'
     libaccessom2:
       require:
         - '@git.2023.10.26=access-om2'
@@ -36,8 +37,8 @@ spack:
         - '%gcc'
     all:
       require:
-        #- '%oneapi@2025.0.4'
-        - '%intel@19.0.5.281'
+        - '%oneapi@2025.0.4'
+        #- '%intel@19.0.5.281'
         - 'target=x86_64'
   view: true
   concretizer:
