@@ -14,7 +14,7 @@ spack:
         - '@git.2023.10.19=access-om2'
     mom5:
       require:
-        - '@git.2023.11.09=access-om2'
+        - '@git.68ba5781d56d690669293ac7fdcc8a453fac58f0=access-om2'
     libaccessom2:
       require:
         - '@git.2023.10.26=access-om2'
@@ -52,6 +52,6 @@ spack:
         projections:
           access-om2: '{name}/2024.03.0'
           cice5: '{name}/2023.10.19-{hash:7}'
-          mom5: '{name}/2023.11.09-{hash:7}'
+          mom5: '{name}/68ba5781d56d690669293ac7fdcc8a453fac58f0-{hash:7}'
           libaccessom2: '{name}/2023.10.26-{hash:7}'
           oasis3-mct: '{name}/2023.11.09-{hash:7}'
