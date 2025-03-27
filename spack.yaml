@@ -35,8 +35,7 @@ spack:
         - '@4.0.2'
     access-fms:
       require:
-      # FIXME: This would need to be changed to a stable version before release
-        - '@git.dev_2024.12.0'
+        - '@git.mom5-2025.04.001'
     # Includes wombatlite-sinking: https://github.com/ACCESS-NRI/GFDL-generic-tracers/commit/9bf0d6d7c72918eaa96d94e68463bf70f6065985
     access-generic-tracers:
       require:
