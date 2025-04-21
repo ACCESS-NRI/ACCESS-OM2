@@ -13,7 +13,7 @@ spack:
     mom5:
       require:
       # FIXME: This would need to be changed to a stable version before release
-        - '@git.be7047af8686d7d057b9779a1f06c9559f08c7dd=access-om2'
+        - '@git.dev-2025.04.001=access-om2'
     libaccessom2:
       require:
         - '@git.2023.10.26=access-om2'
@@ -62,6 +62,6 @@ spack:
         projections:
           access-om2: '{name}/2025.01.2'
           cice5: '{name}/2023.10.19-{hash:7}'
-          mom5: '{name}/be7047af8686d7d057b9779a1f06c9559f08c7dd-{hash:7}'
+          mom5: '{name}/dev-2025.04.001-{hash:7}'
           libaccessom2: '{name}/2023.10.26-{hash:7}'
           oasis3-mct: '{name}/2023.11.09-{hash:7}'
