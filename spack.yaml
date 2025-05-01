@@ -5,7 +5,7 @@
 spack:
   # add package specs to the `specs` list
   specs:
-    - access-om2@git.2025.01.2=latest
+    - access-om2@git.2025.05.000=latest
   packages:
     cice5:
       require:
@@ -14,7 +14,6 @@ spack:
       require:
       # FIXME: This would need to be changed to a stable version before release
         - '@git.dev_2024.08.14=access-om2'
-        - '+access-gtracers'
     libaccessom2:
       require:
         - '@git.2023.10.26=access-om2'
@@ -61,7 +60,7 @@ spack:
           - libaccessom2
           - oasis3-mct
         projections:
-          access-om2: '{name}/2025.01.2'
+          access-om2: '{name}/2025.05.000'
           cice5: '{name}/2023.10.19-{hash:7}'
           mom5: '{name}/dev_2024.08.14-{hash:7}'
           libaccessom2: '{name}/2023.10.26-{hash:7}'
