@@ -15,6 +15,7 @@ spack:
     mom5:
       require:
         - '@git.dev-2025.05.000=access-om2'
+        - '+access-gtracers'
     libaccessom2:
       require:
         - '@git.2023.10.26=access-om2'
@@ -33,6 +34,15 @@ spack:
     openmpi:
       require:
         - '@4.0.2'
+    access-fms:
+      require:
+        - '@git.mom5-2025.04.001'
+    access-generic-tracers:
+      require:
+        - '@git.dev-2025.04.001'
+    access-mocsy:
+      require:
+        - '@git.2017.12.0'
     all:
       require:
         - '%intel@19.0.5.281'
