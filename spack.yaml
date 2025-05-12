@@ -14,10 +14,10 @@ spack:
         - '@git.2023.10.19=access-om2'
     mom5:
       require:
-        - '@git.2023.11.09=access-om2'
+        - '@git.1fdf6ffe8098189e159f8daae93c3b8a66c12add=access-om2' # On update_cmake
     libaccessom2:
       require:
-        - '@git.2023.10.26=access-om2'
+        - '@git.db8a7352ebb2811693c8a2b698a861ba66189ea2=access-om2' # On fix-pkgconfig
     oasis3-mct:
       require:
         - '@git.2023.11.09=access-om2'
@@ -33,6 +33,16 @@ spack:
     openmpi:
       require:
         - '@4.0.2'
+    access-fms:
+      require:
+        - '@git.c56cd23ed38ee84ae3c4e57fb4cb0d18ecfe1c70' # On mom5-preserve-answers
+    access-generic-tracers:
+      require:
+        - '@git.14922cbe00013f6f29b4f827f4dacdf8af634656' # On update-cmake
+    access-mocsy:
+      require:
+        - '@git.2017.12.0'
+    # Specifications that apply to all packages
     all:
       require:
         - '%intel@19.0.5.281'
@@ -52,6 +62,6 @@ spack:
         projections:
           access-om2: '{name}/2024.03.0'
           cice5: '{name}/2023.10.19-{hash:7}'
-          mom5: '{name}/2023.11.09-{hash:7}'
-          libaccessom2: '{name}/2023.10.26-{hash:7}'
+          mom5: '{name}/1fdf6ffe8098189e159f8daae93c3b8a66c12add-{hash:7}'
+          libaccessom2: '{name}/db8a7352ebb2811693c8a2b698a861ba66189ea2-{hash:7}'
           oasis3-mct: '{name}/2023.11.09-{hash:7}'
