@@ -14,10 +14,10 @@ spack:
         - '@git.2023.10.19=access-om2'
     mom5:
       require:
-        - '@git.51f67bf4a554d62f7b1ce99caf2f39dc1ef6b7b3=access-om2' # On update_cmake
+        - '@git.fcb3b49d389dcf36a6b0c7c0a9394c81a1170ee4=access-om2'  # On update_cmake
     libaccessom2:
       require:
-        - '@git.db8a7352ebb2811693c8a2b698a861ba66189ea2=access-om2' # On fix-pkgconfig
+        - '@git.f2109c1a1e922fc139bfe80f3d16bf7bbf215aa2=access-om2'  # On fix-pkgconfig
     oasis3-mct:
       require:
         - '@git.2023.11.09=access-om2'
@@ -35,10 +35,10 @@ spack:
         - '@4.0.2'
     access-fms:
       require:
-        - '@git.c56cd23ed38ee84ae3c4e57fb4cb0d18ecfe1c70' # On mom5-preserve-answers
+        - '@git.mom5-2025.05.000'
     access-generic-tracers:
       require:
-        - '@git.bf2dbee5160929125c73b7d1ef32e6b0063e028b' # On update-cmake
+        - '@git.c5b330a2a74752516c16c92caa3c52879ecd3dea'  # On development
     access-mocsy:
       require:
         - '@git.2017.12.0'
@@ -62,6 +62,6 @@ spack:
         projections:
           access-om2: '{name}/2024.03.0'
           cice5: '{name}/2023.10.19-{hash:7}'
-          mom5: '{name}/51f67bf4a554d62f7b1ce99caf2f39dc1ef6b7b3-{hash:7}'
-          libaccessom2: '{name}/db8a7352ebb2811693c8a2b698a861ba66189ea2-{hash:7}'
+          mom5: '{name}/fcb3b49d389dcf36a6b0c7c0a9394c81a1170ee4-{hash:7}'
+          libaccessom2: '{name}/f2109c1a1e922fc139bfe80f3d16bf7bbf215aa2-{hash:7}'
           oasis3-mct: '{name}/2023.11.09-{hash:7}'
