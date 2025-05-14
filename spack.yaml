@@ -15,9 +15,10 @@ spack:
     mom5:
       require:
         - '@git.fcb3b49d389dcf36a6b0c7c0a9394c81a1170ee4=access-om2'  # On update_cmake
+        - 'build_system=makefile'
     libaccessom2:
       require:
-        - '@git.f2109c1a1e922fc139bfe80f3d16bf7bbf215aa2=access-om2'  # On fix-pkgconfig
+        - '@git.f2109c1a1e922fc139bfe80f3d16bf7bbf215aa2=access-om2'  # On cmake_export
     oasis3-mct:
       require:
         - '@git.2023.11.09=access-om2'
