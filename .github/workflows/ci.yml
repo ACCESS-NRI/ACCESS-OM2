@@ -6,6 +6,8 @@ on:
       - reopened
       - synchronize
       - closed
+      - converted_to_draft
+      - ready_for_review
     branches:
       - main
       - dev
@@ -23,7 +25,7 @@ jobs:
     if: >-
       (github.event_name == 'pull_request' && github.event.action != 'closed') ||
       (github.event_name == 'issue_comment' && startsWith(github.event.comment.body, '!redeploy'))
-    uses: access-nri/build-cd/.github/workflows/ci.yml@v4
+    uses: access-nri/build-cd/.github/workflows/ci.yml@v5
     with:
       model: ${{ vars.NAME }}
       pr: ${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.event.issue.number }}
@@ -36,7 +38,7 @@ jobs:
   pr-comment:
     name: Comment
     if: github.event_name == 'issue_comment'
-    uses: access-nri/build-cd/.github/workflows/ci-comment.yml@v4
+    uses: access-nri/build-cd/.github/workflows/ci-comment.yml@v5
     with:
       model: ${{ vars.NAME }}
     permissions:
@@ -47,7 +49,7 @@ jobs:
   pr-closed:
     name: Closed
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    uses: access-nri/build-cd/.github/workflows/ci-closed.yml@v4
+    uses: access-nri/build-cd/.github/workflows/ci-closed.yml@v5
     with:
       root-sbd: ${{ vars.NAME }}
     secrets: inherit
