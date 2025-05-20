@@ -30,7 +30,7 @@ spack:
         - '@2.5.2'
     openmpi:
       require:
-        - '@4.0.2'
+        - '@4.1'
     all:
       require:
         - '%intel@19.0.5.281'
