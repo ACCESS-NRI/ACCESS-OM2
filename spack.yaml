@@ -37,11 +37,10 @@ spack:
       require:
       # FIXME: This would need to be changed to a stable version before release
         - '@git.dev_2024.12.0'
-    # Includes wombatlite-sinking: https://github.com/ACCESS-NRI/GFDL-generic-tracers/commit/9bf0d6d7c72918eaa96d94e68463bf70f6065985
     access-generic-tracers:
       require:
       # FIXME: This would need to be changed to a stable version before release.
-        - '@git.dev_2025.01.2'
+        - '@git.9adb2aae7807c7dc9df30d863b2914f309124996'  # On dev_2025.01.2-Shouzheng_devs
     access-mocsy:
       require:
         - '@git.2017.12.0'
