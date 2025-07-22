@@ -9,16 +9,16 @@ spack:
   packages:
     cice5:
       require:
-        - '@git.2023.10.19=access-om2'
+        - '@git.2025.03.001=access-om2'
     mom5:
       require:
-        - '@git.2023.11.09=access-om2'
+        - '@git.2025.05.000=access-om2'
     libaccessom2:
       require:
-        - '@git.2023.10.26=access-om2'
+        - '@git.2025.05.001=access-om2'
     oasis3-mct:
       require:
-        - '@git.2023.11.09=access-om2'
+        - '@git.2025.03.001=access-om2'
     netcdf-c:
       require:
         - '@4.7.4'
@@ -31,6 +31,16 @@ spack:
     openmpi:
       require:
         - '@4.0.2'
+    access-fms:
+      require:
+        - '@git.mom5-2025.05.000'
+    access-generic-tracers:
+      require:
+      # FIXME: This will need to be changed to a stable version before release.
+        - '@git.dev-2025.06.003'
+    access-mocsy:
+      require:
+        - '@git.2025.07.001'
     all:
       require:
         - '%intel@19.0.5.281'
