@@ -37,10 +37,10 @@ spack:
     access-generic-tracers:
       require:
       # FIXME: This will need to be changed to a stable version before release.
-        - '@git.dev-2025.06.003'
+        - '@git.42290c1489e3e2de44be84c0b8deeb08efff0c08' # On development
     access-mocsy:
       require:
-        - '@git.2025.07.001'
+        - '@git.2025.07.002'
     all:
       require:
         - '%intel@19.0.5.281'
