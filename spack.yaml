@@ -38,6 +38,7 @@ spack:
       require:
       # FIXME: This will need to be changed to a stable version before release.
         - '@git.42290c1489e3e2de44be84c0b8deeb08efff0c08' # On development
+        - '+shared'
     access-mocsy:
       require:
         - '@git.2025.07.002'
