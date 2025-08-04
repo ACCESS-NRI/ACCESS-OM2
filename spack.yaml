@@ -33,15 +33,13 @@ spack:
         - '@4.0.2'
     access-fms:
       require:
-        - '@git.mom5-2025.05.000'
+        - '@git.mom5-2025.05.000=mom5'
     access-generic-tracers:
       require:
-      # FIXME: This will need to be changed to a stable version before release.
-        - '@git.42290c1489e3e2de44be84c0b8deeb08efff0c08' # On development
-        - '+shared'
+        - '@git.2025.07.001=main'
     access-mocsy:
       require:
-        - '@git.2025.07.002'
+        - '@git.2025.07.002=gtracers'
     all:
       require:
         - '%intel@19.0.5.281'
