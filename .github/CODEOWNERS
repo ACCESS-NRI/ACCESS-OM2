@@ -1,0 +1,5 @@
+# Model Release Team can edit the CODEOWNERS file
+/.github/CODEOWNERS @ACCESS-NRI/model-release
+# Tommy needs to review changes to infra
+/.github/ @CodeGat
+

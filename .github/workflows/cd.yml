@@ -10,9 +10,12 @@ on:
 jobs:
   cd:
     name: CD
-    uses: access-nri/build-cd/.github/workflows/cd.yml@v5
+    uses: access-nri/build-cd/.github/workflows/cd.yml@v6
     with:
       model: ${{ vars.NAME }}
+      spack-manifest-schema-version: 1-0-7
+      config-versions-schema-version: 3-0-0
+      config-packages-schema-version: 1-0-0
     permissions:
       contents: write
       # Required because later workflows also handle on.pull_request trigger
