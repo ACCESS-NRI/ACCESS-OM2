@@ -23,33 +23,33 @@ jobs:
   pr-ci:
     name: CI
     if: >-
-      (github.event_name == 'pull_request' && github.event.action != 'closed') ||
-      (github.event_name == 'issue_comment' && startsWith(github.event.comment.body, '!redeploy'))
-    uses: access-nri/build-cd/.github/workflows/ci.yml@v5
+      (github.event_name == 'pull_request' && github.event.action != 'closed') || (github.event_name == 'issue_comment' && startsWith(github.event.comment.body, '!redeploy'))
+    uses: access-nri/build-cd/.github/workflows/ci.yml@v6
     with:
       model: ${{ vars.NAME }}
       pr: ${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.event.issue.number }}
+      spack-manifest-schema-version: 1-0-7
+      config-versions-schema-version: 3-0-0
+      config-packages-schema-version: 1-0-0
     permissions:
       pull-requests: write
       contents: write
       statuses: write
     secrets: inherit
-
   pr-comment:
     name: Comment
     if: github.event_name == 'issue_comment'
-    uses: access-nri/build-cd/.github/workflows/ci-comment.yml@v5
+    uses: access-nri/build-cd/.github/workflows/ci-comment.yml@v6
     with:
       model: ${{ vars.NAME }}
     permissions:
       pull-requests: write
       contents: write
     secrets: inherit
-
   pr-closed:
     name: Closed
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    uses: access-nri/build-cd/.github/workflows/ci-closed.yml@v5
+    uses: access-nri/build-cd/.github/workflows/ci-closed.yml@v6
     with:
       root-sbd: ${{ vars.NAME }}
     secrets: inherit
