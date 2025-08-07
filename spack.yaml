@@ -34,6 +34,7 @@ spack:
     access-fms:
       require:
         - '@git.mom5-2025.05.000=mom5'
+        - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
         - '@git.2025.07.001=main'
