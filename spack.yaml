@@ -36,17 +36,17 @@ spack:
         - '@git.mom5-2025.05.000'
     access-generic-tracers:
       require:
-      # FIXME: This would need to be changed to a stable version before release.
-        - '@git.dev-2025.06.002'
+        - '@git.2025.07.002'
     access-mocsy:
       require:
-        - '@git.2025.07.001'
+        - '@git.2025.07.002'
     gcc-runtime:
       require:
         - '%gcc'
     all:
       require:
         - '%oneapi@2025.2.0'
+        #- '%intel@2021.10.0'
         #- '%intel@19.0.5.281'
         - 'target=x86_64'
   view: true
