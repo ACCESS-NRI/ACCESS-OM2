@@ -12,7 +12,7 @@ spack:
         - '@git.2025.03.001=access-om2'
     mom5:
       require:
-        - '@git.2025.05.000=access-om2'
+        - '@git.2025.08.000=access-om2'
     libaccessom2:
       require:
         - '@git.2025.05.001=access-om2'
@@ -37,10 +37,10 @@ spack:
         - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
-        - '@git.2025.07.001=main'
+        - '@2025.07.002'
     access-mocsy:
       require:
-        - '@git.2025.07.002=gtracers'
+        - '@2025.07.002'
     all:
       require:
         - '%intel@19.0.5.281'
