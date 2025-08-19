@@ -40,7 +40,7 @@ spack:
     access-generic-tracers:
       require:
       # FIXME: This would need to be changed to a stable version before release.
-        - '@git.9adb2aae7807c7dc9df30d863b2914f309124996'  # On dev_2025.01.2-Shouzheng_devs
+        - '@git.1e16b98aeb139122086f38231ab3a93b283caf37'  # On dev_2025.01.2-Shouzheng_devs
     access-mocsy:
       require:
         - '@git.2017.12.0'
