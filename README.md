@@ -53,7 +53,7 @@ module avail access-om2
 
 For users of ACCESS-OM2 model configurations released by ACCESS-NRI the exact location of the ACCESS-OM2 model executables is not required. Model configurations will be updated with new model components when necessary.
 
-For information on contributing your own fixes to the ACCESS-OM2 `spack.yaml`, see the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
+For information on contributing your own fixes to the ACCESS-OM2 `spack.yaml`, see the [Hive Docs article](https://docs.access-hive.org.au/models/run-a-model/create-a-prerelease/) on creating a prerelease. 
 
 ## Conditions of use
 
