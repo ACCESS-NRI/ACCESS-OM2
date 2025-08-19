@@ -54,3 +54,11 @@ module avail access-om2
 For users of ACCESS-OM2 model configurations released by ACCESS-NRI the exact location of the ACCESS-OM2 model executables is not required. Model configurations will be updated with new model components when necessary.
 
 For information on contributing your own fixes to the ACCESS-OM2 `spack.yaml`, see the [Hive Docs article](https://docs.access-hive.org.au/models/run-a-model/create-a-prerelease/) on creating a prerelease. 
+
+## Conditions of use
+
+COSIMA request that users of this or other ACCESS-OM2 model code:
+
+1. consider citing Kiss et al. (2020) ([http://doi.org/10.5194/gmd-13-401-2020](http://doi.org/10.5194/gmd-13-401-2020))
+2. include an acknowledgement such as that suggested [here](https://cosima.org.au/index.php/get-involved/)
+3. let COSIMA know of any publications which use these models or data so they can add them to [their list](https://scholar.google.com/citations?hl=en&user=inVqu_4AAAAJ).
