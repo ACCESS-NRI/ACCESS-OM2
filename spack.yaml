@@ -18,7 +18,7 @@ spack:
         - '@git.2025.05.001=access-om2'
     oasis3-mct:
       require:
-        - '@git.2025.03.001=access-om2'
+        - '@git.2025.03.001'
     netcdf-c:
       require:
         - '@4.7.4'
@@ -37,7 +37,7 @@ spack:
         - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
-        - '@2025.07.002'
+        - '@2025.08.000'
     access-mocsy:
       require:
         - '@2025.07.002'
