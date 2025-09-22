@@ -21,16 +21,16 @@ spack:
         - '@git.2025.03.001'
     netcdf-c:
       require:
-        - '@4.7.4'
+        - '@4.9.2'
     netcdf-fortran:
       require:
-        - '@4.5.2'
+        - '@4.6.1'
     parallelio:
       require:
-        - '@2.5.2'
+        - '@2.6.2'
     openmpi:
       require:
-        - '@4.0.2'
+        - '@5.0.8'
     access-fms:
       require:
         - '@git.mom5-2025.05.000=mom5'
