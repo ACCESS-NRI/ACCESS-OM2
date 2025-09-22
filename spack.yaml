@@ -30,7 +30,7 @@ spack:
         - '@2.6.2'
     openmpi:
       require:
-        - '@5.0.8'
+        - '@4.0.2'
     access-fms:
       require:
         - '@git.mom5-2025.05.000=mom5'
