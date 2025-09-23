@@ -5,7 +5,7 @@
 spack:
   # add package specs to the `specs` list
   specs:
-    - access-om2@git.2024.03.0=latest
+    - access-om2@git.2025.09.0=latest
   packages:
     cice5:
       require:
