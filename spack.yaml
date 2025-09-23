@@ -37,7 +37,7 @@ spack:
         - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
-        - '@2025.08.000'
+        - '@2025.09.000'
     access-mocsy:
       require:
         - '@2025.07.002'
