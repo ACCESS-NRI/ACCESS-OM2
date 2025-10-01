@@ -1,0 +1,45 @@
+name: Command
+on:
+  issue_comment:
+    types:
+      - created
+      - edited
+jobs:
+  redeploy:
+    name: Redeploy
+    if: startsWith(github.event.comment.body, '!redeploy') && github.event.issue.pull_request
+    uses: access-nri/build-cd/.github/workflows/ci.yml@v7
+    with:
+      model: ${{ vars.NAME }}
+      pr: ${{ github.event.issue.number }}
+      spack-manifest-schema-version: 1-0-7
+      config-versions-schema-version: 3-0-0
+      config-packages-schema-version: 1-0-0
+    permissions:
+      pull-requests: write
+      contents: write
+      statuses: write
+    secrets: inherit
+  bump:
+    name: Bump
+    if: startsWith(github.event.comment.body, '!bump') && github.event.issue.pull_request
+    uses: access-nri/build-cd/.github/workflows/ci-comment.yml@v7
+    with:
+      model: ${{ vars.NAME }}
+    permissions:
+      pull-requests: write
+      contents: write
+    secrets: inherit
+  configs:
+    name: Configs
+    if: startsWith(github.event.comment.body, '!update-configs') && github.event.issue.pull_request
+    uses: access-nri/build-cd/.github/workflows/ci-comment-configs.yml@v7
+    with:
+      model: ${{ vars.NAME }}
+      auto-configs-pr-schema-version: 1-0-0
+    permissions:
+      pull-requests: write
+    secrets:
+      configs-repo-token: ${{ secrets.CONFIGS_REPO_TOKEN }}
+      commit-gpg-private-key: ${{ secrets.GH_ACTIONS_BOT_GPG_PRIVATE_KEY }}
+      commit-gpg-passphrase: ${{ secrets.GH_ACTIONS_BOT_GPG_PASSPHRASE }}
