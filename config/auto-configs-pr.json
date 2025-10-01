@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/ACCESS-NRI/schema/main/au.org.access-nri/model/deployment/config/auto-configs-pr/1-0-0.json",
+  "profiles": {
+
+    "default": {
+      "configs_repo": "ACCESS-NRI/YOUR_CONFIG_REPO_HERE",
+      "configs": {
+        "dev-YOUR_CONFIG_HERE": {
+          "checks": {
+            "repro": true
+          }
+        }
+      },
+      "dev-YOUR_OTHER_CONFIG_HERE": {
+        "checks": {
+          "repro": false
+        }
+      }
+    }
+
+  }
+}
