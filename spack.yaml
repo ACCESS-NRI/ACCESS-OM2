@@ -50,14 +50,17 @@ spack:
       require:
       - '@2025.07.002'
     c:
-      require:
-      - 'intel-oneapi-compilers@2025.2.0'
+      prefer:
+      - 'gcc@15.1.0'
+      - '~binutils'
     cxx:
-      require:
-      - 'intel-oneapi-compilers@2025.2.0'
+      prefer:
+      - 'gcc@15.1.0'
+      - '~binutils'
     fortran:
-      require:
-      - 'intel-oneapi-compilers@2025.2.0'
+      prefer:
+      - 'gcc@15.1.0'
+      - '~binutils'
     all:
       prefer:
       - 'target=x86_64_v4'
