@@ -41,9 +41,10 @@ spack:
     parallelio:
       require:
       - '@2.6.8'
-    openmpi:
+    cray-mpich:
       require:
-      - '@5.0.8'
+      - '@9.1.0'
+      - '%gcc@14.2.0'
     access-fms:
       require:
       - '@2025.08.001'
@@ -54,18 +55,40 @@ spack:
     access-mocsy:
       require:
       - '@2025.07.002'
+
+    # Workarounds
+    gcc::
+      externals:
+      - spec: gcc@14.3.0 languages:='c,c++,fortran'
+        prefix: /opt/cray/pe/gcc-native/14
+        extra_attributes:
+          compilers:
+            c: /opt/cray/pe/gcc-native/14/bin/gcc
+            cxx: /opt/cray/pe/gcc-native/14/bin/g++
+            fortran: /opt/cray/pe/gcc-native/14/bin/gfortran
+      - spec: gcc@14.2.0 languages:='c,c++,fortran'
+        prefix: /opt/cray/pe/gcc-native/14
+        extra_attributes:
+          compilers:
+            c: /opt/cray/pe/gcc-native/14/bin/gcc
+            cxx: /opt/cray/pe/gcc-native/14/bin/g++
+            fortran: /opt/cray/pe/gcc-native/14/bin/gfortran
+    curl:
+      require:
+      - '@8.17.0'
+
     c:
-      require:
-      - intel-oneapi-compilers@2025.2.0
-    cxx:
-      require:
-      - intel-oneapi-compilers@2025.2.0
-    fortran:
-      require:
-      - intel-oneapi-compilers@2025.2.0
-    all:
       prefer:
-      - target=x86_64_v4
+      - gcc@14.3.0
+    cxx:
+      prefer:
+      - gcc@14.3.0
+    fortran:
+      prefer:
+      - gcc@14.3.0
+    all:
+      require:
+      - target=x86_64
   view: true
   concretizer:
     unify: true
@@ -74,3 +97,7 @@ spack:
       git: https://github.com/ACCESS-NRI/access-spack-packages.git
       tag: 2026.10.009
       destination: $env/package-repos/access-spack-packages
+    builtin::
+      git: https://github.com/ACCESS-NRI/upstream-spack-packages.git
+      branch: access/v1.1
+      destination: $env/package-repos/spack-packages
