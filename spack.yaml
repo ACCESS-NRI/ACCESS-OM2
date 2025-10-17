@@ -21,6 +21,7 @@ spack:
         - '@git.2025.03.001'
     netcdf-c:
       require:
+        - '~parallel-netcdf'
         - '@4.9.2'
     netcdf-fortran:
       require:
@@ -45,9 +46,8 @@ spack:
       require:
         - '%gcc'
     all:
-      require:
-        - '%oneapi@2025.2.0'
-        - 'target=x86_64_v4'
+      prefer:
+        - '%gcc@15.1.0'
   view: true
   concretizer:
     unify: true
