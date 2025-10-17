@@ -28,16 +28,16 @@ spack:
 
     # Indirect dependencies
     netcdf-c:
-      require:
+      prefer:
       - '@4.9.2'
     netcdf-fortran:
-      require:
+      prefer:
       - '@4.6.1'
     parallelio:
-      require:
+      prefer:
       - '@2.6.8'
     openmpi:
-      require:
+      prefer:
       - '@5.0.8'
     access-fms:
       require:
@@ -50,14 +50,14 @@ spack:
       require:
       - '@2025.07.002'
     c:
-      require:
-      - 'intel-oneapi-compilers@2025.2.0'
+      prefer:
+      - 'gcc@11.2.0'
     cxx:
-      require:
-      - 'intel-oneapi-compilers@2025.2.0'
+      prefer:
+      - 'gcc@11.2.0'
     fortran:
-      require:
-      - 'intel-oneapi-compilers@2025.2.0'
+      prefer:
+      - 'gcc@11.2.0'
     all:
       prefer:
       - 'target=x86_64_v4'
