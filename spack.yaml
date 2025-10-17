@@ -41,9 +41,17 @@ spack:
     access-mocsy:
       require:
         - '@2025.07.002'
-    all:
+    c:
       require:
-        - '%intel@19.0.5.281'
+        - 'intel-oneapi-compilers@2025.2.0'
+    cxx:
+      require:
+        - 'intel-oneapi-compilers@2025.2.0'
+    fortran:
+      require:
+        - 'intel-oneapi-compilers@2025.2.0'
+    all:
+      prefer:
         - 'target=x86_64'
   view: true
   concretizer:
