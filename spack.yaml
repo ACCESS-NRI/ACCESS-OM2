@@ -41,9 +41,6 @@ spack:
     parallelio:
       require:
       - '@2.6.8'
-    openmpi:
-      require:
-      - '@5.0.8'
     access-fms:
       require:
       - '@2025.08.001'
@@ -55,17 +52,21 @@ spack:
       require:
       - '@2025.07.002'
     c:
-      require:
-      - intel-oneapi-compilers@2025.2.0
-    cxx:
-      require:
-      - intel-oneapi-compilers@2025.2.0
-    fortran:
-      require:
-      - intel-oneapi-compilers@2025.2.0
-    all:
       prefer:
-      - target=x86_64_v4
+      - gcc@14.2.0
+    cxx:
+      prefer:
+      - gcc@14.2.0
+    fortran:
+      prefer:
+      - gcc@14.2.0
+    cray-mpich:
+      require:
+      - '@9.1.0'
+      - "%gcc@14.2.0"
+    all:
+      require:
+      - target=x86_64
   view: true
   concretizer:
     unify: true
@@ -74,3 +75,7 @@ spack:
       git: https://github.com/ACCESS-NRI/access-spack-packages.git
       tag: 2026.10.009
       destination: $env/package-repos/access-spack-packages
+    builtin::
+      git: https://github.com/ACCESS-NRI/upstream-spack-packages.git
+      branch: access/v1.1
+      destination: $env/package-repos/spack-packages
