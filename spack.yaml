@@ -12,7 +12,7 @@ spack:
   packages:
     cice5:
       require:
-        - '@git.0612f2297edbc12f268d0ca3f4cb7e412310f65a=stable model=access-om2'
+        - '@git.782a247de1fdafe5eb1289099226675c2b2d6c33=stable model=access-om2'
     mom5:
       require:
         - '@git.2025.08.000=access-om2'
