@@ -5,11 +5,14 @@
 spack:
   # add package specs to the `specs` list
   specs:
-    - access-om2@git.2025.09.000=latest
+    - access-om2@git.2025.09.000=latest ^cice5 nxglob=360 nyglob=300 blckx=15 blcky=300 mxblcks=1
+    - access-om2@git.2025.09.000=latest ^cice5 nxglob=1440 nyglob=1080 blckx=30 blcky=27 mxblcks=4
+    - access-om2@git.2025.09.000=latest ^cice5 nxglob=3600 nyglob=2700 blckx=18 blcky=15 mxblcks=22
+
   packages:
     cice5:
       require:
-        - '@git.2025.03.001=access-om2'
+        - '@git.0612f2297edbc12f268d0ca3f4cb7e412310f65a=stable model=access-om2'
     mom5:
       require:
         - '@git.2025.08.000=access-om2'
@@ -47,4 +50,4 @@ spack:
         - 'target=x86_64'
   view: true
   concretizer:
-    unify: true
+    unify: when_possible
