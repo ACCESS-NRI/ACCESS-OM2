@@ -54,4 +54,4 @@ spack:
     default:
       tcl:
         projections:
-          ^cice5: '{name}/{version}-{^cice5.variants.nxglob.value}x{^cice5.variants.nyglob.value}'
+          access-om2: '{name}/{version}-{^cice5.variants.nxglob.value}x{^cice5.variants.nyglob.value}'
