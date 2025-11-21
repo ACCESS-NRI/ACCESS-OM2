@@ -54,4 +54,4 @@ spack:
     default:
       tcl:
         projections:
-          access-om2: '{name}/2025.12.000-{^cice5.variants.nxglob.value}x{^cice5.variants.nyglob.value}'
+          access-om2: '{name}/2025.12.000-{^cice5.variants.nxglob.value}x{^cice5.variants.nyglob.value}-{hash[:7]}'
