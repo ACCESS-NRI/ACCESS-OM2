@@ -11,7 +11,7 @@ spack:
   packages:
     cice5:
       require:
-        - '@git.46ef92b232632663855abb4088ffbd76378c27b5=stable model=access-om2'
+        - '@git.38b7fc85382ec1015fb7304bb3c9e2ba6e2e9a0f=stable model=access-om2'
     mom5:
       require:
         - '@git.2025.08.000=access-om2'
@@ -29,7 +29,7 @@ spack:
         - '@4.6.1'
     parallelio:
       require:
-        - '@2.6.2'
+        - '@git.06e79373ae7f344833ba70a5958b53cd7a46adef=2.6.2'
     openmpi:
       require:
         - '@4.1.5'
