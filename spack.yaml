@@ -11,7 +11,7 @@ spack:
   packages:
     cice5:
       require:
-        - '@git.38b7fc85382ec1015fb7304bb3c9e2ba6e2e9a0f=stable model=access-om2'
+        - '@git.4048ff2b836a04a6ea00fcbffd17335829393e5b=stable model=access-om2'
     mom5:
       require:
         - '@git.2025.08.000=access-om2'
