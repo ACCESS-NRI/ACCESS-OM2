@@ -28,7 +28,7 @@ jobs:
     with:
       model: ${{ vars.NAME }}
       pr: ${{ github.event_name == 'pull_request' && github.event.pull_request.number || github.event.issue.number }}
-      spack-manifest-schema-version: 1-0-7
+      spack-manifest-schema-version: 2-0-0
       config-versions-schema-version: 4-0-0
       config-packages-schema-version: 1-0-0
     permissions:
