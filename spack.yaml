@@ -5,46 +5,46 @@
 spack:
   # add package specs to the `specs` list
   specs:
-    - access-om2@git.2025.09.000=latest
+  - access-om2@git.2025.09.000=latest
   packages:
     cice5:
       require:
-        - '@git.2025.03.001=access-om2'
+      - '@git.2025.03.001=access-om2'
     mom5:
       require:
-        - '@git.2025.08.000=access-om2'
+      - '@git.2025.08.000=access-om2'
     libaccessom2:
       require:
-        - '@git.2025.05.001=access-om2'
+      - '@git.2025.05.001=access-om2'
     oasis3-mct:
       require:
-        - '@git.2025.03.001'
+      - '@git.2025.03.001'
     netcdf-c:
       require:
-        - '@4.9.2'
+      - '@4.9.2'
     netcdf-fortran:
       require:
-        - '@4.6.1'
+      - '@4.6.1'
     parallelio:
       require:
-        - '@2.6.2'
+      - '@2.6.2'
     openmpi:
       require:
-        - '@4.1.5'
+      - '@4.1.5'
     access-fms:
       require:
-        - '@git.mom5-2025.05.000=mom5'
-        - 'cppflags="-DMAXFIELDMETHODS_=600"'
+      - '@git.mom5-2025.05.000=mom5'
+      - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
-        - '@2025.09.000'
+      - '@2025.09.000'
     access-mocsy:
       require:
-        - '@2025.07.002'
+      - '@2025.07.002'
     all:
       require:
-        - '%intel@19.0.5.281'
-        - 'target=x86_64'
+      - '%intel@19.0.5.281'
+      - 'target=x86_64'
   view: true
   concretizer:
     unify: true
