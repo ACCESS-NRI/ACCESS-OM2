@@ -9,7 +9,7 @@ spack:
   packages:
     cice5:
       require:
-        - '@git.2025.03.001=access-om2'
+        - '@git.2023.10.19=access-om2'
     mom5:
       require:
         - '@git.2025.08.000=access-om2'
@@ -18,19 +18,19 @@ spack:
         - '@git.2025.05.001=access-om2'
     oasis3-mct:
       require:
-        - '@git.2025.03.001'
+        - '@git.2023.11.09=access-om2'
     netcdf-c:
       require:
-        - '@4.9.2'
+        - '@4.7.4'
     netcdf-fortran:
       require:
-        - '@4.6.1'
+        - '@4.5.2'
     parallelio:
       require:
-        - '@2.6.2'
+        - '@2.5.2'
     openmpi:
       require:
-        - '@4.1.5'
+        - '@4.0.2'
     access-fms:
       require:
         - '@git.mom5-2025.05.000=mom5'
