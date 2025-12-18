@@ -30,7 +30,7 @@ spack:
         - '@2.6.2'
     openmpi:
       require:
-        - '@4.1.5'
+        - '@5.0.8'
     access-fms:
       require:
         - '@git.mom5-2025.05.000=mom5'
@@ -47,7 +47,7 @@ spack:
     all:
       require:
         - '%oneapi@2025.2.0'
-        - 'target=x86_64'
+        - 'target=x86_64_v4'
   view: true
   concretizer:
     unify: true
