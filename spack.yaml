@@ -5,7 +5,7 @@
 spack:
   # add package specs to the `specs` list
   specs:
-    - access-om2@git.2025.09.000=latest
+    - access-om2@git.2025.12.000=latest
   packages:
     cice5:
       require:
@@ -30,7 +30,7 @@ spack:
         - '@2.6.2'
     openmpi:
       require:
-        - '@4.1.5'
+        - '@5.0.8'
     access-fms:
       require:
         - '@git.mom5-2025.05.000=mom5'
@@ -41,10 +41,13 @@ spack:
     access-mocsy:
       require:
         - '@2025.07.002'
+    gcc-runtime:
+      require:
+        - '%gcc'
     all:
       require:
-        - '%intel@19.0.5.281'
-        - 'target=x86_64'
+        - '%oneapi@2025.2.0'
+        - 'target=x86_64_v4'
   view: true
   concretizer:
     unify: true

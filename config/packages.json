@@ -7,6 +7,5 @@
     "libaccessom2"
   ],
   "injection": [
-    "openmpi"
   ]
 }
