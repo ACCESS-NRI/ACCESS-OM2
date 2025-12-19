@@ -10,15 +10,23 @@ spack:
     cice5:
       require:
         - '@git.2025.03.001=access-om2'
+        - 'cflags="-mavx2"'
+        - 'fflags="-mavx2"'
     mom5:
       require:
         - '@git.2025.08.000=access-om2'
+        - 'cflags="-mavx2"'
+        - 'fflags="-mavx2"'
     libaccessom2:
       require:
         - '@git.2025.05.001=access-om2'
+        - 'cflags="-mavx2"'
+        - 'fflags="-mavx2"'
     oasis3-mct:
       require:
         - '@git.2025.03.001'
+        - 'cflags="-mavx2"'
+        - 'fflags="-mavx2"'
     netcdf-c:
       require:
         - '@4.9.2'
