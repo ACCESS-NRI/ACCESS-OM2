@@ -3,17 +3,12 @@
   "profiles": {
 
     "default": {
-      "configs_repo": "ACCESS-NRI/YOUR_CONFIG_REPO_HERE",
+      "configs_repo": "ACCESS-NRI/access-om2-configs",
       "configs": {
-        "dev-YOUR_CONFIG_HERE": {
+        "dev-1deg_jra55_ryf": {
           "checks": {
             "repro": true
           }
-        }
-      },
-      "dev-YOUR_OTHER_CONFIG_HERE": {
-        "checks": {
-          "repro": false
         }
       }
     }
