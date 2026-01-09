@@ -9,7 +9,7 @@ spack:
   packages:
     cice5:
       require:
-        - '@git.d6b35980a5f6e1281ff89de0ce6df42edf37b53c=access-om2'
+        - '@git.29a9581c84537246ca142bc4ffee27bef7fd017f=access-om2'
     mom5:
       require:
         - '@git.2025.08.000=access-om2'
