@@ -37,7 +37,7 @@ spack:
         - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
-        - '@git.9822bb3aeb2dec6c0e4699bd56ae4617b54d7ace=2025.09.000'  # On branch WOMBATupdate-2026-01-19
+        - '@git.a551ae636feca9f7269f36846468ccc907b84319=2025.09.000'  # On branch WOMBATupdate-2026-01-19
     access-mocsy:
       require:
         - '@2025.07.002'
