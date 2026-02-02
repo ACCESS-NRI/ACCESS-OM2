@@ -6,8 +6,8 @@ spack:
   # add package specs to the `specs` list
   specs:
     - access-om2@git.2026.02.000 ^cice5 nxglob=360 nyglob=300 blckx=15 blcky=300 mxblcks=1
-    - access-om2 ^cice5 nxglob=1440 nyglob=1080 blckx=30 blcky=27 mxblcks=4
-    - access-om2 ^cice5 nxglob=3600 nyglob=2700 blckx=40 blcky=30 mxblcks=12
+    - access-om2@git.2026.02.000 ^cice5 nxglob=1440 nyglob=1080 blckx=30 blcky=27 mxblcks=4
+    - access-om2@git.2026.02.000 ^cice5 nxglob=3600 nyglob=2700 blckx=40 blcky=30 mxblcks=12
   packages:
     cice5:
       require:
