@@ -20,16 +20,16 @@ spack:
       require:
         - '@git.2025.03.001'
     netcdf-c:
-      require:
+      prefer:
         - '@4.9.2'
     netcdf-fortran:
-      require:
+      prefer:
         - '@4.6.1'
     parallelio:
-      require:
+      prefer:
         - '@2.6.2'
     openmpi:
-      require:
+      prefer:
         - '@4.1.5'
     access-fms:
       require:
@@ -42,13 +42,13 @@ spack:
       require:
         - '@2025.07.002'
     c:
-      require:
+      prefer:
         - 'gcc@11.2.0'
     cxx:
-      require:
+      prefer:
         - 'gcc@11.2.0'
     fortran:
-      require:
+      prefer:
         - 'gcc@11.2.0'
     all:
       prefer:
