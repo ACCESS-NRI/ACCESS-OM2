@@ -6,7 +6,7 @@ spack:
   definitions:
   # _name and _version are reserved definitions that inform deployments
   - _name: [access-om2]
-  - _version: [2025.12.000]
+  - _version: [2026.02.000]
   # add package specs to the `specs` list
   specs:
   - access-om2
@@ -14,7 +14,8 @@ spack:
     # Direct dependencies
     cice5:
       require:
-      - '@git.2025.03.001=access-om2'
+      - '@2026.01.000'
+      - 'io_type=PIO build_system=cmake'
     mom5:
       require:
       - '@git.2025.08.000=access-om2'
@@ -34,7 +35,7 @@ spack:
       - '@4.6.1'
     parallelio:
       require:
-      - '@2.6.2'
+      - '@2.6.8'
     openmpi:
       require:
       - '@5.0.8'
@@ -44,7 +45,7 @@ spack:
       - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
-      - '@2025.09.000'
+      - '@2026.01.000'
     access-mocsy:
       require:
       - '@2025.07.002'
