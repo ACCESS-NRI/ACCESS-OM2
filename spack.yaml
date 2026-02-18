@@ -6,7 +6,7 @@ spack:
   definitions:
   # _name and _version are reserved definitions that inform deployments
   - _name: [access-om2]
-  - _version: [2025.12.000]
+  - _version: [2026.02.000]
   # add package specs to the `specs` list
   specs:
   - access-om2
