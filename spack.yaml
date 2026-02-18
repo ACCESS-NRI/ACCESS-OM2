@@ -14,7 +14,8 @@ spack:
     # Direct dependencies
     cice5:
       require:
-      - '@git.2025.03.001=access-om2'
+      - '@2026.01.000'
+      - 'io_type=PIO build_system=cmake'
     mom5:
       require:
       - '@git.2025.08.000=access-om2'
@@ -34,7 +35,7 @@ spack:
       - '@4.6.1'
     parallelio:
       require:
-      - '@2.6.2'
+      - '@2.6.8'
     openmpi:
       require:
       - '@5.0.8'
