@@ -38,7 +38,7 @@ spack:
       - '@2.6.8'
     openmpi:
       require:
-      - '@5.0.8%gcc@13.2.0'
+      - '@5.0.8'
     access-fms:
       require:
       - '@git.mom5-2025.05.000=mom5'
@@ -50,14 +50,14 @@ spack:
       require:
       - '@2025.07.002'
     c:
-      prefer:
-      - 'gcc@15.1.0'
+      require:
+      - 'gcc@13.2.0'
     cxx:
-      prefer:
-      - 'gcc@15.1.0'
+      require:
+      - 'gcc@13.2.0'
     fortran:
-      prefer:
-      - 'gcc@15.1.0'
+      require:
+      - 'gcc@13.2.0'
     all:
       prefer:
       - 'target=x86_64_v4'
