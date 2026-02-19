@@ -51,13 +51,13 @@ spack:
       - '@2025.07.002'
     c:
       require:
-      - 'gcc@13.2.0'
+      - 'gcc@15.1.0'
     cxx:
       require:
-      - 'gcc@13.2.0'
+      - 'gcc@15.1.0'
     fortran:
       require:
-      - 'gcc@13.2.0'
+      - 'gcc@15.1.0'
     all:
       prefer:
       - 'target=x86_64_v4'
