@@ -41,7 +41,7 @@ spack:
       - '@5.0.8%gcc@13.2.0'
     access-fms:
       require:
-      - '@git.mom5-2025.05.000=mom5'
+      - '@git.f9fb720d832c94f0cbd7b21ce95eda128fe80256=mom5'  # On mom5-boz-literal
       - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
