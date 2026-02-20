@@ -43,12 +43,18 @@ spack:
       require:
         - '@git.mom5-2025.05.000=mom5'
         - 'cppflags="-DMAXFIELDMETHODS_=600"'
+        - 'cflags="-mavx2"'
+        - 'fflags="-mavx2"'
     access-generic-tracers:
       require:
         - '@2025.09.000'
+        - 'cflags="-mavx2"'
+        - 'fflags="-mavx2"'
     access-mocsy:
       require:
         - '@2025.07.002'
+        - 'cflags="-mavx2"'
+        - 'fflags="-mavx2"'
     c:
       require:
         - 'intel-oneapi-compilers@2025.2.0'
