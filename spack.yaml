@@ -38,7 +38,7 @@ spack:
       - '@2.6.8'
     openmpi:
       require:
-      - '@5.0.8'
+      - '@5.0.8%gcc@13.2.0'
     access-fms:
       require:
       - '@git.584974cd58fe19be09e060b219ecf6138cc1798f=mom5'  # On mom5-boz-literal
