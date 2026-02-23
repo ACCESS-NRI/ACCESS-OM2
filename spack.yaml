@@ -38,10 +38,10 @@ spack:
       - '@2.6.8'
     openmpi:
       require:
-      - '@5.0.8%gcc@13.2.0'
+      - '@5.0.8'
     access-fms:
       require:
-      - '@git.f9fb720d832c94f0cbd7b21ce95eda128fe80256=mom5'  # On mom5-boz-literal
+      - '@git.584974cd58fe19be09e060b219ecf6138cc1798f=mom5'  # On mom5-boz-literal
       - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
