@@ -14,14 +14,14 @@ spack:
     # Direct dependencies
     cice5:
       require:
-      - '@2026.01.000'
+      - '@git.b7b6cff7f60339d8d2fe07cc78d648bb2a9c5b67=2026.01.000'  # On branch 'mavx2'
       - 'io_type=PIO build_system=cmake'
     mom5:
       require:
-      - '@git.2025.08.000=access-om2'
+      - '@git.fd4e09d8bf26da98cf011624890e136c6e23b705=access-om2'  # On branch 'dkhutch-nesi'
     libaccessom2:
       require:
-      - '@git.2025.05.001=access-om2'
+      - '@git.afd7abf4a00e29853f6ecf3134f172b11fad62d5=access-om2'  # On branch 'dkhutch-nesi'
     oasis3-mct:
       require:
       - '@git.2025.03.001'
@@ -41,14 +41,14 @@ spack:
       - '@5.0.8'
     access-fms:
       require:
-      - '@git.mom5-2025.05.000=mom5'
+      - '@git.28f5cbadc41b823b882d3e411304f2e00265f14a=mom5'  # On branch 'dkhutch-nesi'
       - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
-      - '@2026.01.000'
+      - '@git.92a87ad44398809365591832f9a64811bf3c4a57=2026.01.000'  # On branch 'dkhutch-nesi'
     access-mocsy:
       require:
-      - '@2025.07.002'
+      - '@git.d4475dea14e9f6cf795f59f3f0cd200111ed8d0f=2025.07.002'  # On branch 'dkhutch-nesi'
     c:
       require:
       - 'intel-oneapi-compilers@2025.2.0'
