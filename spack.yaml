@@ -18,10 +18,10 @@ spack:
       - 'io_type=PIO build_system=cmake'
     mom5:
       require:
-      - '@git.2025.08.000=access-om2'
+      - '@git.c4fa2450034e09239fa73a5db76724c18e37c887=access-om2'  # On branch 'gcc'
     libaccessom2:
       require:
-      - '@git.2025.05.001=access-om2'
+      - '@git.5d905fa470d6f0541dc27cfc0eca913e9bcb192d=access-om2'  # On branch 'gcc'
     oasis3-mct:
       require:
       - '@git.2025.03.001'
