@@ -6,7 +6,7 @@ spack:
   definitions:
   # _name and _version are reserved definitions that inform deployments
   - _name: [access-om2]
-  - _version: [2026.02.000]
+  - _version: [2026.02.001]
   # add package specs to the `specs` list
   specs:
   - access-om2
@@ -18,10 +18,10 @@ spack:
       - 'io_type=PIO build_system=cmake'
     mom5:
       require:
-      - '@git.2025.08.000=access-om2'
+      - '@git.2026.02.000=access-om2'
     libaccessom2:
       require:
-      - '@git.2025.05.001=access-om2'
+      - '@git.2026.02.000=access-om2'
     oasis3-mct:
       require:
       - '@git.2025.03.001'
@@ -41,11 +41,11 @@ spack:
       - '@5.0.8'
     access-fms:
       require:
-      - '@git.mom5-2025.05.000=mom5'
+      - '@git.mom5-2025.08.000=mom5'
       - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
-      - '@2026.01.000'
+      - '@2026.02.000'
     access-mocsy:
       require:
       - '@2025.07.002'
