@@ -18,10 +18,10 @@ spack:
       - 'io_type=PIO build_system=cmake'
     mom5:
       require:
-      - '@git.2025.08.000=access-om2'
+      - '@git.92ac46a07fcfc6bcd6995682ea6ce0fe5760ee35=access-om2'  # On branch 'gcc'
     libaccessom2:
       require:
-      - '@git.2025.05.001=access-om2'
+      - '@git.5d905fa470d6f0541dc27cfc0eca913e9bcb192d=access-om2'  # On branch 'gcc'
     oasis3-mct:
       require:
       - '@git.2025.03.001'
@@ -38,7 +38,7 @@ spack:
       - '@2.6.8'
     openmpi:
       require:
-      - '@5.0.8'
+      - '@5.0.8%gcc'
     access-fms:
       require:
       - '@git.mom5-2025.05.000=mom5'
@@ -50,14 +50,14 @@ spack:
       require:
       - '@2025.07.002'
     c:
-      require:
-      - 'intel-oneapi-compilers@2025.2.0'
+      prefer:
+      - 'gcc@15.1.0'
     cxx:
-      require:
-      - 'intel-oneapi-compilers@2025.2.0'
+      prefer:
+      - 'gcc@15.1.0'
     fortran:
-      require:
-      - 'intel-oneapi-compilers@2025.2.0'
+      prefer:
+      - 'gcc@15.1.0'
     all:
       prefer:
       - 'target=x86_64_v4'
