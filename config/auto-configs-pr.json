@@ -9,6 +9,16 @@
           "checks": {
             "repro": true
           }
+        },
+        "dev-025deg_jra55_ryf": {
+          "checks": {
+            "repro": true
+          }
+        },
+        "dev-01deg_jra55_ryf": {
+          "checks": {
+            "repro": true
+          }
         }
       }
     }
