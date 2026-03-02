@@ -60,7 +60,7 @@ spack:
       - 'intel-oneapi-compilers@2025.2.0'
     all:
       prefer:
-      - 'target=x86_64_v4'
+      - 'target=cascadelake'
   view: true
   concretizer:
     unify: true
