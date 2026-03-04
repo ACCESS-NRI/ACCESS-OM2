@@ -60,7 +60,7 @@ spack:
       - 'intel-oneapi-compilers@2025.2.0'
     all:
       require:
-      - 'target=x86_64_v2'
+      - 'target=x86_64'
   view: true
   concretizer:
-    unify: false
+    unify: true
