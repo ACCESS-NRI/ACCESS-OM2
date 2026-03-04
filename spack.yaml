@@ -34,12 +34,15 @@ spack:
     netcdf-c:
       require:
       - '@4.9.2'
+      - 'target=x86_64_v4'
     netcdf-fortran:
       require:
       - '@4.6.1'
+      - 'target=x86_64_v4'
     parallelio:
       require:
       - '@2.6.8'
+      - 'target=x86_64_v4'
     openmpi:
       require:
       - '@5.0.8'
@@ -56,6 +59,26 @@ spack:
       require:
       - '@git.0e180aa968dcb257f318389bf089b59f9116f732=2025.07.002'  # On branch 'dkhutch-nesi'
       - 'target=x86_64_v3'
+    datetime-fortran:
+      require:
+      - '@1.7.0'
+      - 'target=x86_64_v4'
+    json-fortran:
+      require: 
+      - '@8.3.0'
+      - 'target=x86_64_v4'
+    hdf5:
+      require:
+      - '@1.14.6'
+      - 'target=x86_64_v4'
+    zlib-ng:
+      require:
+      - '@2.3.2'
+      - 'target=x86_64_v4'
+    pkgconf:
+      require:
+      - '@2.5.1'
+      - 'target=x86_64_v4'
     c:
       require:
       - 'intel-oneapi-compilers@2025.2.0'
