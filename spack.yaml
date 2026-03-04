@@ -14,17 +14,29 @@ spack:
     # Direct dependencies
     cice5:
       require:
-      - '@2026.01.000'
+      - '@git.5c2159bcfe13b8c597ddf049a80370c1fc8395cd=2026.01.000'  # On branch 'mavx2'
       - 'io_type=PIO build_system=cmake'
+      - 'cflags="-march=core-avx2"'
+      - 'cxxflags="-march=core-avx2"'
+      - 'fflags="-march=core-avx2"'
     mom5:
       require:
-      - '@git.2026.02.000=access-om2'
+      - '@git.240ceb1b633f917c05499b0eee02940625938e3e=access-om2'  # On branch 'dkhutch-nesi'
+      - 'cflags="-march=core-avx2"'
+      - 'cxxflags="-march=core-avx2"'
+      - 'fflags="-march=core-avx2"'
     libaccessom2:
       require:
-      - '@git.2026.02.000=access-om2'
+      - '@git.ae9244516f39cb15936819e901466ce11f806855=access-om2'  # On branch 'dkhutch-nesi'
+      - 'cflags="-march=core-avx2"'
+      - 'cxxflags="-march=core-avx2"'
+      - 'fflags="-march=core-avx2"'
     oasis3-mct:
       require:
       - '@git.2025.03.001'
+      - 'cflags="-march=core-avx2"'
+      - 'cxxflags="-march=core-avx2"'
+      - 'fflags="-march=core-avx2"'
 
     # Indirect dependencies
     netcdf-c:
@@ -41,14 +53,23 @@ spack:
       - '@5.0.8'
     access-fms:
       require:
-      - '@git.mom5-2025.08.000=mom5'
+      - '@git.95f4978b8d576b7d3e3b66362a3cfff83f7d3f73=mom5'  # On branch 'dkhutch-nesi'
       - 'cppflags="-DMAXFIELDMETHODS_=600"'
+      - 'cflags="-march=core-avx2"'
+      - 'cxxflags="-march=core-avx2"'
+      - 'fflags="-march=core-avx2"'
     access-generic-tracers:
       require:
-      - '@2026.02.000'
+      - '@git.c7a14cb4466a51ea962ec28fec47cab2a4a3f5e4=2026.01.000'  # On branch 'dkhutch-nesi'
+      - 'cflags="-march=core-avx2"'
+      - 'cxxflags="-march=core-avx2"'
+      - 'fflags="-march=core-avx2"'
     access-mocsy:
       require:
-      - '@2025.07.002'
+      - '@git.0e180aa968dcb257f318389bf089b59f9116f732=2025.07.002'  # On branch 'dkhutch-nesi'
+      - 'cflags="-march=core-avx2"'
+      - 'cxxflags="-march=core-avx2"'
+      - 'fflags="-march=core-avx2"'
     c:
       require:
       - 'intel-oneapi-compilers@2025.2.0'
