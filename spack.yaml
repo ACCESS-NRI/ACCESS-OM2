@@ -59,8 +59,11 @@ spack:
       require:
       - 'intel-oneapi-compilers@2025.2.0'
     all:
-      require:
-      - 'target=haswell'
+      prefer:
+      - 'target=x86_64_v4'
+      - 'cflags="-march=core-avx2"'
+      - 'cxxflags="-march=core-avx2"'
+      - 'fflags="-march=core-avx2"'
   view: true
   concretizer:
     unify: true
