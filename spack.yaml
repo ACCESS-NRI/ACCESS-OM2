@@ -64,3 +64,6 @@ spack:
   view: true
   concretizer:
     unify: true
+    targets:
+      granularity: microarchitectures
+      host_compatible: false
