@@ -35,7 +35,7 @@ spack:
       - '@4.6.1'
     parallelio:
       prefer:
-      - '@2.6.8'
+      - '@2.6.2'
     openmpi:
       prefer:
       - '@5.0.8'
@@ -64,3 +64,5 @@ spack:
   view: true
   concretizer:
     unify: true
+  repos:
+    access.nri: /mnt/lustre/a2fs-work1/work/n01/n01/munday/SO-SIMMER/GCC/ACCESS-OM2/access-spack-packages/spack_repo/access/nri
