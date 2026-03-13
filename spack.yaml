@@ -14,8 +14,7 @@ spack:
     # Direct dependencies
     cice5:
       require:
-      - '@2026.01.000'
-      - 'io_type=PIO build_system=cmake'
+      - '@git.2025.03.001=access-om2'
     mom5:
       require:
       - '@git.2026.02.000=access-om2'
