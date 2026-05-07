@@ -38,7 +38,7 @@ spack:
       - '@2.6.8'
     openmpi:
       require:
-      - '@5.0.8'
+      - '@5.0.6'
     access-fms:
       require:
       - '@git.mom5-2025.08.000=mom5'
