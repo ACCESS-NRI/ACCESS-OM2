@@ -11,7 +11,7 @@ jobs:
     uses: access-nri/build-cd/.github/workflows/ci.yml@v9
     with:
       model: ${{ vars.NAME }}
-      spack-manifest-schema-version: 2-0-0
+      spack-manifest-schema-version: 3-0-0
     permissions:
       pull-requests: write
       contents: write
