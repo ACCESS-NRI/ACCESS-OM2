@@ -18,13 +18,13 @@ spack:
       - 'io_type=PIO build_system=cmake'
     mom5:
       require:
-      - '@git.2026.02.000=access-om2'
+      - '@2026.02.000'
     libaccessom2:
       require:
-      - '@git.2026.02.000=access-om2'
+      - '@2026.02.000'
     oasis3-mct:
       require:
-      - '@git.2025.03.001'
+      - '@2025.03.001'
 
     # Indirect dependencies
     netcdf-c:
@@ -41,7 +41,7 @@ spack:
       - '@5.0.8'
     access-fms:
       require:
-      - '@git.mom5-2025.08.000=mom5'
+      - '@2025.08.000'
       - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
