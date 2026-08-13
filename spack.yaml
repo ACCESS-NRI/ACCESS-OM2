@@ -26,7 +26,7 @@ spack:
       - '@2026.02.000'
     libaccessom2:
       require:
-      - '@2026.02.000'
+      - '@2026.08.000'
     oasis3-mct:
       require:
       - '@2025.03.001'
@@ -72,5 +72,5 @@ spack:
   repos:
     access_spack_packages:
       git: https://github.com/ACCESS-NRI/access-spack-packages.git
-      tag: 2026.08.000
+      tag: 2026.08.006
       destination: $env/package-repos/access-spack-packages
