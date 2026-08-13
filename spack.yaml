@@ -23,7 +23,7 @@ spack:
       - 'io_type=PIO build_system=cmake'
     mom5:
       require:
-      - '@2026.02.000'
+      - '@2026.02.001'
     libaccessom2:
       require:
       - '@2026.08.000'
