@@ -26,7 +26,7 @@ spack:
       - '@2026.02.000'
     libaccessom2:
       require:
-      - '@2026.02.000'
+      - '@git.d698a9e6656c42e76672c11c8cf6b4f618334c74=2026.02.000'  # On branch 32-calendar-override
     oasis3-mct:
       require:
       - '@2025.03.001'
