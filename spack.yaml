@@ -19,7 +19,7 @@ spack:
     # Direct dependencies
     cice5:
       require:
-      - '@2026.01.000'
+      - '@2026.07.000'
       - 'io_type=PIO build_system=cmake'
     mom5:
       require:
