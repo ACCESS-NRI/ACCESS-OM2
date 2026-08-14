@@ -6,7 +6,7 @@ spack:
   definitions:
   # _name and _version are reserved definitions that inform deployments
   - _name: [access-om2]
-  - _version: [2026.05.000]
+  - _version: [2026.08.000]
   # _spack-version and _custom-scopes inform the branch of spack to use, and custom scopes if applicable, respectively
   - _spack-version: ["1.1"]
   # Release database provenance information - packages for inclusion into the database, and packages just for injection into the modules
