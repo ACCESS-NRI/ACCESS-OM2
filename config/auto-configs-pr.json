@@ -5,17 +5,12 @@
     "default": {
       "configs_repo": "ACCESS-NRI/access-om2-configs",
       "configs": {
-        "dev-1deg_jra55_ryf": {
+        "dev-1deg_jra55_ryf+wombatlite": {
           "checks": {
             "repro": true
           }
         },
-        "dev-025deg_jra55_ryf": {
-          "checks": {
-            "repro": true
-          }
-        },
-        "dev-01deg_jra55_ryf": {
+        "dev-025deg_jra55_iaf": {
           "checks": {
             "repro": true
           }

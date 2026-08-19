@@ -13,18 +13,15 @@ on:
       - dev
       - backport/*.*
     paths:
-      - config/**
       - spack.yaml
 jobs:
   pr-ci:
     name: CI
     if: github.event.action != 'closed'
-    uses: access-nri/build-cd/.github/workflows/ci.yml@v8
+    uses: access-nri/build-cd/.github/workflows/ci.yml@v9
     with:
       model: ${{ vars.NAME }}
-      spack-manifest-schema-version: 2-0-0
-      config-versions-schema-version: 4-0-0
-      config-packages-schema-version: 1-0-0
+      spack-manifest-schema-version: 3-0-0
     permissions:
       pull-requests: write
       contents: write
@@ -33,5 +30,5 @@ jobs:
   pr-closed:
     name: Closed
     if: github.event.action == 'closed'
-    uses: access-nri/build-cd/.github/workflows/ci-closed.yml@v8
+    uses: access-nri/build-cd/.github/workflows/ci-closed.yml@v9
     secrets: inherit
