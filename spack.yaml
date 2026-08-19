@@ -6,7 +6,7 @@ spack:
   definitions:
   # _name and _version are reserved definitions that inform deployments
   - _name: [access-om2]
-  - _version: [2026.08.000]
+  - _version: [2026.05.000]
   # _spack-version and _custom-scopes inform the branch of spack to use, and custom scopes if applicable, respectively
   - _spack-version: ["1.1"]
   # Release database provenance information - packages for inclusion into the database, and packages just for injection into the modules
@@ -19,17 +19,17 @@ spack:
     # Direct dependencies
     cice5:
       require:
-      - '@2026.07.000'
+      - '@2026.01.000'
       - 'io_type=PIO build_system=cmake'
     mom5:
       require:
-      - '@2026.02.001'
+      - '@git.cc8c322ea939d9bfb43f9433601f91cfe117131f=access-om2'  # On branch mixed_layer_tracer_diagnostics_nri
     libaccessom2:
       require:
-      - '@2026.08.000'
+      - '@git.2026.02.000=access-om2'
     oasis3-mct:
       require:
-      - '@2025.03.001'
+      - '@git.2025.03.001'
 
     # Indirect dependencies
     netcdf-c:
@@ -46,7 +46,7 @@ spack:
       - '@5.0.8'
     access-fms:
       require:
-      - '@2025.08.001'
+      - '@git.mom5-2025.08.000=mom5'
       - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
@@ -72,5 +72,5 @@ spack:
   repos:
     access_spack_packages:
       git: https://github.com/ACCESS-NRI/access-spack-packages.git
-      tag: 2026.08.007
+      tag: 2026.05.001
       destination: $env/package-repos/access-spack-packages
