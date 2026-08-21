@@ -72,5 +72,5 @@ spack:
   repos:
     access_spack_packages:
       git: https://github.com/ACCESS-NRI/access-spack-packages.git
-      tag: 2026.08.007
+      commit: afe0308d6fd89d1b81c7772f3f223c31ad0f79e8
       destination: $env/package-repos/access-spack-packages
