@@ -23,7 +23,7 @@ spack:
       - 'io_type=PIO build_system=cmake'
     mom5:
       require:
-      - '@2026.02.001'
+      - '@git.fedb3fd6846c4ada3e608135734405c126779be3=2026.02.001'
     libaccessom2:
       require:
       - '@2026.08.000'
@@ -46,7 +46,7 @@ spack:
       - '@5.0.8'
     access-fms:
       require:
-      - '@2025.08.001'
+      - '@git.c907a3436957152e1768290a1185827432cfc669=2025.08.001'
       - 'cppflags="-DMAXFIELDMETHODS_=600"'
     access-generic-tracers:
       require:
@@ -72,5 +72,5 @@ spack:
   repos:
     access_spack_packages:
       git: https://github.com/ACCESS-NRI/access-spack-packages.git
-      tag: 2026.08.007
+      commit: afe0308d6fd89d1b81c7772f3f223c31ad0f79e8
       destination: $env/package-repos/access-spack-packages
