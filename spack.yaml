@@ -23,7 +23,7 @@ spack:
       - 'io_type=PIO build_system=cmake'
     mom5:
       require:
-      - '@git.cc8c322ea939d9bfb43f9433601f91cfe117131f=access-om2'  # On branch mixed_layer_tracer_diagnostics_nri
+      - '@git.0a2eb30b7f7eec5bd43fc0ade63280ccad8e7f5b=access-om2'  # On branch mixed_layer_tracer_diagnostics_nri
     libaccessom2:
       require:
       - '@git.2026.02.000=access-om2'
