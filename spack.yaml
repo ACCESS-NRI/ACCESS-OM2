@@ -23,7 +23,7 @@ spack:
       - 'io_type=PIO build_system=cmake'
     mom5:
       require:
-      - '@2026.02.001'
+      - '@2026.02.002'
     libaccessom2:
       require:
       - '@2026.08.000'
@@ -72,5 +72,5 @@ spack:
   repos:
     access_spack_packages:
       git: https://github.com/ACCESS-NRI/access-spack-packages.git
-      tag: 2026.09.005
+      tag: 2026.09.006
       destination: $env/package-repos/access-spack-packages
