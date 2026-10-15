@@ -20,7 +20,7 @@ spack:
     cice5:
       require:
       - '@2026.10.000'
-      - io_type=PIO build_system=cmake
+      - io_type=PIO
     mom5:
       require:
       - '@2026.02.002'
